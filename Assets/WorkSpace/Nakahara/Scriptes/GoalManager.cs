@@ -5,13 +5,31 @@ using UnityEngine.SceneManagement;
 
 public class GoalManager : MonoBehaviour
 {
+    //トランジション
+    [SerializeField]
+    GameObject m_gTransitionImage;
+
     //衝突タイマー
     int m_iCollisionTimer = 0;
     //衝突時間（3秒後ステージ遷移）
-    int m_iLimitCollisionTime = 180;
+    int m_iLimitCollisionTime = 120;
     //衝突フラグ
     bool m_bCollisiontFlag = false;
 
+    //=============================================================
+    // コンストラクタ
+    //=============================================================
+    public void Start()
+    {
+        if (m_gTransitionImage == null)
+        {
+            Debug.Log("オブジェクトを設定していません。");
+        }
+    }
+
+    //=============================================================
+    // 更新
+    //=============================================================
     private void Update()
     {
         //衝突時間
@@ -21,7 +39,7 @@ public class GoalManager : MonoBehaviour
     //=============================================================
     // 衝突間（物理衝突なし）
     //=============================================================
-    void OnTriggerStay(Collider collider)
+    private void OnTriggerStay(Collider collider)
     {
         //光オブジェクトとの衝突
         if (collider.gameObject.name == "N_Light")
@@ -31,7 +49,13 @@ public class GoalManager : MonoBehaviour
             //衝突フラグ
             m_bCollisiontFlag = true;
             //ステージ遷移
-            SceneTransition();
+            if (m_iCollisionTimer > m_iLimitCollisionTime)
+            {
+                //トランジション（フェイドアウト）
+                m_gTransitionImage.SetActive(true);
+                Invoke("SceneTransition", 3.0f);
+                m_iCollisionTimer = 0;
+            }
         }
     }
 
@@ -66,10 +90,6 @@ public class GoalManager : MonoBehaviour
     //=============================================================
     private void SceneTransition()
     {
-        if (m_iCollisionTimer > m_iLimitCollisionTime)
-        {
-            SceneManager.LoadScene("Nakahara02");
-            m_iCollisionTimer = 0;
-        }
+        SceneManager.LoadScene("Nakahara02");
     }
 }
