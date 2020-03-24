@@ -92,9 +92,10 @@ SubShader {
 
 		if (texcol.a < _Stroke) {
 			texcol.r = lerp(color.r, 1, 0.3);//_StrokeColor;
-			texcol.g = lerp(color.g, 1, 0.3);//_StrokeColor;
-			texcol.b = lerp(color.b, 1, 0.3);//_StrokeColor;
+			texcol.g = lerp(color.g, 1, 0.3);
+			texcol.b = lerp(color.b, 1, 0.3);
 			texcol.a = 0.5;
+			texcol *= _StrokeColor;
 		} else {
 			
 			half3 viewDir = normalize(i.worldpos - _WorldSpaceCameraPos.xyz);

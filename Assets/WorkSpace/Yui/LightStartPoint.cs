@@ -19,6 +19,7 @@ public class LightStartPoint : MonoBehaviour
         m_lightmove.lightpoint = this;
         m_LRenderer = GetComponent<LineRenderer>();
         m_LRenderer.SetPosition(0, transform.position);
+        m_LRenderer.SetPosition(1, transform.position);
     }
 
     
