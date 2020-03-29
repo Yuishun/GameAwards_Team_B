@@ -39,35 +39,42 @@ public class LightMove : MonoBehaviour
         
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.L))
+        /*if (Input.GetKeyDown(KeyCode.L))
         {
             Refraction();
-        }
+        }*/
+        StartCoroutine("Refraction");
     }
 
 
-    void Refraction()
+    IEnumerator Refraction()
     {
+        // FixedUpdate終わりまで待つ
+        yield return new WaitForFixedUpdate();
+
+        // 変数宣言
         RaycastHit2D ray;
         m_linenum = 1;
-        m_dirVec = m_lightpoint.transform.right;
-        m_pos = m_lightpoint.transform.position;
+        m_dirVec = m_lightpoint.transform.right;    // 初期方向
+        m_pos = m_lightpoint.transform.position;    // 初期位置
         int i = 0;
 
-        bool  EnterWater = false;
+        bool  EnterWater = false;   // 水に当たっているか
         while (true)
         {
+            // エラー時の処理
             if(m_dirVec==new Vector2(0, 0))
             {
                 Debug.Log("Vector Error");
                 break;
             }
 
+            // 水か光を通さないものに当たっているか
             ray = Physics2D.Raycast(m_pos, m_dirVec, 50,
                 LayerMask.GetMask("Default","PostProcessing"), 0, 2);
-            // 枠に当たったら終了
+            // 枠に当たったら位置をLineRendererに伝えて終了
             if (ray.collider.gameObject.layer == LayerMask.NameToLayer("Default"))
             {
                 transform.position = m_pos = ray.point;
@@ -79,6 +86,7 @@ public class LightMove : MonoBehaviour
             {
                 //ray.transform.GetComponent<>().
 
+                // 空気から水への屈折したベクトルを取得
                 m_dirVec = Refractioning(GetRefractiveIndex(RefractiveIndex.Air),
                     GetRefractiveIndex(RefractiveIndex.Water),
                     m_dirVec, ray.normal);
@@ -88,6 +96,7 @@ public class LightMove : MonoBehaviour
                 EnterWater = true;
             }
 
+            // 水の中にいるとき
             if (EnterWater)
             {
                 Collider2D[] collider2D = new Collider2D[1];
@@ -96,13 +105,13 @@ public class LightMove : MonoBehaviour
                     // まだ水の中にいるか
                     int hitnum = Physics2D.OverlapCircleNonAlloc(m_pos, 0.3f, 
                         collider2D,WaterLayer);
-                    if (hitnum == 0)    // 
+                    if (hitnum == 0)    // 水から抜けた時
                     {
                         RaycastHit2D ray2 = Physics2D.Raycast(m_pos, -m_dirVec, 10,
                             WaterLayer, 0, 2);
                        // Debug.Log("Exit" + ray2.point);
                        // Debug.Log("ExitN" + ray2.normal);
-                        m_pos = ray2.point + m_dirVec * 0.001f;
+                        m_pos = ray2.point + m_dirVec * 0.001f; // 位置調整
                         m_dirVec = Refractioning(GetRefractiveIndex(RefractiveIndex.Water),
                                 GetRefractiveIndex(RefractiveIndex.Air),
                                 m_dirVec, -ray2.normal);
@@ -111,7 +120,7 @@ public class LightMove : MonoBehaviour
                         EnterWater = false;
                         break;
                     }
-                    // 先に不透過オブジェクトがあるかどうか
+                    // 水の中に不透過オブジェクトがあるかどうか
                     else if(0 < Physics2D.OverlapCircleNonAlloc(m_pos, 0.3f,
                         collider2D, FrameLayer))
                     {
@@ -122,6 +131,8 @@ public class LightMove : MonoBehaviour
                         EnterWater = false;
                         break;
                     }
+
+                    // 位置を方向に進める
                     m_pos += m_dirVec;
 
                 }
@@ -130,20 +141,23 @@ public class LightMove : MonoBehaviour
             if (i > 100)
             {
                 Debug.Log("無限ループ脱出");
-                return;
+                break;
             }
 
         }
 
     }
 
+    // LineRendererに屈折位置・終点を伝える
     void AddLineRenderer()
     {
         m_lightpoint.line.positionCount = ++m_linenum;
         m_lightpoint.line.SetPosition(m_linenum - 1, m_pos);
-        Debug.Log(m_linenum-1+" "+ m_dirVec);
+       // Debug.Log(m_linenum-1+" "+ m_dirVec);
     }
 
+
+    //! 以下から屈折に関するもの
     float GetRefractiveIndex(RefractiveIndex index)
     {
         switch (index)
@@ -166,10 +180,6 @@ public class LightMove : MonoBehaviour
         {
             return new Vector2(0, 0);
         }
-       /* if (0 > Vector2.Dot(v, n))
-        {
-            n = -n;
-        }*/
 
           float nr = n2 / n1;
         
