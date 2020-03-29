@@ -42,14 +42,14 @@ public class MetaballParticleClass : MonoBehaviour {
 
 			//if (LifeTime < 0)
 				return;
-
+            /*
 			if (delta > LifeTime) {
 				delta *= 0;
 				Active = false;
 			} else {
 				delta += Time.deltaTime;
 			}
-
+            */
 
 		}
 
