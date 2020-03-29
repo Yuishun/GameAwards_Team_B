@@ -61,7 +61,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _BumpScale: 1
-    - _Cutoff: 0.128
+    - _Cutoff: 0.256
     - _DetailNormalMapScale: 1
     - _Distance: 1.2
     - _DstBlend: 0
@@ -74,7 +74,7 @@ Material:
     - _RefractOffset: 0.0421
     - _RelativeRefractionIndex: 0.2
     - _SrcBlend: 1
-    - _Stroke: 0.238
+    - _Stroke: 0.476
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:

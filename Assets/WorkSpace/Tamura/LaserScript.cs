@@ -53,12 +53,26 @@ public class LaserScript : MonoBehaviour
         ray = new Ray2D(transform.position, -transform.up);
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, maxDistance, LayerMask.GetMask("Default", "PostProcessing"));
 
-        //Rayのデバッグ描画
-        //        Debug.DrawRay(ray.origin, ray.direction * maxDistance, Color.blue, 3, false);
-        //Rayの物体までの描画
+        //Rayの物体までの描画用
         LinePointers.Add(hit.point);
         return hit;
     }
+
+    double collL(Vector2 vec1, Vector2 vec2)
+    {
+        double dx, dy;
+        double x1, x2, y1, y2;
+        x1 = vec1.x;
+        y1 = vec1.y;
+        x2 = vec2.x;
+        y2 = vec2.x;
+
+        dx = x2 - x1;
+        dy = y2 - y1;
+        double L = Mathf.Sqrt((float)(dx * dx + dy * dy));
+        return L;
+    }
+
     public bool onetimeFlag = true;
     void watett(RaycastHit2D hit)
     {
@@ -75,22 +89,26 @@ public class LaserScript : MonoBehaviour
             Leng1 = collL(vec1, vec2);
             Leng2 = collL(vec1, cols[0].transform.position);
             TRYPos2 = cols[0].gameObject;
+            int allnum = -1;
             foreach (Collider2D col in cols)
             {
+                allnum++;
+
                 double onetime = collL(vec1, col.transform.position);
 
                 if (Leng1 > onetime)
                 {
+                    Leng2 = Leng1;
+                    TRYPos2 = TRYPos1;
+                    Leng1 = onetime;
+                    TRYPos1 = col.gameObject;
                     if (onetimeFlag)
                     {
                         Debug.Log(Leng1);
                         Debug.Log(onetime);
                     }
-                    Leng2 = Leng1;
-                    TRYPos2 = TRYPos1;
-                    Leng1 = onetime;
-                    TRYPos1 = col.gameObject;
                 }
+
             }
             LinePointers.Add(TRYPos1.transform.position);
             LinePointers.Add(TRYPos2.transform.position);
@@ -98,23 +116,12 @@ public class LaserScript : MonoBehaviour
             {
                 Debug.Log(Leng1);
                 Debug.Log(Leng2);
+                Debug.Log(TRYPos1.transform.position);
+                Debug.Log(TRYPos2.transform.position);
             }
+
             onetimeFlag = false;
         }
-    }
-    double collL(Vector2 vec1,Vector2 vec2)
-    {
-        double dx, dy;
-        double x1, x2, y1, y2;
-        x1 = vec1.x;
-        y1 = vec1.y;
-        x2 = vec2.x;
-        y2 = vec2.x;
-
-        dx = x2 - x1;
-        dy = y2 - y1;
-        double L = Mathf.Sqrt((float)(dx * dx + dy * dy));
-        return L;
     }
     //==========================================================================
     //水面処理2D
@@ -128,7 +135,7 @@ public class LaserScript : MonoBehaviour
         {
             //範囲円内の水判定のコライダを全て記録
             Collider2D[] cols = Physics2D.OverlapCircleAll(hit.transform.position, hit.transform.lossyScale.x * 2, LayerMask.GetMask("PostProcessing"));
-            
+
             List<WaterMemory> Mem = new List<WaterMemory>();
             //範囲内コライダの探索==================================================================================
             //線分の開始地点A座標と、線分の終了地点B座標で、線分の1点目から2点目に向かってどちら側かを判定。
@@ -154,9 +161,9 @@ public class LaserScript : MonoBehaviour
                 //記録(距離・左右・位置)
                 Mem.Add(wm.wmMethod(vecAcol.length, S, col.transform.position));
             }
-            
+
             bool eflag = false;
-            if(eflag)
+            if (eflag)
             {
                 //Mem記録を参照し、再計算
                 //if (!Flagger)
@@ -237,6 +244,7 @@ public class LaserScript : MonoBehaviour
             Mem.Clear();
         }
     }
+
     //=============================================================
     //登録された地点を辿り、線を引く
     //=============================================================
@@ -263,7 +271,7 @@ public class LaserScript : MonoBehaviour
             Vector2 point = new Vector2((Point1.x + Point2.x) * 0.5f, (Point1.y + Point2.y) * 0.5f);
 
             GameObject obj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            obj.transform.position = point;            
+            obj.transform.position = point;
         }
     }
 }
