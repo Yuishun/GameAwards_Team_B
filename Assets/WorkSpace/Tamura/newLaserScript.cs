@@ -66,6 +66,7 @@ public class newLaserScript : MonoBehaviour
                 hit.collider.transform.LookAt(transform.position);
                 hitWay = hit.transform.forward * hit.collider.transform.lossyScale.x * 0.3f;
                 hit.transform.forward = upway;
+
                 LinePointers.Add(hit.point + hitWay);
                 hitrange = hitWay + hitWay * Vector3.Distance(hit.point, hit.transform.position);
                 float distance = Vector2.Distance(transform.position,hit.transform.position);
