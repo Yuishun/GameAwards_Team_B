@@ -30,10 +30,7 @@ public class FollowLight : MonoBehaviour
     void Start()
     {
         m_pos = transform.position;
-        Debug.Log(0 + " " + m_dirVec);
-        //m_rb2d = GetComponent<Rigidbody2D>();
-
-        //InvokeRepeating("Refravtion", 0, 2);
+        //Debug.Log(0 + " " + m_dirVec);
         waterSurface = GetComponent<WaterSurface>();
     }
 
