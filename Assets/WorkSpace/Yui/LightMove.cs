@@ -24,9 +24,10 @@ public class LightMove : MonoBehaviour
     {
         set { m_lightpoint = value; }
     }
-    int m_linenum = 1;
 
     [SerializeField] LayerMask FrameLayer, WaterLayer;
+
+    Color m_color;
 
     // Start is called before the first frame update
     void Start()
@@ -39,26 +40,28 @@ public class LightMove : MonoBehaviour
         
     }
 
-    void FixedUpdate()
+    void Update()
     {
-        /*if (Input.GetKeyDown(KeyCode.L))
+        if (Input.GetKeyDown(KeyCode.L))
         {
+            //StartCoroutine(Refraction());
             Refraction();
-        }*/
-        StartCoroutine("Refraction");
+        }
+        //StartCoroutine("Refraction");
     }
 
 
-    IEnumerator Refraction()
+    void Refraction()
     {
         // FixedUpdate終わりまで待つ
-        yield return new WaitForFixedUpdate();
+        //yield return new WaitForFixedUpdate();
 
+        m_lightpoint.LineReset();
         // 変数宣言
         RaycastHit2D ray;
-        m_linenum = 1;
         m_dirVec = m_lightpoint.transform.right;    // 初期方向
         m_pos = m_lightpoint.transform.position;    // 初期位置
+        m_color = Color.yellow;
         int i = 0;
 
         bool  EnterWater = false;   // 水に当たっているか
@@ -78,14 +81,16 @@ public class LightMove : MonoBehaviour
             if (ray.collider.gameObject.layer == LayerMask.NameToLayer("Default"))
             {
                 transform.position = m_pos = ray.point;
+                m_dirVec = new Vector2(m_dirVec.y, m_dirVec.x);
                 AddLineRenderer();
+                m_lightpoint.DrawLine();
                 break;
             }
             else  if(!EnterWater && ray.collider.gameObject.layer ==
                 LayerMask.NameToLayer("PostProcessing"))  // 水だったら
             {
                 //ray.transform.GetComponent<>().
-                ray.transform.GetComponent<WaterSurface>().Rerurn_dirVec(m_pos, ray, m_dirVec);
+                //ray.transform.GetComponent<WaterSurface>().Rerurn_dirVec(m_pos, ray, m_dirVec);
 
                 // 空気から水への屈折したベクトルを取得
                 m_dirVec = Refractioning(GetRefractiveIndex(RefractiveIndex.Air),
@@ -93,6 +98,7 @@ public class LightMove : MonoBehaviour
                     m_dirVec, ray.normal);
                 
                 m_pos = ray.point;
+                m_color = Color.green;
                 AddLineRenderer();
                 EnterWater = true;
             }
@@ -152,9 +158,8 @@ public class LightMove : MonoBehaviour
     // LineRendererに屈折位置・終点を伝える
     void AddLineRenderer()
     {
-        m_lightpoint.line.positionCount = ++m_linenum;
-        m_lightpoint.line.SetPosition(m_linenum - 1, m_pos);
-       // Debug.Log(m_linenum-1+" "+ m_dirVec);
+        m_lightpoint.AddLineRenderer(m_pos, m_dirVec,m_color);
+        Debug.Log("Pos "+m_pos+"Vec "+ m_dirVec+"Color "+m_color);
     }
 
 
@@ -196,7 +201,7 @@ public class LightMove : MonoBehaviour
         float g = Mathf.Sqrt(nr * nr + C * C - 1);
         if (float.IsNaN(g))
         {
-            //return v + 2 * C * n .normalized;
+            //return (v + 2 * C * n).normalized;
             nr = n1 / n2;
             C = -Vector2.Dot(v, n);
             g = Mathf.Sqrt(nr * nr + C * C - 1);
