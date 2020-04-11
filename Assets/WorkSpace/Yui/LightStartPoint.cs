@@ -11,7 +11,6 @@ public class LightStartPoint : MonoBehaviour
     List<Vector3> points = new List<Vector3>();
     List<Vector2> vectors = new List<Vector2>();
     List<Color> colors = new List<Color>();
-    List<Color> colors2 = new List<Color>();
     
 
     List<Vector3> vertices = new List<Vector3>();
@@ -22,8 +21,7 @@ public class LightStartPoint : MonoBehaviour
     Mesh mesh;
     int offset = 0;
     float xoffset = 0;
-    float penSize = 0.3f;          // 筆の太さ
-    //float uScrollSpeed = 0.18f;  // テクスチャの伸びる速度
+    float penSize = 0.2f;          // 筆の太さ
 
     private void Awake()
     {
@@ -35,17 +33,29 @@ public class LightStartPoint : MonoBehaviour
 
     void CreateMesh(float size,int i)
     {
-         //Vector2 plus90 = top + new Vector2(-dir.y, dir.x) * size;
-         //Vector2 minus90 = top + new Vector2(dir.y, -dir.x) * size;
+        //Vector2 plus90 = top + new Vector2(-dir.y, dir.x) * size;
+        //Vector2 minus90 = top + new Vector2(dir.y, -dir.x) * size;
 
-        Vector2 verticesVec = Vector2.Lerp(vectors[i - 1], vectors[i], 0.5f);
-        Mathf.Abs(verticesVec.x);
-        Mathf.Abs(verticesVec.y);
+        Vector2 verticesVec;
+        if (i == points.Count - 1)
+        {
+            verticesVec = vectors[i];
+            verticesVec.y = Mathf.Abs(verticesVec.y);
+        }
+        else
+        {
+            verticesVec = Vector2.Lerp(vectors[i - 1], vectors[i], 0.5f).normalized;            
+            verticesVec = new Vector2(verticesVec.y, verticesVec.x);
+        }
+        
+        verticesVec.x = Mathf.Abs(verticesVec.x);
+        
+        Debug.Log("vertVec" + verticesVec);
+        verticesVec = transform.InverseTransformVector(verticesVec);
 
         Vector2 point = transform.InverseTransformPoint(points[i]);
         Vector2 pluspoint = point + verticesVec * size;
-        Vector2 minuspoint = point + -verticesVec * size;
-
+        Vector2 minuspoint = point + -verticesVec * size;        
 
         // 頂点を追加
         this.vertices.Add(minuspoint);
@@ -54,6 +64,7 @@ public class LightStartPoint : MonoBehaviour
         // UVを追加
         this.uvs.Add(new Vector2(xoffset, 0));
         this.uvs.Add(new Vector2(xoffset, 1));
+        xoffset = (xoffset + 1) % 2;
         //xoffset += (top - prev).magnitude / 6.0f;////uScrollSpeed; 
 
         // インデックスを追加
@@ -101,13 +112,17 @@ public class LightStartPoint : MonoBehaviour
 
         // 頂点を２つ生成
         tp = transform.InverseTransformPoint(tp);
-        this.vertices.Add(tp + transform.up * penSize);
-        this.vertices.Add(tp - transform.up * penSize);
+        Vector3 vec = transform.InverseTransformVector(transform.up);
+        vec.x = Mathf.Abs(vec.x);   vec.y = Mathf.Abs(vec.y);
+        
+        this.vertices.Add(tp - vec * penSize);
+        this.vertices.Add(tp + vec * penSize);
       
         // uv座標を設定
-        this.uvs.Add(new Vector2(0, 1f));
-        this.uvs.Add(new Vector2(0, 0));
+        this.uvs.Add(new Vector2(0, 0f));
+        this.uvs.Add(new Vector2(0, 1));
         this.offset = 0;
+        this.xoffset = 1;
 
         // 初期色
         for(int i=0; i < 2; i++)

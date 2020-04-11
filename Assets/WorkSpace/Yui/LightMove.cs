@@ -29,6 +29,8 @@ public class LightMove : MonoBehaviour
 
     Color m_color;
 
+    RaycastHit2D ray;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,25 +42,25 @@ public class LightMove : MonoBehaviour
         
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.L))
+        /*if (Input.GetKeyDown(KeyCode.L))
         {
             //StartCoroutine(Refraction());
             Refraction();
-        }
-        //StartCoroutine("Refraction");
+        }*/
+        StartCoroutine("Refraction");
     }
 
 
-    void Refraction()
+    IEnumerator Refraction()
     {
         // FixedUpdate終わりまで待つ
-        //yield return new WaitForFixedUpdate();
+        yield return new WaitForFixedUpdate();
 
         m_lightpoint.LineReset();
         // 変数宣言
-        RaycastHit2D ray;
+        //RaycastHit2D ray;
         m_dirVec = m_lightpoint.transform.right;    // 初期方向
         m_pos = m_lightpoint.transform.position;    // 初期位置
         m_color = Color.yellow;
@@ -81,7 +83,7 @@ public class LightMove : MonoBehaviour
             if (ray.collider.gameObject.layer == LayerMask.NameToLayer("Default"))
             {
                 transform.position = m_pos = ray.point;
-                m_dirVec = new Vector2(m_dirVec.y, m_dirVec.x);
+                m_dirVec = new Vector2(ray.normal.y, ray.normal.x);
                 AddLineRenderer();
                 m_lightpoint.DrawLine();
                 break;
@@ -98,7 +100,7 @@ public class LightMove : MonoBehaviour
                     m_dirVec, ray.normal);
                 
                 m_pos = ray.point;
-                m_color = Color.green;
+
                 AddLineRenderer();
                 EnterWater = true;
             }
@@ -114,14 +116,15 @@ public class LightMove : MonoBehaviour
                         collider2D,WaterLayer);
                     if (hitnum == 0)    // 水から抜けた時
                     {
-                        RaycastHit2D ray2 = Physics2D.Raycast(m_pos, -m_dirVec, 10,
+                        ray = Physics2D.Raycast(m_pos, -m_dirVec, 10,
                             WaterLayer, 0, 2);
                        // Debug.Log("Exit" + ray2.point);
                        // Debug.Log("ExitN" + ray2.normal);
-                        m_pos = ray2.point + m_dirVec * 0.001f; // 位置調整
+                        m_pos = ray.point + m_dirVec * 0.001f; // 位置調整
                         m_dirVec = Refractioning(GetRefractiveIndex(RefractiveIndex.Water),
                                 GetRefractiveIndex(RefractiveIndex.Air),
-                                m_dirVec, -ray2.normal);
+                                m_dirVec, -ray.normal);
+                        m_color = Color.green;
                         AddLineRenderer();
 
                         EnterWater = false;
@@ -131,9 +134,9 @@ public class LightMove : MonoBehaviour
                     else if(0 < Physics2D.OverlapCircleNonAlloc(m_pos, 0.3f,
                         collider2D, FrameLayer))
                     {
-                        RaycastHit2D ray2 = Physics2D.Raycast(m_pos, m_dirVec, 1,
+                        ray = Physics2D.Raycast(m_pos, m_dirVec, 1,
                             FrameLayer, 0, 2);
-                        m_pos = ray2.point;
+                        m_pos = ray.point;
                         AddLineRenderer();
                         EnterWater = false;
                         break;
@@ -159,7 +162,8 @@ public class LightMove : MonoBehaviour
     void AddLineRenderer()
     {
         m_lightpoint.AddLineRenderer(m_pos, m_dirVec,m_color);
-        Debug.Log("Pos "+m_pos+"Vec "+ m_dirVec+"Color "+m_color);
+        //Debug.Log("Pos "+m_pos+"Vec "+ m_dirVec+"Color "+m_color);
+        //Debug.Log("Normal" + ray.normal);
     }
 
 

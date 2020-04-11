@@ -91,11 +91,12 @@ SubShader {
 		half3 color = texcol.rgb;
 
 		if (texcol.a < _Stroke) {
-			texcol.r = lerp(color.r, 1, 0.3);//_StrokeColor;
-			texcol.g = lerp(color.g, 1, 0.3);
-			texcol.b = lerp(color.b, 1, 0.3);
+			//texcol.r = lerp(color.r, 1, 0.3);//_StrokeColor;
+			//texcol.g = lerp(color.g, 1, 0.3);
+			//texcol.b = lerp(color.b, 1, 0.3);
+			texcol.rgb = color;
 			texcol.a = 0.5;
-			texcol *= _StrokeColor;
+			//texcol *= _StrokeColor;
 		} else {
 			
 			half3 viewDir = normalize(i.worldpos - _WorldSpaceCameraPos.xyz);
@@ -110,7 +111,7 @@ SubShader {
 #if UNITY_UV_STARTS_AT_TOP
 			i.uv.y = 1.0 - i.uv.y;
 #endif
-			texcol = tex2D(_GrabTexture, i.uv) * half4(color, 1) ;
+			texcol = tex2D(_GrabTexture, i.uv) *half4(color, 1);
 			
 		}
 					
