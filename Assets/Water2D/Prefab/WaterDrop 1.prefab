@@ -14,8 +14,9 @@ GameObject:
   - component: {fileID: 50136950052901686}
   - component: {fileID: 114815093173730838}
   - component: {fileID: 96420874952216904}
+  - component: {fileID: 4068028936658510067}
   m_Layer: 8
-  m_Name: WaterDrop
+  m_Name: WaterDrop 1
   m_TagString: Metaball_liquid
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -239,3 +240,16 @@ TrailRenderer:
   m_MinVertexDistance: 0.0001
   m_Autodestruct: 0
   m_Emitting: 1
+--- !u!114 &4068028936658510067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 199430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3da69447aae97f74d80e1825c2e7f8d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FreezingFlag: 0

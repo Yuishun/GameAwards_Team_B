@@ -12,7 +12,6 @@ public class FreezeCarsorScript : MonoBehaviour
     private Color Meltcolor = new Color(1.0f, 0.4f, 0.0f, 1.0f);
 
     private string Layer_Water = "PostProcessing";
-    private string Layer_Ice = "IceProcessing";
     private float CasorRange;
 
 
@@ -52,7 +51,7 @@ public class FreezeCarsorScript : MonoBehaviour
     public void MeltIMage()
     {
         spr.color = Meltcolor;
-        Collider2D target = Physics2D.OverlapCircle(transform.position, CasorRange, LayerMask.GetMask(Layer_Ice));
+        Collider2D target = Physics2D.OverlapCircle(transform.position, CasorRange, LayerMask.GetMask(Layer_Water));
         if (target)
             target.SendMessage("Melt");
     }
