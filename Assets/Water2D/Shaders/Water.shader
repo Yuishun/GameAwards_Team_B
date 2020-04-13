@@ -3,14 +3,16 @@
 Shader "Water/Water_Simple" {
 Properties {    
     _MainTex ("Texture", 2D) = "white" { }    
-    _Color ("Main color", Color) = (1,1,1,1)
+   // _Color ("Main color", Color) = (1,1,1,1)
     _Cutoff ("Alpha cutoff", Range(0,1)) = 0.5
 
 	_Stroke ("Stroke alpha", Range(0,1)) = 0.1
-	_StrokeColor ("Stroke color", Color) = (1,1,1,1)
+	//_StrokeColor ("Stroke color", Color) = (1,1,1,1)
 
 	_RelativeRefractionIndex("Relative Refraction Index", Range(0.0, 1.0)) = 0.67
 	[PowerSlider(5)]_Distance("Distance", Range(0.0, 100.0)) = 10.0
+
+	[MaterialToggle] _AceFlag("Ace flag",Int) = 0
 }
 /// <summary>
 /// Multiple metaball shader.
@@ -35,14 +37,14 @@ SubShader {
 	#pragma vertex vert
 	#pragma fragment frag	
 	#include "UnityCG.cginc"	
-	float4 _Color;
+	//float4 _Color;
 	sampler2D _MainTex;	
 	fixed _Cutoff;
 	fixed _Stroke;
-	half4 _StrokeColor;
+	//half4 _StrokeColor;
 	float2 _screenPos;
 	
-
+	int _AceFlag;
 
 	float4 _CameraDepthTexture_TexelSize;
 
@@ -94,8 +96,13 @@ SubShader {
 			//texcol.r = lerp(color.r, 1, 0.3);//_StrokeColor;
 			//texcol.g = lerp(color.g, 1, 0.3);
 			//texcol.b = lerp(color.b, 1, 0.3);
-			texcol.rgb = color;
-			texcol.a = 0.5;
+			texcol.rgb = color + 0.1;			
+			if (_AceFlag) {
+				texcol.rgb += 0.4;
+				texcol.a = 0.9;
+			}
+			else
+				texcol.a = 0.7;
 			//texcol *= _StrokeColor;
 		} else {
 			
@@ -111,11 +118,14 @@ SubShader {
 #if UNITY_UV_STARTS_AT_TOP
 			i.uv.y = 1.0 - i.uv.y;
 #endif
-			texcol = tex2D(_GrabTexture, i.uv) *half4(color, 1);
+			texcol = tex2D(_GrabTexture, i.uv) * 0.5 + half4(color, 1);
 			
+			if (_AceFlag) {
+				texcol.rgb += 0.2;
+			}
 		}
 					
-
+		
 		
 	 	return texcol;
 	 	

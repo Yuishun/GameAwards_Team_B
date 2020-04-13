@@ -50,7 +50,7 @@ public class LightStartPoint : MonoBehaviour
         
         verticesVec.x = Mathf.Abs(verticesVec.x);
         
-        Debug.Log("vertVec" + verticesVec);
+        //Debug.Log("vertVec" + verticesVec);
         verticesVec = transform.InverseTransformVector(verticesVec);
 
         Vector2 point = transform.InverseTransformPoint(points[i]);

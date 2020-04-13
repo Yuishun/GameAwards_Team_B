@@ -290,7 +290,7 @@
 					if (DynamicChanges) {
 						_initSpeed = initSpeed;
 						MetaBall.transform.localScale = new Vector3 (size, size, 1f);
-						SetWaterColor (FillColor, StrokeColor);
+						//SetWaterColor (FillColor, StrokeColor);
 					}
 
 					WaterDropsObjects [i].GetComponent<Rigidbody2D> ().velocity = _initSpeed;
@@ -348,7 +348,7 @@
                     {
                         _initSpeed = initSpeed;
                         MetaBall.transform.localScale = new Vector3(size, size, 1f);
-                        SetWaterColor(FillColor, StrokeColor);
+                        //SetWaterColor(FillColor, StrokeColor);
                     }
 
                     WaterDropsObjects[i].GetComponent<Rigidbody2D>().velocity = _initSpeed;
