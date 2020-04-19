@@ -83,7 +83,7 @@ public class LightMove : MonoBehaviour
             if (ray.collider.gameObject.layer == LayerMask.NameToLayer("Default"))
             {
                 transform.position = m_pos = ray.point;
-                m_dirVec = new Vector2(ray.normal.y, ray.normal.x);
+                m_dirVec = new Vector2(ray.normal.y, -ray.normal.x);
                 AddLineRenderer();
                 m_lightpoint.DrawLine();
                 break;
@@ -91,6 +91,12 @@ public class LightMove : MonoBehaviour
             else  if(!EnterWater && ray.collider.gameObject.layer ==
                 LayerMask.NameToLayer("PostProcessing"))  // 水だったら
             {
+                if (!ray.transform.GetComponent<MetaballParticleClass>().
+                     CountWater())
+                {
+                    m_pos = ray.point + m_dirVec * Vector2.Distance(ray.point, ray.transform.position);
+                    continue;
+                }
                 //ray.transform.GetComponent<>().
                 //ray.transform.GetComponent<WaterSurface>().Rerurn_dirVec(m_pos, ray, m_dirVec);
                 var watersurface = surface.ReInVector2(m_pos, ray, m_dirVec);
@@ -112,19 +118,21 @@ public class LightMove : MonoBehaviour
                 while (true)
                 {
                     // まだ水の中にいるか
-                    int hitnum = Physics2D.OverlapCircleNonAlloc(m_pos, 0.3f, 
+                    int hitnum = Physics2D.OverlapCircleNonAlloc(m_pos, 0.2f, 
                         collider2D,WaterLayer);
                     if (hitnum == 0)    // 水から抜けた時
                     {
-                        ray = Physics2D.Raycast(m_pos, -m_dirVec, 10,
+                        ray = Physics2D.Raycast(m_pos, -m_dirVec, 5,
                             WaterLayer, 0, 2);
-                       // Debug.Log("Exit" + ray2.point);
-                       // Debug.Log("ExitN" + ray2.normal);
+                        m_color = ray.transform.GetComponent<MetaballParticleClass>().
+                            spRend.color;
+                        // Debug.Log("Exit" + ray2.point);
+                        // Debug.Log("ExitN" + ray2.normal);
                         m_pos = ray.point + m_dirVec * 0.001f; // 位置調整
                         m_dirVec = Refractioning(GetRefractiveIndex(RefractiveIndex.Water),
                                 GetRefractiveIndex(RefractiveIndex.Air),
                                 m_dirVec, -ray.normal);
-                        m_color = Color.green;
+                        
                         AddLineRenderer();
 
                         EnterWater = false;
