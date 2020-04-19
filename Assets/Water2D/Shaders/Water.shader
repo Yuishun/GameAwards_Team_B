@@ -12,7 +12,6 @@ Properties {
 	_RelativeRefractionIndex("Relative Refraction Index", Range(0.0, 1.0)) = 0.67
 	[PowerSlider(5)]_Distance("Distance", Range(0.0, 100.0)) = 10.0
 
-	[MaterialToggle] _AceFlag("Ace flag",Int) = 0
 }
 /// <summary>
 /// Multiple metaball shader.
@@ -44,7 +43,6 @@ SubShader {
 	//half4 _StrokeColor;
 	float2 _screenPos;
 	
-	int _AceFlag;
 
 	float4 _CameraDepthTexture_TexelSize;
 
@@ -96,13 +94,8 @@ SubShader {
 			//texcol.r = lerp(color.r, 1, 0.3);//_StrokeColor;
 			//texcol.g = lerp(color.g, 1, 0.3);
 			//texcol.b = lerp(color.b, 1, 0.3);
-			texcol.rgb = color + 0.1;			
-			if (_AceFlag) {
-				texcol.rgb += 0.4;
-				texcol.a = 0.9;
-			}
-			else
-				texcol.a = 0.7;
+			texcol.rgb = color + 0.2;			
+			texcol.a = 0.7;
 			//texcol *= _StrokeColor;
 		} else {
 			
@@ -120,9 +113,6 @@ SubShader {
 #endif
 			texcol = tex2D(_GrabTexture, i.uv) * 0.5 + half4(color, 1);
 			
-			if (_AceFlag) {
-				texcol.rgb += 0.2;
-			}
 		}
 					
 		

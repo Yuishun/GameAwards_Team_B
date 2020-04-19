@@ -27,11 +27,13 @@ public class MetaballParticleClass : MonoBehaviour {
 	float delta;
 	Rigidbody2D rb;
 	TrailRenderer tr;
+    public SpriteRenderer spRend;
 
 	void Start () {
 		//MObject = gameObject;
 		rb = GetComponent<Rigidbody2D> ();
 		tr = GetComponent<TrailRenderer> ();
+        spRend = GetComponent<SpriteRenderer>();
 	}
 
 	void Update () {
@@ -68,4 +70,41 @@ public class MetaballParticleClass : MonoBehaviour {
 		rb.velocity = _vel;
 	}
 
+    public Vector2 RefractionNormal(Vector2 pos,Vector2 normal)
+    {
+        RaycastHit2D ray =
+            Physics2D.CircleCast(pos + normal * 0.2f, 0.2f, normal, 0.1f,
+            LayerMask.GetMask("PostProcessing"));
+        if (!ray.collider)
+        {
+            return normal;
+        }
+        else
+        {
+            Vector2 LineVec = ray.transform.position - transform.position;
+            Vector2 Normal = new Vector2(LineVec.y, LineVec.x).normalized;
+            ray = Physics2D.Raycast(pos + Normal * 0.01f, Normal, 0.1f,
+                LayerMask.GetMask("PostProcessing"));            
+            if(ray.collider && ray.transform.position == transform.position)
+            {
+                Normal = -Normal;
+            }
+
+            return Normal;
+        }
+    }
+
+    public bool CountWater()
+    {
+        Collider2D[] col = new Collider2D[4];
+            Physics2D.OverlapCircleNonAlloc(transform.position, 0.5f, col,
+            LayerMask.GetMask("PostProcessing"));
+        for(int i = 0; i < 4; i++)
+        {
+            if (!col[i])
+                return false;
+        }
+                
+            return true;
+    }
 }

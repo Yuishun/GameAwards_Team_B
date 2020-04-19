@@ -8,7 +8,7 @@ public class LightStartPoint : MonoBehaviour
 
     public Material _mat;
 
-    List<Vector3> points = new List<Vector3>();
+    List<Vector2> points = new List<Vector2>();
     List<Vector2> vectors = new List<Vector2>();
     List<Color> colors = new List<Color>();
     
@@ -40,26 +40,28 @@ public class LightStartPoint : MonoBehaviour
         if (i == points.Count - 1)
         {
             verticesVec = vectors[i];
-            verticesVec.y = Mathf.Abs(verticesVec.y);
+            //verticesVec.y = Mathf.Abs(verticesVec.y);
         }
         else
         {
-            verticesVec = Vector2.Lerp(vectors[i - 1], vectors[i], 0.5f).normalized;            
-            verticesVec = new Vector2(verticesVec.y, verticesVec.x);
+            Vector2 Lvec1 = new Vector2(-vectors[i - 1].y, vectors[i - 1].x);
+            Vector2 Lvec2 = new Vector2(-vectors[i].y, vectors[i].x);
+            verticesVec = Vector2.Lerp(Lvec1, Lvec2, 0.5f).normalized;                        
         }
-        
-        verticesVec.x = Mathf.Abs(verticesVec.x);
-        
+
+        //verticesVec.x = Mathf.Abs(verticesVec.x);
+
         //Debug.Log("vertVec" + verticesVec);
-        verticesVec = transform.InverseTransformVector(verticesVec);
+        verticesVec = transform.InverseTransformVector(verticesVec);            
+        
 
         Vector2 point = transform.InverseTransformPoint(points[i]);
-        Vector2 pluspoint = point + verticesVec * size;
-        Vector2 minuspoint = point + -verticesVec * size;        
+        Vector2 leftpoint = point + verticesVec * size;
+        Vector2 rightpoint = point - verticesVec * size;        
 
         // 頂点を追加
-        this.vertices.Add(minuspoint);
-        this.vertices.Add(pluspoint);
+        this.vertices.Add(leftpoint);
+        this.vertices.Add(rightpoint);
 
         // UVを追加
         this.uvs.Add(new Vector2(xoffset, 0));
@@ -110,13 +112,15 @@ public class LightStartPoint : MonoBehaviour
         // 開始点を保存
         this.points.Add(tp);
 
+        // ベクトルを保存
+        vectors.Add(transform.right);
+
         // 頂点を２つ生成
-        tp = transform.InverseTransformPoint(tp);
-        Vector3 vec = transform.InverseTransformVector(transform.up);
-        vec.x = Mathf.Abs(vec.x);   vec.y = Mathf.Abs(vec.y);
+        tp = transform.InverseTransformPoint(tp);        
+        Vector3 vec = transform.InverseTransformVector(transform.up);        
         
-        this.vertices.Add(tp - vec * penSize);
         this.vertices.Add(tp + vec * penSize);
+        this.vertices.Add(tp - vec * penSize);
       
         // uv座標を設定
         this.uvs.Add(new Vector2(0, 0f));
@@ -127,8 +131,6 @@ public class LightStartPoint : MonoBehaviour
         // 初期色
         for(int i=0; i < 2; i++)
         this.colors.Add(Color.yellow);
-
-        vectors.Add(transform.right);
 
         // メッシュ生成
         this.mesh = new Mesh();
@@ -141,4 +143,5 @@ public class LightStartPoint : MonoBehaviour
         for(int i=0;i<2;i++)
         colors.Add(color);
     }
+
 }

@@ -143,6 +143,7 @@
 			//Application.targetFrameRate = 60;
 
 			_parent = new GameObject ("_metaBalls");
+            _parent.AddComponent<ColorChange>();
 			//_parent.hideFlags = HideFlags.HideInHierarchy;
 			WaterDropsObjects [0].transform.SetParent (_parent.transform);
 			WaterDropsObjects [0].transform.localScale = new Vector3 (size, size, 1f);
@@ -152,9 +153,10 @@
 
 
 
-            for (int i = 1; i < WaterDropsObjects.Length; i++) {
+            for (int i = 1; i < WaterDropsObjects.Length; i++) {                
 				WaterDropsObjects[i] = Instantiate(WaterDropsObjects[0], gameObject.transform.position, new Quaternion(0,0,0,0)) as GameObject;
-				WaterDropsObjects [i].GetComponent<MetaballParticleClass>().Active = false;
+                WaterDropsObjects[i].name = "WaterDrops" + i;
+                WaterDropsObjects [i].GetComponent<MetaballParticleClass>().Active = false;
 				WaterDropsObjects [i].transform.SetParent (_parent.transform);
 				WaterDropsObjects [i].transform.localScale = new Vector3 (size, size, 1f);
                 WaterDropsObjects[i].layer = WaterDropsObjects[0].layer;
