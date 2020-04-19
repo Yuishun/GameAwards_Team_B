@@ -26,7 +26,7 @@ public class LightMove : MonoBehaviour
     }
 
     [SerializeField] LayerMask FrameLayer, WaterLayer;
-
+    [SerializeField] Surface surface;
     Color m_color;
 
     RaycastHit2D ray;
@@ -93,7 +93,7 @@ public class LightMove : MonoBehaviour
             {
                 //ray.transform.GetComponent<>().
                 //ray.transform.GetComponent<WaterSurface>().Rerurn_dirVec(m_pos, ray, m_dirVec);
-
+                var watersurface = surface.ReInVector2(m_pos, ray, m_dirVec);
                 // 空気から水への屈折したベクトルを取得
                 m_dirVec = Refractioning(GetRefractiveIndex(RefractiveIndex.Air),
                     GetRefractiveIndex(RefractiveIndex.Water),

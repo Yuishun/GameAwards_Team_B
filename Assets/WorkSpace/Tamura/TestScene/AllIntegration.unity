@@ -628,6 +628,38 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!84 &545841120
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_Width: 437
+  m_Height: 350
+  m_AntiAliasing: 1
+  m_DepthFormat: 1
+  m_ColorFormat: 7
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
 --- !u!1 &664191879
 GameObject:
   m_ObjectHideFlags: 0
@@ -638,7 +670,7 @@ GameObject:
   m_Component:
   - component: {fileID: 664191880}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: WorldRotate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -652,7 +684,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 664191879}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.345382, y: -1.7581023, z: -0.13476562}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1284102727}
@@ -1103,38 +1135,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!84 &1165773994
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_Width: 437
-  m_Height: 350
-  m_AntiAliasing: 1
-  m_DepthFormat: 1
-  m_ColorFormat: 7
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 0
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
 --- !u!1 &1199275136
 GameObject:
   m_ObjectHideFlags: 0
@@ -1284,7 +1284,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1284356811}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.5016499, y: 5.2439127, z: 0.013767131}
+  m_LocalPosition: {x: -1.1562679, y: 3.4858103, z: -0.120998494}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6200582023919893996}
@@ -1551,7 +1551,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1396286146}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.49835, y: -2.7560873, z: 0.013767131}
+  m_LocalPosition: {x: 9.843732, y: -4.5141897, z: -0.120998494}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 664191880}
@@ -2100,6 +2100,7 @@ GameObject:
   - component: {fileID: 1722168811}
   - component: {fileID: 1722168810}
   - component: {fileID: 1722168809}
+  - component: {fileID: 1722168813}
   m_Layer: 0
   m_Name: Circle
   m_TagString: Untagged
@@ -2139,6 +2140,7 @@ MonoBehaviour:
   WaterLayer:
     serializedVersion: 2
     m_Bits: 256
+  surface: {fileID: 1722168813}
 --- !u!50 &1722168810
 Rigidbody2D:
   serializedVersion: 4
@@ -2224,6 +2226,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1722168813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1722168807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2efab7876a7860429395c9af07e3c9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1804185179
 GameObject:
   m_ObjectHideFlags: 0
@@ -2403,7 +2417,7 @@ PrefabInstance:
         type: 3}
       propertyPath: WaterDropsObjects.Array.data[0]
       value: 
-      objectReference: {fileID: 2103330059}
+      objectReference: {fileID: 2103266828}
     - target: {fileID: 4064339307071467320, guid: 1f9a47a695f72184f96ddc8d0b602c32,
         type: 3}
       propertyPath: WaterMaterial
@@ -2753,13 +2767,19 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2103078533}
   m_LocalRotation: {x: -0, y: -0, z: -0.38268343, w: 0.92387956}
-  m_LocalPosition: {x: -9.675383, y: 9.208102, z: 0.013767131}
+  m_LocalPosition: {x: -7.330001, y: 7.45, z: -0.120998494}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1722168808}
   m_Father: {fileID: 664191880}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -45}
+--- !u!1 &2103266828 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 199430, guid: 25e86b716b996964bbad7bef0d3b3e8d,
+    type: 3}
+  m_PrefabInstance: {fileID: 2103330058}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2103330058
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2843,12 +2863,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 25e86b716b996964bbad7bef0d3b3e8d, type: 3}
---- !u!1 &2103330059 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 199430, guid: 25e86b716b996964bbad7bef0d3b3e8d,
-    type: 3}
-  m_PrefabInstance: {fileID: 2103330058}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2108532630
 GameObject:
   m_ObjectHideFlags: 0
@@ -2987,7 +3001,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 1024
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 1165773994}
+  m_TargetTexture: {fileID: 545841120}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1

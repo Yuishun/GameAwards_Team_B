@@ -102,6 +102,7 @@ public class FlowerScript : MonoBehaviour
             {
                 swingtime = 0;
                 swingway = !swingway;
+                transform.up = transform.root.up;
             }
             if (swingway)
                 angle = Mathf.LerpAngle(-10, 10, swingtime);
