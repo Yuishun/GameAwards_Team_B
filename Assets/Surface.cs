@@ -89,7 +89,7 @@ public class Surface : MonoBehaviour
     Vector2 Water_In_Normal(RaycastHit2D hit, Vector2 dir,Vector2 originpos)
     {
         Collider2D[] hit_Around = Physics2D.OverlapCircleAll(
-            hit.point + dir*WaterRange, 
+            hit.point - dir*WaterRange, 
             WaterRange * 2,
             LayerMask.GetMask(Layer_Water));
         //配列が空でないとき

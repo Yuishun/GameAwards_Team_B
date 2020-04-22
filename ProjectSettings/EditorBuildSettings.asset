@@ -11,4 +11,34 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/WorkSpace/Nakahara/Scenes/Nakahara02.unity
     guid: 70d684c4997c41742a01cab76d701c2f
+  - enabled: 1
+    path: Assets/Scenes/Title.unity
+    guid: 0c5f1ea94747b2941ad6e97d57015507
+  - enabled: 1
+    path: Assets/Scenes/GameClear.unity
+    guid: 8a2f7cecc2643934e9ddb8123004258c
+  - enabled: 1
+    path: Assets/Scenes/MainScene.unity
+    guid: c6ba6f66bb8788d42b775798c16e38e6
+  - enabled: 1
+    path: Assets/Scenes/Stage1.unity
+    guid: 283914ace1653b64daafe3169b4eb2d7
+  - enabled: 1
+    path: Assets/Scenes/Stage2.unity
+    guid: 6e565f1dec08bcd4f9143233860e8361
+  - enabled: 1
+    path: Assets/Scenes/Stage3.unity
+    guid: 949f99bd2a678894bb730c4a8dc1e271
+  - enabled: 1
+    path: Assets/Scenes/Stage4.unity
+    guid: 082ddef00c862c344b9433c4a0410731
+  - enabled: 1
+    path: Assets/Scenes/Stage5.unity
+    guid: d6158da80fed499419d45805d8507af5
+  - enabled: 1
+    path: Assets/Scenes/Stage6.unity
+    guid: c9d0f870b42ad0e4595f33e55bda14ab
+  - enabled: 1
+    path: Assets/Scenes/Stage7.unity
+    guid: 6f9f1bdee0ea90c41afaafada81d5691
   m_configObjects: {}

@@ -20,7 +20,7 @@ public class ColorChange : MonoBehaviour
         foreach(Transform child in transform)
         {
             SpriteRenderer sprite = child.GetComponent<SpriteRenderer>();
-            sprite.material.SetInt("_Ace", 1);
+            sprite.material.SetInt("_Ace", 1);//1で氷0で水
         }
     
     }
