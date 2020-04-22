@@ -51,9 +51,7 @@ public class ProphecyScript : MonoBehaviour
         //}
 
         if (WhichRainEffect)
-        {
             transform.GetChild(1).transform.GetComponent<ParticleSystemRenderer>().enabled = false;
-        }
     }
 
     void Update()
@@ -70,9 +68,10 @@ public class ProphecyScript : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Return))
             {
-                textScript.SkipText();
                 if (onceflag)
                     Itdestroy();
+                else
+                    textScript.SkipText();
             }
         }
         if (WhichRainEffect)

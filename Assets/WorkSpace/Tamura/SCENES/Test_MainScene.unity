@@ -11549,7 +11549,7 @@ MonoBehaviour:
   m_targetParticleSystem: {fileID: 1054187097}
   RainEffect: {fileID: 3856094277156786734, guid: 9ae1298ba607a0c4d861a18080fa9558,
     type: 3}
-  WhichRainEffect: 1
+  WhichRainEffect: 0
 --- !u!4 &1909002568
 Transform:
   m_ObjectHideFlags: 0

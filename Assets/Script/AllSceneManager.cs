@@ -24,6 +24,8 @@ public class AllSceneManager : MonoBehaviour
     [SerializeField]
     bool m_bFadeOut = true;
     private bool m_bFadeEnd = false;
+    [SerializeField]
+    public static bool m_bFadeInEnd = false;
 
     void Awake()
     {
@@ -33,7 +35,6 @@ public class AllSceneManager : MonoBehaviour
         {
             DontDestroyOnLoad(gameObject);
             singleton = this;
-
         }
         else
             Destroy(gameObject);
@@ -43,6 +44,7 @@ public class AllSceneManager : MonoBehaviour
     //=============================================================
     void SceneChanged(Scene prevScene, Scene nextScene)
     {
+        m_bFadeInEnd = false;
         Debug.Log(prevScene.name + "->" + nextScene.name);
         m_bFadeOut = false;
         StartCoroutine(BeginTransition());
@@ -59,34 +61,34 @@ public class AllSceneManager : MonoBehaviour
             case 0://Titleからしか呼ばれない
                 gamedata1 = 1;
                 transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
-                StartCoroutine(SceneChange("MainScene"));
+                StartCoroutine(SceneChange("Test_MainScene"));
                 break;
             case 1:
-                StartCoroutine(SceneChange("Stage1"));
+                StartCoroutine(SceneChange("Test_Stage1"));
                 break;
             case 2:
-                StartCoroutine(SceneChange("Stage2"));
+                StartCoroutine(SceneChange("Test_Stage2"));
                 break;
             case 3:
-                StartCoroutine(SceneChange("Stage3"));
+                StartCoroutine(SceneChange("Test_Stage3"));
                 break;
             case 4:
-                StartCoroutine(SceneChange("Stage4"));
+                StartCoroutine(SceneChange("Test_Stage4"));
                 break;
             case 5:
-                StartCoroutine(SceneChange("Stage5"));
+                StartCoroutine(SceneChange("Test_Stage5"));
                 break;
             case 6:
-                StartCoroutine(SceneChange("Stage6"));
+                StartCoroutine(SceneChange("Test_Stage6"));
                 break;
             case 7:
-                StartCoroutine(SceneChange("Stage7"));
+                StartCoroutine(SceneChange("Test_Stage7"));
                 break;
             case 100:
-                StartCoroutine(SceneChange("GameClear"));
+                StartCoroutine(SceneChange("Test_GameClear"));
                 break;
             case 1000:
-                StartCoroutine(SceneChange("MainScene"));
+                StartCoroutine(SceneChange("Test_MainScene"));
                 break;
         }
     }
@@ -146,6 +148,8 @@ public class AllSceneManager : MonoBehaviour
         {
             m_bFadeEnd = true;
         }
+        else
+            m_bFadeInEnd = true;
     }
     //=============================================================
     // シーン遷移時呼び出し処理

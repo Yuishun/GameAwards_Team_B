@@ -22,7 +22,7 @@ public class TextScript : MonoBehaviour
     private float Displaytime = 0;                  // 表示にかかる時間
     private float DisplayStarttime = 3;             // 文字列の表示を開始した時間
     private int lastUpdateCharCount = -1;           // 表示中の文字数
-
+    
     void Start()
     {
         loadText = (Resources.Load("Story", typeof(TextAsset)) as TextAsset).text;
@@ -30,28 +30,30 @@ public class TextScript : MonoBehaviour
         BookText.text = "";
         currentSentence = loadText;
         splitText = loadText.Split(char.Parse("▼"));
-
-        NextText();
-        //SkipText();
+        
+        StartCoroutine(StartText());
     }
 
     void Update()
     {
         if (!TextEndFlag)
         {
-            if (Time.time > DisplayStarttime + Displaytime)
+            if (AllSceneManager.m_bFadeInEnd)
             {
-                if (currentSentenceNum < splitText.Length)
-                    NextText();
-                else
-                    TextEnd();
-            }
-            int nowCharCount = (int)(currentSentence.Length * Mathf.Clamp01((Time.time - DisplayStarttime) / Displaytime));
+                if (Time.time > DisplayStarttime + Displaytime)
+                {
+                    if (currentSentenceNum < splitText.Length)
+                        NextText();
+                    else
+                        TextEnd();
+                }
+                int nowCharCount = (int)(currentSentence.Length * Mathf.Clamp01((Time.time - DisplayStarttime) / Displaytime));
 
-            if (lastUpdateCharCount != nowCharCount && !TextEndFlag)
-            {
-                BookText.text = currentSentence.Substring(0, nowCharCount);
-                lastUpdateCharCount = nowCharCount;
+                if (lastUpdateCharCount != nowCharCount && !TextEndFlag)
+                {
+                    BookText.text = currentSentence.Substring(0, nowCharCount);
+                    lastUpdateCharCount = nowCharCount;
+                }
             }
         }
     }
@@ -81,11 +83,17 @@ public class TextScript : MonoBehaviour
     {
         TextEndFlag = true;
         StartCoroutine(SkipToText());
-        BookText.text = currentSentence;
+        BookText.text = currentSentence.Substring(0, currentSentence.Length-2);
     }
     IEnumerator SkipToText()
     {
         yield return new WaitForSeconds(1.0f);
         ProphecyScript.flag = true;
+    }
+    IEnumerator StartText()
+    {
+        while (!AllSceneManager.m_bFadeInEnd)
+            yield return new WaitForEndOfFrame();
+        NextText();
     }
 }
