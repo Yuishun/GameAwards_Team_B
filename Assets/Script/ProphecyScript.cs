@@ -8,6 +8,7 @@ public class ProphecyScript : MonoBehaviour
     bool wayflag = true;
     bool onceflag = false;
     Transform nextIcon;
+    bool IconFlag = true;
 
     [SerializeField]
     private RawImage m_iImage = null;
@@ -25,13 +26,17 @@ public class ProphecyScript : MonoBehaviour
         get { return m_targetParticleSystem; }
     }
     [SerializeField]
-    GameObject RainEffect;
+    GameObject RainObjEffect;
     [SerializeField, Header("雨の表現。粒or流。✓=粒")]
-    bool WhichRainEffect;
+    bool WhichRainObjEffect;
+
+    [SerializeField, Header("雨。軽量版")]
+    ParticleSystem RainEffect;
+    [SerializeField, Header("雨粒。✓=軽量版")]
+    bool WhichRainBlot;
     //[SerializeField, Header("✓=Debug")]
     //bool DebugFlag;
 
-    //void Start()
     void Awake()
     {
         //1度だけのチェック
@@ -50,7 +55,7 @@ public class ProphecyScript : MonoBehaviour
         //    StartCoroutine(Capture());
         //}
 
-        if (WhichRainEffect)
+        if (WhichRainObjEffect)
             transform.GetChild(1).transform.GetComponent<ParticleSystemRenderer>().enabled = false;
     }
 
@@ -74,7 +79,7 @@ public class ProphecyScript : MonoBehaviour
                     textScript.SkipText();
             }
         }
-        if (WhichRainEffect)
+        if (WhichRainObjEffect)
             if (targetParticleSystem.particleCount > 0)
             {
                 var particleCount = targetParticleSystem.particleCount;
@@ -87,7 +92,13 @@ public class ProphecyScript : MonoBehaviour
                         targetPos = targetParticleSystem.transform.TransformPoint(particle.position);
                         //Debug用
                         //DropPaint(screenpos);
-                        Instantiate(RainEffect, targetPos, Quaternion.identity);
+                        if (WhichRainBlot)
+                        {
+                            RainEffect.transform.position = targetPos;
+                            RainEffect.Emit(1);
+                        }
+                        else
+                            Instantiate(RainObjEffect, targetPos, Quaternion.identity);
                     }
                 }
             }
@@ -95,7 +106,7 @@ public class ProphecyScript : MonoBehaviour
 
     IEnumerator IconMove()
     {
-        while (true)
+        while (IconFlag)
         {
             yield return new WaitForSeconds(0.4f);
             if (wayflag)
@@ -108,6 +119,7 @@ public class ProphecyScript : MonoBehaviour
 
     void Itdestroy()
     {
+        IconFlag = false;
         AllSceneManager.SetButton_Active();
         Destroy(gameObject);
     }
