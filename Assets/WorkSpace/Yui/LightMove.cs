@@ -94,7 +94,7 @@ public class LightMove : MonoBehaviour
                 if (!ray.transform.GetComponent<MetaballParticleClass>().
                      CountWater())
                 {
-                    m_pos = ray.point + m_dirVec * Vector2.Distance(ray.point, ray.transform.position);
+                    m_pos = ray.point + m_dirVec * Vector2.Distance(ray.point, ray.transform.position) * 2;
                     continue;
                 }
                 //ray.transform.GetComponent<>().
@@ -170,7 +170,7 @@ public class LightMove : MonoBehaviour
     void AddLineRenderer()
     {
         m_lightpoint.AddLineRenderer(m_pos, m_dirVec,m_color);
-        //Debug.Log("Pos "+m_pos+"Vec "+ m_dirVec+"Color "+m_color);
+        Debug.Log("Pos "+m_pos+"Vec "+ m_dirVec+"Color "+m_color);
         //Debug.Log("Normal" + ray.normal);
     }
 

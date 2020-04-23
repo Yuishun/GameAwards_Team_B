@@ -12,7 +12,7 @@ public class Surface : MonoBehaviour
     private bool OneCheckWaterRange = false;
     void Start()
     {
-        Time.timeScale = 0.05f;
+        //Time.timeScale = 0.05f;
     }
     //水の半径を取得
     void CheckRange(RaycastHit2D target)

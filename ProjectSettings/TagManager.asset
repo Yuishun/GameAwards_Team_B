@@ -6,6 +6,8 @@ TagManager:
   tags:
   - N_Obj
   - Metaball_liquid
+  - Flower
+  - Mirror
   layers:
   - Default
   - TransparentFX
