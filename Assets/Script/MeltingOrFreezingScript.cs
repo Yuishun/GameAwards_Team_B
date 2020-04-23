@@ -18,6 +18,8 @@ public class MeltingOrFreezingScript : MonoBehaviour
         Time.timeScale = 0;
         if (FreezingFlag)
         {
+            transform.GetComponent<SpriteRenderer>().material.SetInt("_Ace", 0);//1で氷0で水
+
             FreezingFlag = false;
             rb.isKinematic = false;
             rb.constraints = RigidbodyConstraints2D.None;
@@ -38,6 +40,8 @@ public class MeltingOrFreezingScript : MonoBehaviour
         Time.timeScale = 0;
         if (!FreezingFlag)
         {
+            transform.GetComponent<SpriteRenderer>().material.SetInt("_Ace", 1);//1で氷0で水
+
             FreezingFlag = true;
             rb.isKinematic = true;
             rb.velocity *= 0;
