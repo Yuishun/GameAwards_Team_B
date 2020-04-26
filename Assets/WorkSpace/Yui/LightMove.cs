@@ -63,7 +63,7 @@ public class LightMove : MonoBehaviour
         //RaycastHit2D ray;
         m_dirVec = m_lightpoint.transform.right;    // 初期方向
         m_pos = m_lightpoint.transform.position;    // 初期位置
-        m_color = Color.yellow;
+        m_color = Color.white;
         int i = 0;
 
         bool  EnterWater = false;   // 水に当たっているか
@@ -75,6 +75,12 @@ public class LightMove : MonoBehaviour
                 Debug.Log("Vector Error");
                 break;
             }
+            i++;    // 無限ループ阻止
+            if (i > 100)
+            {
+                Debug.Log("無限ループ脱出");
+                break;
+            }
 
             // 水か光を通さないものに当たっているか
             ray = Physics2D.Raycast(m_pos, m_dirVec, 50,
@@ -82,15 +88,14 @@ public class LightMove : MonoBehaviour
             // 枠に当たったら位置をLineRendererに伝えて終了
             if (ray.collider.gameObject.layer == LayerMask.NameToLayer("Default"))
             {
-                transform.position = m_pos = ray.point;
-                m_dirVec = new Vector2(ray.normal.y, -ray.normal.x);
-                AddLineRenderer();
-                m_lightpoint.DrawLine();
-                break;
+                if(FrameLayerProcessing(ray.transform.tag, false))
+                    break;
+                continue;
             }
             else  if(!EnterWater && ray.collider.gameObject.layer ==
                 LayerMask.NameToLayer("PostProcessing"))  // 水だったら
             {
+                // 水の粒が規定値よりあるか
                 if (!ray.transform.GetComponent<MetaballParticleClass>().
                      CountWater())
                 {
@@ -108,6 +113,8 @@ public class LightMove : MonoBehaviour
                 m_pos = ray.point;
 
                 AddLineRenderer();
+                m_color = ray.transform.GetComponent<MetaballParticleClass>().
+                    spRend.color;
                 EnterWater = true;
             }
 
@@ -115,8 +122,12 @@ public class LightMove : MonoBehaviour
             if (EnterWater)
             {
                 Collider2D[] collider2D = new Collider2D[1];
-                while (true)
+                Vector2 raypos = m_pos;
+                int k = 0;
+                while (EnterWater)
                 {
+                    if (++k > 100)
+                        break;
                     // まだ水の中にいるか
                     int hitnum = Physics2D.OverlapCircleNonAlloc(m_pos, 0.2f, 
                         collider2D,WaterLayer);
@@ -124,42 +135,35 @@ public class LightMove : MonoBehaviour
                     {
                         ray = Physics2D.Raycast(m_pos, -m_dirVec, 5,
                             WaterLayer, 0, 2);
-                        m_color = ray.transform.GetComponent<MetaballParticleClass>().
-                            spRend.color;
+                       // m_color = ray.transform.GetComponent<MetaballParticleClass>().
+                       //     spRend.color;
                         // Debug.Log("Exit" + ray2.point);
                         // Debug.Log("ExitN" + ray2.normal);
                         m_pos = ray.point + m_dirVec * 0.001f; // 位置調整
                         m_dirVec = Refractioning(GetRefractiveIndex(RefractiveIndex.Water),
                                 GetRefractiveIndex(RefractiveIndex.Air),
                                 m_dirVec, -ray.normal);
-                        
+
                         AddLineRenderer();
 
-                        EnterWater = false;
-                        break;
+                        EnterWater = false;                       
                     }
                     // 水の中に不透過オブジェクトがあるかどうか
-                    else if(0 < Physics2D.OverlapCircleNonAlloc(m_pos, 0.3f,
-                        collider2D, FrameLayer))
-                    {
-                        ray = Physics2D.Raycast(m_pos, m_dirVec, 1,
-                            FrameLayer, 0, 2);
-                        m_pos = ray.point;
-                        AddLineRenderer();
-                        EnterWater = false;
-                        break;
+                    else if (ray = Physics2D.Raycast(raypos,
+                        m_dirVec, 0.3f, FrameLayer, 0, 2))
+                    {                        
+                        
+                        //if(ray.collider)
+                        EnterWater =
+                            FrameLayerProcessing(ray.transform.tag, EnterWater);
                     }
-
-                    // 位置を方向に進める
-                    m_pos += m_dirVec;
-
+                    else
+                    {
+                        raypos = m_pos;
+                        // 基準位置を方向に進める
+                        m_pos += m_dirVec * 0.3f;
+                    }
                 }
-            }
-            i++;    // 無限ループ阻止
-            if (i > 100)
-            {
-                Debug.Log("無限ループ脱出");
-                break;
             }
 
         }
@@ -221,5 +225,43 @@ public class LightMove : MonoBehaviour
         }
         Vector2 T = 1 / nr * (v + (C - g) * n);
         return T.normalized;
+    }
+    
+    bool FrameLayerProcessing(string tag,bool flag)
+    {
+        switch (tag)
+        {
+            case "Frame":
+                transform.position = m_pos = ray.point;
+                m_dirVec = new Vector2(ray.normal.y, -ray.normal.x);
+                AddLineRenderer();
+                m_lightpoint.DrawLine();
+                return !flag;                
+            case "Mirror":
+                m_pos = ray.point;
+                float C = -Vector2.Dot(m_dirVec, ray.normal);
+                m_dirVec = (m_dirVec + 2 * C * ray.normal).normalized;
+                AddLineRenderer();
+                m_pos += m_dirVec * 0.01f;
+                return flag;
+            case "ColorWall":
+                Color wallcolor = ray.transform.GetComponent<SpriteRenderer>().color;
+                if (m_color == wallcolor)
+                {
+                    m_pos += m_dirVec * 0.3f;
+                    return flag;
+                }
+                else
+                {
+                    m_pos = ray.point;
+                    m_dirVec = new Vector2(ray.normal.y, -ray.normal.x);
+                    AddLineRenderer();
+                    m_lightpoint.DrawLine();
+                    return !flag;
+                }
+                break;
+        }
+        Debug.Log("FramereturnError");
+        return true;
     }
 }

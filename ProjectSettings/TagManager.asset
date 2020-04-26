@@ -8,6 +8,9 @@ TagManager:
   - Metaball_liquid
   - Flower
   - AllScene
+  - Mirror
+  - Frame
+  - ColorWall
   layers:
   - Default
   - TransparentFX

@@ -130,7 +130,7 @@ public class LightStartPoint : MonoBehaviour
 
         // 初期色
         for(int i=0; i < 2; i++)
-        this.colors.Add(Color.yellow);
+        this.colors.Add(Color.white);
 
         // メッシュ生成
         this.mesh = new Mesh();
