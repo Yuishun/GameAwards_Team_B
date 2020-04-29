@@ -7,6 +7,8 @@ public class GravityControllerScript : MonoBehaviour
     private Vector3 localGravity;
     Transform cam_root;
     private bool RollerFlag = false;
+    [SerializeField, Header("回転速度(倍率)0.1～2"),Range(0.1f,2)]
+    private float RotateSpeed = 1;
     enum RollAngle
     {
         Ten = 10,
@@ -52,13 +54,13 @@ public class GravityControllerScript : MonoBehaviour
     }
     void Roll()
     {
-        timer += Time.deltaTime;
+        timer += Time.deltaTime* RotateSpeed;
         if (timer <= 1)
         {
             if (rollWay == RollWay.right)
-                cam_root.transform.Rotate(new Vector3(0, 0, (int)rollAngle) * Time.deltaTime);
+                cam_root.transform.Rotate(new Vector3(0, 0, (int)rollAngle) * Time.deltaTime * RotateSpeed);
             if (rollWay == RollWay.left)
-                cam_root.transform.Rotate(new Vector3(0, 0, -(int)rollAngle) * Time.deltaTime);
+                cam_root.transform.Rotate(new Vector3(0, 0, -(int)rollAngle) * Time.deltaTime * RotateSpeed);
             Physics2D.gravity = localGravity.y * cam_root.up;
         }
         if (timer >= 1)
