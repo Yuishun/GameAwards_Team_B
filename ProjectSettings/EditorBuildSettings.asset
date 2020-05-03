@@ -41,4 +41,34 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/WorkSpace/Tamura/SCENES/Test_Stage7.unity
     guid: 6f9f1bdee0ea90c41afaafada81d5691
+  - enabled: 1
+    path: Assets/Scene/Title.unity
+    guid: 0312330c3634bd345a0c30095b25d505
+  - enabled: 1
+    path: Assets/Scene/Start.unity
+    guid: 1f09322a241fcf44583a465632ea89b2
+  - enabled: 1
+    path: Assets/Scene/StageSelect.unity
+    guid: de5dcc6ad638feb47b2ef82a1765a8b2
+  - enabled: 1
+    path: Assets/Scene/Stage1_Red.unity
+    guid: 7c114fd2aa5d10d48b4a13ed74641808
+  - enabled: 1
+    path: Assets/Scene/Stage2_Orange.unity
+    guid: 2c9c413b27cbb1149984f5231d819bb3
+  - enabled: 1
+    path: Assets/Scene/Stage3_Yellow.unity
+    guid: ddf5ef4ddb42a9e4d919a2910e71de88
+  - enabled: 1
+    path: Assets/Scene/Stage4_Green.unity
+    guid: b5edb0de7daea8946b66958ad866304e
+  - enabled: 1
+    path: Assets/Scene/Stage5_Blue.unity
+    guid: 7ef7d01f71f6a6c468eee3ee2a7e35aa
+  - enabled: 1
+    path: Assets/Scene/Stage6_Indigo.unity
+    guid: 1dbdf7b66cc434b498b9a31271b7f67b
+  - enabled: 1
+    path: Assets/Scene/Stage7_Purple.unity
+    guid: b86bc2346d67d5b4d9ed6e6d86acc382
   m_configObjects: {}

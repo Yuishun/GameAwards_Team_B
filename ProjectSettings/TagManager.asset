@@ -11,6 +11,7 @@ TagManager:
   - Mirror
   - Frame
   - ColorWall
+  - AllScene2
   layers:
   - Default
   - TransparentFX

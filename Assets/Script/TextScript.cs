@@ -38,7 +38,7 @@ public class TextScript : MonoBehaviour
     {
         if (!TextEndFlag)
         {
-            if (AllSceneManager.m_bFadeInEnd)
+            if (SceneManagerScript.m_bFadeInEnd)
             {
                 if (Time.time > DisplayStarttime + Displaytime)
                 {
@@ -82,17 +82,12 @@ public class TextScript : MonoBehaviour
     public void SkipText()
     {
         TextEndFlag = true;
-        StartCoroutine(SkipToText());
-        BookText.text = currentSentence.Substring(0, currentSentence.Length-2);
-    }
-    IEnumerator SkipToText()
-    {
-        yield return new WaitForSeconds(1.0f);
+        BookText.text = currentSentence.Substring(0, currentSentence.Length - 2);
         ProphecyScript.flag = true;
     }
     IEnumerator StartText()
     {
-        while (!AllSceneManager.m_bFadeInEnd)
+        while (!SceneManagerScript.m_bFadeInEnd)
             yield return new WaitForEndOfFrame();
         NextText();
     }

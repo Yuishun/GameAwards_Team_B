@@ -13,11 +13,13 @@ public class ProphecyScript : MonoBehaviour
     [SerializeField]
     private RawImage m_iImage = null;
     private Texture2D m_texture = null;
-    //RectTransform rect;
+    
     [SerializeField]
     TextScript textScript;
+    [SerializeField]
+    StageSelectScript stageSelectScript;
     private Vector3 targetPos;
-    //[SerializeField] private Canvas canvas;
+    
     
     [SerializeField, Header("座標取得対象パーティクル")]
     private ParticleSystem m_targetParticleSystem;
@@ -34,26 +36,21 @@ public class ProphecyScript : MonoBehaviour
     ParticleSystem RainEffect;
     [SerializeField, Header("雨粒。✓=軽量版")]
     bool WhichRainBlot;
-    //[SerializeField, Header("✓=Debug")]
-    //bool DebugFlag;
-
+    
     void Awake()
     {
         //1度だけのチェック
-        if (AllSceneManager.ProphecyCheck)
+        if (SceneManagerScript.ProphecyCheck)
         {
-            AllSceneManager.ProphecyCheck = false;
+            gameObject.SetActive(true);
+            SceneManagerScript.ProphecyCheck = false;
             transform.GetChild(0).gameObject.SetActive(true);
             nextIcon = transform.GetChild(0).GetChild(3);
+            nextIcon.transform.localPosition = new Vector3(nextIcon.transform.localPosition.x, transform.transform.GetChild(0).GetChild(2).transform.localPosition.y,0);
         }
         else
             Itdestroy();
         
-        //if (DebugFlag)
-        //{
-        //    rect = m_iImage.gameObject.GetComponent<RectTransform>();
-        //    StartCoroutine(Capture());
-        //}
 
         if (WhichRainObjEffect)
             transform.GetChild(1).transform.GetComponent<ParticleSystemRenderer>().enabled = false;
@@ -71,7 +68,7 @@ public class ProphecyScript : MonoBehaviour
         }
         else
         {
-            if (Input.GetKeyDown(KeyCode.Return))
+            if (Input.GetButtonDown("Button_A"))
             {
                 if (onceflag)
                     Itdestroy();
@@ -80,6 +77,7 @@ public class ProphecyScript : MonoBehaviour
             }
         }
         if (WhichRainObjEffect)
+        {
             if (targetParticleSystem.particleCount > 0)
             {
                 var particleCount = targetParticleSystem.particleCount;
@@ -102,6 +100,7 @@ public class ProphecyScript : MonoBehaviour
                     }
                 }
             }
+        }
     }
 
     IEnumerator IconMove()
@@ -119,56 +118,10 @@ public class ProphecyScript : MonoBehaviour
 
     void Itdestroy()
     {
+        stageSelectScript.SelectButtonActivateion();
         IconFlag = false;
-        AllSceneManager.SetButton_Active();
-        Destroy(gameObject);
+        SceneManagerScript.SetButton_Active();
+        gameObject.SetActive(false);
+        //Destroy(gameObject);
     }
-
-    /*
-    //===========================================================
-    // Debug.スクリーン座標に変換、赤点を打つ
-    //===========================================================
-    void DropPaint(Vector3 Pos)
-    {
-        var screenpos = RectTransformUtility.WorldToScreenPoint(canvas.worldCamera, Pos);
-        int width = 8;
-        int height = 8;
-        var Xposting = m_texture.width  * screenpos.x / Screen.width;
-        var Yposting = m_texture.height * screenpos.y / Screen.height;
-        for (int i = 0; i < height; ++i)
-        {
-            int y = (int)(Yposting + i);
-            for (int j = 0; j < width; ++j)
-            {
-                int x = (int)(Xposting + j);
-                if (y >= 0 && y <= m_texture.height)
-                    if (x >= 0 && x <= m_texture.width)
-                        m_texture.SetPixel(x, y, Color.red);
-            }
-        }
-        m_texture.Apply();
-    }
-    //===========================================================
-    // スクショを取って変換、RawImageのテクスチャに適応している。Debug用
-    //===========================================================
-    IEnumerator Capture()
-    {
-        yield return new WaitForEndOfFrame();
-        var texture = new Texture2D(Screen.width, Screen.height, TextureFormat.RGBA32, false);
-
-        TextureScale.Bilinear(texture, (int)(Screen.width * 0.947f), (int)(Screen.height * 0.935f));
-
-        texture.ReadPixels(new Rect(25, 25, Screen.width - 55, Screen.height - 50), 0, 0);
-        texture.Apply();
-
-        byte[] pngdata = texture.EncodeToPNG();
-        texture.LoadImage(pngdata);
-        //Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
-        //m_iImage.material.SetTexture("_MainTex", texture);
-        m_texture = texture;
-        
-        m_iImage.texture = m_texture;
-        m_texture.Apply();
-    }
-    */
 }

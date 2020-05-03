@@ -154,7 +154,7 @@ public class AllSceneManager : MonoBehaviour
     //=============================================================
     // シーン遷移時呼び出し処理
     //=============================================================
-    public void loadstagenum(int type)
+    public void Loadstagenum(int type)
     {
         gamedata1 = type;
         OnPushChangeScene();
