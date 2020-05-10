@@ -6,10 +6,10 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/WorkSpace/Nakahara/Scenes/Nakahara01.unity
+    path: Assets/WorkSpace/Nakahara/Scenes/Test_Transition01.unity
     guid: 1e65cf51107ef5b4ab051c759f6f0c79
   - enabled: 1
-    path: Assets/WorkSpace/Nakahara/Scenes/Nakahara02.unity
+    path: Assets/WorkSpace/Nakahara/Scenes/Test_Transition02.unity
     guid: 70d684c4997c41742a01cab76d701c2f
   - enabled: 1
     path: Assets/WorkSpace/Tamura/SCENES/Test_Title.unity
