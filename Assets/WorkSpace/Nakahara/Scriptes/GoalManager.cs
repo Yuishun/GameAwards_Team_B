@@ -11,7 +11,7 @@ public class GoalManager : MonoBehaviour
 
     //衝突タイマー
     int m_iCollisionTimer = 0;
-    //衝突時間（3秒後ステージ遷移）
+    //衝突時間（2秒後ステージ遷移）
     int m_iLimitCollisionTime = 120;
     //衝突フラグ
     bool m_bCollisiontFlag = false;
@@ -75,7 +75,7 @@ public class GoalManager : MonoBehaviour
     }
 
     //=============================================================
-    // 衝突時間（3秒後ステージ遷移）
+    // 衝突時間（2秒後ステージ遷移）
     //=============================================================
     private void CollisionTime()
     {
