@@ -182,4 +182,22 @@ public class StageSelectScript : MonoBehaviour
         }
         yield return new WaitForEndOfFrame();
     }
+
+
+    public int BackClearStageNum()
+    {
+
+        int clearNum = 0;
+        int num = 0;
+        if (CheckFind_SceneManager)
+        {
+            while (num < ClearStageNum.Length / 2)
+            {
+                if (ClearStageNum[num, 1] == 1)
+                    clearNum++;
+                num++;
+            }
+        }
+        return clearNum;
+    }
 }

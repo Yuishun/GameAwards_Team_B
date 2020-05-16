@@ -62,6 +62,7 @@ public class GravityControllerScript : MonoBehaviour
             if (rollWay == RollWay.left)
                 cam_root.transform.Rotate(new Vector3(0, 0, -(int)rollAngle) * Time.deltaTime * RotateSpeed);
             Physics2D.gravity = localGravity.y * cam_root.up;
+
         }
         if (timer >= 1)
         {
@@ -69,6 +70,12 @@ public class GravityControllerScript : MonoBehaviour
             RollerFlag = false;
             RightRoll = false;
             LeftRoll = false;
+            rollWay = RollWay.normal;
+            var axis = Vector3.Cross(-Vector3.up, (Vector3)Physics2D.gravity);
+            if (-0.05f < axis.z || axis.z < 0.05f)
+            {
+                Physics2D.gravity = localGravity;
+            }
         }
     }
 
@@ -106,4 +113,14 @@ public class GravityControllerScript : MonoBehaviour
                 }
             }
     }
+    
+    public int BackAngle()
+    {
+        return (int)rollAngle;
+    }
+    public int BackRollWay()
+    {
+        return (int)rollWay;
+    }
+
 }
