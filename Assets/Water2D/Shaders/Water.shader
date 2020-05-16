@@ -4,14 +4,14 @@ Shader "Water/Water_Simple" {
 Properties {    
     _MainTex ("Texture", 2D) = "white" { }    
    // _Color ("Main color", Color) = (1,1,1,1)
-    _Cutoff ("Alpha cutoff", Range(0,1)) = 0.5
+	_Cutoff("Alpha cutoff", Range(0,1)) = 0.5
 
-	_Stroke ("Stroke alpha", Range(0,1)) = 0.1
-	//_StrokeColor ("Stroke color", Color) = (1,1,1,1)
+	_Stroke("Stroke alpha", Range(0,1)) = 0.1
+		//_StrokeColor ("Stroke color", Color) = (1,1,1,1)
 
 	_RelativeRefractionIndex("Relative Refraction Index", Range(0.0, 1.0)) = 0.67
 	[PowerSlider(5)]_Distance("Distance", Range(0.0, 100.0)) = 10.0
-
+	_ColorIndex("Colorindex",Range(0, 1)) = 1
 }
 /// <summary>
 /// Multiple metaball shader.
@@ -35,8 +35,9 @@ SubShader {
 	CGPROGRAM
 	#pragma vertex vert
 	#pragma fragment frag	
-	#include "UnityCG.cginc"	
-	//float4 _Color;
+	#include "UnityCG.cginc"
+
+	
 	sampler2D _MainTex;	
 	fixed _Cutoff;
 	fixed _Stroke;
@@ -54,6 +55,7 @@ SubShader {
 	sampler2D _GrabTexture;
 	float _RelativeRefractionIndex;
 	float _Distance;
+	float _ColorIndex;
 
 	struct v2f {
 	    float4  pos : SV_POSITION;
@@ -111,7 +113,7 @@ SubShader {
 #if UNITY_UV_STARTS_AT_TOP
 			i.uv.y = 1.0 - i.uv.y;
 #endif
-			texcol = tex2D(_GrabTexture, i.uv) * 0.5 + half4(color, 1);
+			texcol = tex2D(_GrabTexture, i.uv) * 0.5 + half4(color, 1) * _ColorIndex;
 			
 		}
 					

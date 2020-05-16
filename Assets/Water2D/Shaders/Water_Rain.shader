@@ -73,7 +73,19 @@ SubShader {
 		o.worldpos = mul(unity_ObjectToWorld, v.vertex);
 		o.normal = UnityObjectToWorldNormal(v.normal);
 
-				
+		/*half3 viewDir = normalize(worldPos - _WorldSpaceCameraPos.xyz);
+		// 屈折方向を求める
+		half3 refractDir = refract(viewDir, worldNormal, _RelativeRefractionIndex);
+		// 屈折方向の先にある位置をサンプリング位置とする
+		half3 samplingPos = worldPos + refractDir * _Distance;
+		// サンプリング位置をプロジェクション変換
+		half4 samplingScreenPos = mul(UNITY_MATRIX_VP, half4(samplingPos, 1.0));
+		// ビューポート座標系に変換
+		o.uv = (samplingScreenPos.xy / samplingScreenPos.w) * 0.5 + 0.5;
+#if UNITY_UV_STARTS_AT_TOP
+		o.uv.y = 1.0 - o.uv.y;
+#endif*/
+
 		
 	    return o;
 	};
@@ -92,7 +104,7 @@ SubShader {
 
 		if (texcol.a < _Stroke) {
 			texcol = tex2D(_GrabTexture, i.uv);
-			texcol.rgb += 0.4;
+			texcol.rgb += 0.2;
 			texcol.a = 0.7;
 			//texcol *= _StrokeColor;
 		} else {
@@ -109,7 +121,7 @@ SubShader {
 #if UNITY_UV_STARTS_AT_TOP
 			i.uv.y = 1.0 - i.uv.y;
 #endif
-			texcol = tex2D(_GrabTexture, i.uv);
+			texcol = tex2D(_GrabTexture, i.uv) ;
 			
 		}
 					

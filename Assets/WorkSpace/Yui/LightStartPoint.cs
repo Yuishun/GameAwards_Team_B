@@ -7,6 +7,7 @@ public class LightStartPoint : MonoBehaviour
     LightMove m_lightmove;
 
     public Material _mat;
+    public Color vertColor = Color.gray;
 
     List<Vector2> points = new List<Vector2>();
     List<Vector2> vectors = new List<Vector2>();
@@ -21,7 +22,7 @@ public class LightStartPoint : MonoBehaviour
     Mesh mesh;
     int offset = 0;
     float xoffset = 0;
-    float penSize = 0.2f;          // 筆の太さ
+    float penSize = 0.25f;          // 筆の太さ
 
     private void Awake()
     {
@@ -130,7 +131,7 @@ public class LightStartPoint : MonoBehaviour
 
         // 初期色
         for(int i=0; i < 2; i++)
-        this.colors.Add(Color.white);
+        this.colors.Add(vertColor);
 
         // メッシュ生成
         this.mesh = new Mesh();

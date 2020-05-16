@@ -18,6 +18,15 @@ public class FlowerScript : MonoBehaviour
     float Alpha = 1.0f;
     float swingtime = 0;
     bool swingway = true;
+
+    //衝突タイマー
+    int m_iCollisionTimer = 0;
+    //衝突時間（2秒後ステージ遷移）
+    int m_iLimitCollisionTime = 120;
+    //衝突フラグ
+    bool m_bCollisiontFlag = false;
+    Collider2D[] col = new Collider2D[1];
+
     void Start()
     {
         SpriteRenderer = transform.GetComponent<SpriteRenderer>();
@@ -110,6 +119,25 @@ public class FlowerScript : MonoBehaviour
                 angle = Mathf.LerpAngle(10, -10, swingtime);
             transform.eulerAngles = new Vector3(0, 0, angle);
             yield return null;
+        }
+    }
+
+    private void Update()
+    {
+        col = null;
+            Physics2D.OverlapCircleNonAlloc(transform.position, 0.6f,
+            col, LayerMask.GetMask("Light"));
+        if (col[0])
+        {
+            m_iCollisionTimer++;
+            if (m_iCollisionTimer > m_iLimitCollisionTime)
+            {
+                GoalFlower();
+            }
+        }
+        else if (m_iCollisionTimer > 0)
+        {
+            m_iCollisionTimer = 0;
         }
     }
 }

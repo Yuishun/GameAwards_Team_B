@@ -63,7 +63,7 @@ public class LightMove : MonoBehaviour
         //RaycastHit2D ray;
         m_dirVec = m_lightpoint.transform.right;    // 初期方向
         m_pos = m_lightpoint.transform.position;    // 初期位置
-        m_color = Color.white;
+        m_color = m_lightpoint.vertColor;
         int i = 0;
 
         bool  EnterWater = false;   // 水に当たっているか
@@ -140,6 +140,7 @@ public class LightMove : MonoBehaviour
                         // Debug.Log("Exit" + ray2.point);
                         // Debug.Log("ExitN" + ray2.normal);
                         m_pos = ray.point + m_dirVec * 0.001f; // 位置調整
+                        var watersurface = surface.ReInVector2(m_pos, ray, -m_dirVec);
                         m_dirVec = Refractioning(GetRefractiveIndex(RefractiveIndex.Water),
                                 GetRefractiveIndex(RefractiveIndex.Air),
                                 m_dirVec, -ray.normal);
@@ -174,7 +175,7 @@ public class LightMove : MonoBehaviour
     void AddLineRenderer()
     {
         m_lightpoint.AddLineRenderer(m_pos, m_dirVec,m_color);
-        Debug.Log("Pos "+m_pos+"Vec "+ m_dirVec+"Color "+m_color);
+        //Debug.Log("Pos "+m_pos+"Vec "+ m_dirVec+"Color "+m_color);
         //Debug.Log("Normal" + ray.normal);
     }
 
@@ -232,6 +233,7 @@ public class LightMove : MonoBehaviour
         switch (tag)
         {
             case "Frame":
+            case "Flower":
                 transform.position = m_pos = ray.point;
                 m_dirVec = new Vector2(ray.normal.y, -ray.normal.x);
                 AddLineRenderer();
