@@ -7,8 +7,10 @@ public class ProphecyScript : MonoBehaviour
     public static bool flag = false;
     bool wayflag = true;
     bool onceflag = false;
+    [SerializeField]
     Transform nextIcon;
     bool IconFlag = true;
+    bool BookOpener = true;
 
     [SerializeField]
     private RawImage m_iImage = null;
@@ -45,7 +47,7 @@ public class ProphecyScript : MonoBehaviour
             gameObject.SetActive(true);
             SceneManagerScript.ProphecyCheck = false;
             transform.GetChild(0).gameObject.SetActive(true);
-            nextIcon = transform.GetChild(0).GetChild(3);
+            nextIcon = transform.GetChild(0).GetChild(4);
             nextIcon.transform.localPosition = new Vector3(nextIcon.transform.localPosition.x, transform.transform.GetChild(0).GetChild(2).transform.localPosition.y,0);
         }
         else
@@ -54,64 +56,69 @@ public class ProphecyScript : MonoBehaviour
 
         if (WhichRainObjEffect)
             transform.GetChild(1).transform.GetComponent<ParticleSystemRenderer>().enabled = false;
+
+        StartCoroutine("BookOpen");
     }
 
     void Update()
     {
-        if (flag)
+        if (!BookOpener)
         {
-            transform.GetChild(0).GetChild(2).gameObject.SetActive(true);
-            nextIcon.gameObject.SetActive(true);
-            flag = false;
-            onceflag = true;
-            StartCoroutine(IconMove());
-        }
-        else
-        {
-            if (Input.GetButtonDown("Button_A"))
+            if (flag)
             {
-                if (onceflag)
-                    Itdestroy();
-                else
-                    textScript.SkipText();
+                transform.GetChild(0).GetChild(3).gameObject.SetActive(true);
+                nextIcon.gameObject.SetActive(true);
+                StartCoroutine(IconMove());
+                flag = false;
+                onceflag = true;
+
             }
-        }
-        if (WhichRainObjEffect)
-        {
-            if (targetParticleSystem.particleCount > 0)
+            else
             {
-                var particleCount = targetParticleSystem.particleCount;
-                ParticleSystem.Particle[] targetParticles = new ParticleSystem.Particle[particleCount];
-                targetParticleSystem.GetParticles(targetParticles);
-                foreach (var particle in targetParticles)
+                if (Input.GetButtonDown("Button_A"))
                 {
-                    if (particle.remainingLifetime >= 1.9f)
+                    if (onceflag)
+                        Itdestroy();
+                    else
+                        textScript.SkipText();
+                }
+            }
+            if (WhichRainObjEffect)
+            {
+                if (targetParticleSystem.particleCount > 0)
+                {
+                    var particleCount = targetParticleSystem.particleCount;
+                    ParticleSystem.Particle[] targetParticles = new ParticleSystem.Particle[particleCount];
+                    targetParticleSystem.GetParticles(targetParticles);
+                    foreach (var particle in targetParticles)
                     {
-                        targetPos = targetParticleSystem.transform.TransformPoint(particle.position);
-                        //Debug用
-                        //DropPaint(screenpos);
-                        if (WhichRainBlot)
+                        if (particle.remainingLifetime >= 1.9f)
                         {
-                            RainEffect.transform.position = targetPos;
-                            RainEffect.Emit(1);
+                            targetPos = targetParticleSystem.transform.TransformPoint(particle.position);
+                            //Debug用
+                            //DropPaint(screenpos);
+                            if (WhichRainBlot)
+                            {
+                                RainEffect.transform.position = targetPos;
+                                RainEffect.Emit(1);
+                            }
+                            else
+                                Instantiate(RainObjEffect, targetPos, Quaternion.identity);
                         }
-                        else
-                            Instantiate(RainObjEffect, targetPos, Quaternion.identity);
                     }
                 }
             }
         }
     }
-
     IEnumerator IconMove()
     {
         while (IconFlag)
         {
             yield return new WaitForSeconds(0.4f);
             if (wayflag)
-                nextIcon.position += new Vector3(0, 1);
+                nextIcon.localPosition += new Vector3(0, 30);
             else
-                nextIcon.position -= new Vector3(0, 1);
+                nextIcon.localPosition -= new Vector3(0, 30);
             wayflag = !wayflag;
         }
     }
@@ -123,5 +130,11 @@ public class ProphecyScript : MonoBehaviour
         SceneManagerScript.SetButton_Active();
         gameObject.SetActive(false);
         //Destroy(gameObject);
+    }
+
+    IEnumerator BookOpen()
+    {
+        yield return new WaitForEndOfFrame();
+        BookOpener = true;
     }
 }
