@@ -199,7 +199,6 @@
                 SpawnAll();
             }
             else {
-                DelayBetweenParticles = 0.05f;
                 StartCoroutine(loop(gameObject.transform.position, initSpeed, count));
             }
 			
@@ -211,12 +210,12 @@
 
 		public void Spawn(int count, Vector3 pos){
 			executeMicroSpawns ();
-			StartCoroutine (loop(pos, initSpeed, count));
+            StartCoroutine(loop(pos, initSpeed, count, 0, false));
 		}
 
 		public void Spawn(int count, Vector3 pos, Vector2 InitVelocity, float delay = 0f){
 			executeMicroSpawns ();
-			StartCoroutine (loop(pos, InitVelocity, count, delay));
+			StartCoroutine (loop(pos, InitVelocity, count, delay,false));
 		}
 
 		void executeMicroSpawns()
@@ -228,7 +227,7 @@
 				for (int i = 0; i < microSpawns.Count; i++) {
 					//Spawn (microSpawns [i].amount, microSpawns [i].pos, microSpawns [i].initVel);
 					DynamicChanges = false;
-					StartCoroutine (loop(microSpawns [i].pos, microSpawns [i].initVel, microSpawns [i].amount ,0f));
+                    StartCoroutine(loop(microSpawns[i].pos, microSpawns[i].initVel, microSpawns[i].amount, 0f, false));
 				}
 
 				microSpawns.Clear ();
@@ -261,7 +260,7 @@
 			//usableDropsCount = DefaultCount;
 			//Dynamic = false;
 		}
-
+        int sonss = 0;
 		IEnumerator loop(Vector3 _pos, Vector2 _initSpeed, int count = -1, float delay = 0f, bool waitBetweenDropSpawn = true){
 			yield return new WaitForSeconds (delay);
 
@@ -306,7 +305,9 @@
 						} 
 					}
 
-					if(waitBetweenDropSpawn)
+                    if (++sonss == 60)
+                        DelayBetweenParticles = 0.05f;
+                    if (waitBetweenDropSpawn)
 						yield return new WaitForSeconds (DelayBetweenParticles);
 
 				}
