@@ -72,10 +72,10 @@ public class GravityControllerScript : MonoBehaviour
             LeftRoll = false;
             rollWay = RollWay.normal;
             var axis = Vector3.Cross(-Vector3.up, (Vector3)Physics2D.gravity);
-            if (-0.05f < axis.z || axis.z < 0.05f)
-            {
-                Physics2D.gravity = localGravity;
-            }
+            //if (-0.05f < axis.z || axis.z < 0.05f)
+            //{
+            //    Physics2D.gravity = localGravity;
+            //}
         }
     }
 

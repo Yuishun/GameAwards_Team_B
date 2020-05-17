@@ -22,7 +22,7 @@ public class FlowerScript : MonoBehaviour
     //衝突タイマー
     int m_iCollisionTimer = 0;
     //衝突時間（2秒後ステージ遷移）
-    int m_iLimitCollisionTime = 120;
+    int m_iLimitCollisionTime = 150;
     //衝突フラグ
     bool m_bCollisiontFlag = false;
     Collider2D[] col = new Collider2D[1];
