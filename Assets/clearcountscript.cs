@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 public class clearcountscript : MonoBehaviour
 {
-    SceneManagerScript allScene;
     [SerializeField]
     StageSelectScript selectScript;
     void Start()
