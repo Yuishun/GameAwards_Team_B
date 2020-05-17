@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 0052e0632206f6e448540357bb46496e
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures:
+  - _WaveHeightTex: {fileID: 2800000, guid: 441254493321ded4683c5393718854b1, type: 3}
+  - _Wavenormal: {fileID: 2800000, guid: 85031e7fb77282d4ca28d4dd251e3e0b, type: 3}
+  - _AlphaTexture: {fileID: 2800000, guid: e53bd3431cea0164ba470648f79f7a19, type: 3}
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
