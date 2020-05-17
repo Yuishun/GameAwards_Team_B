@@ -124,7 +124,7 @@ public class FlowerScript : MonoBehaviour
 
     private void Update()
     {
-        col = null;
+        col[0] = null;
             Physics2D.OverlapCircleNonAlloc(transform.position, 0.6f,
             col, LayerMask.GetMask("Light"));
         if (col[0])
