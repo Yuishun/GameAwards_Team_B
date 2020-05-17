@@ -200,6 +200,7 @@
                 SpawnAll();
             }
             else {
+                DelayBetweenParticles = 0.05f;
                 StartCoroutine(loop(gameObject.transform.position, initSpeed, count));
             }
 			
