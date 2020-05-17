@@ -67,6 +67,7 @@
 			fixed4 SampleSpriteTexture(float2 uv)
 			{
 				fixed4 color = tex2D(_MainTex, uv);
+				//color.rgb = 1 - color.rgb;
 
 #if UNITY_TEXTURE_ALPHASPLIT_ALLOWED
 				if (_AlphaSplitEnabled)
@@ -78,8 +79,10 @@
 
 			fixed4 frag(v2f IN) : SV_Target
 			{
-				fixed4 c = SampleSpriteTexture(IN.texcoord) * IN.color;
-				c.rgb *= c.a;
+				fixed4 c = SampleSpriteTexture(IN.texcoord) * (1 - IN.color);
+				c.rgb = 1 - c.rgb;
+				c.a = _Color.a;
+				//c.rgb *= c.a;
 				return c;
 			}
 		ENDCG
