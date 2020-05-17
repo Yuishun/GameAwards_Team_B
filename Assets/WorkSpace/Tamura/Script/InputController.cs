@@ -21,7 +21,6 @@ public class InputController : MonoBehaviour
         //===============================================
         // Rスティックかキーボード左右矢印
         float RstickH = Input.GetAxisRaw("R_Horizontal");
-        float RstickV = Input.GetAxisRaw("R_Vertical");
         float Trigger = Input.GetAxisRaw("LR_Trigger");
         if (RstickH < 0 || Trigger < 0 ||
             Input.GetButtonDown("Button_L"))//回転
@@ -35,14 +34,14 @@ public class InputController : MonoBehaviour
             if (!MenuScript.m_bMenuOpen)
                 GravityController.RightRoll = true;
         }
-        else if (Input.GetButtonDown("Button_Y") ||
-            RstickV > 0)//回転角度変更
+        else if (Input.GetButtonDown("Button_Y") )
+            //回転角度変更
         {
             if (!MenuScript.m_bMenuOpen)
                 GravityController.RollAngleChange(true);
         }
-        else if (Input.GetButtonDown("Button_X") ||
-            RstickV < 0)//回転角度変更
+        else if (Input.GetButtonDown("Button_X") )
+            //回転角度変更
         {
             if (!MenuScript.m_bMenuOpen)
                 GravityController.RollAngleChange(false);
@@ -54,22 +53,24 @@ public class InputController : MonoBehaviour
         //===============================================
         float LstickH = Input.GetAxis("L_Horizontal");
         float LstickV = Input.GetAxis("L_Vertical");
-        if (LstickH < 0)//左
+        float DpadH = Input.GetAxis("DPad_Horizontal");
+        float DpadV = Input.GetAxis("DPad_Vertical");
+        if (LstickH < 0 || DpadH < 0)//左
         {
             if (!MenuScript.m_bMenuOpen)
                 FreezeCarsor.ControllerColliderHit(1);
         }
-        else if (LstickH > 0)//右
+        else if (LstickH > 0 || DpadH > 0)//右
         {
             if (!MenuScript.m_bMenuOpen)
                 FreezeCarsor.ControllerColliderHit(2);
         }
-        if (LstickV > 0)//上
+        if (LstickV > 0 || DpadV > 0)//上
         {
             if (!MenuScript.m_bMenuOpen)
                 FreezeCarsor.ControllerColliderHit(3);
         }
-        else if (LstickV < 0)//下
+        else if (LstickV < 0 || DpadV < 0)//下
         {
             if (!MenuScript.m_bMenuOpen)
                 FreezeCarsor.ControllerColliderHit(4);
