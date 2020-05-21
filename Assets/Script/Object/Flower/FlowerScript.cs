@@ -26,6 +26,8 @@ public class FlowerScript : MonoBehaviour
     //衝突フラグ
     bool m_bCollisiontFlag = false;
     Collider2D[] col = new Collider2D[1];
+    [SerializeField]
+    Color ClearColor = Color.white;
 
     void Start()
     {
@@ -129,6 +131,10 @@ public class FlowerScript : MonoBehaviour
             col, LayerMask.GetMask("Light"));
         if (col[0])
         {
+            if (col[0].GetComponent<LightMove>().m_color
+                != ClearColor)
+                return;
+
             m_iCollisionTimer++;
             if (m_iCollisionTimer > m_iLimitCollisionTime)
             {

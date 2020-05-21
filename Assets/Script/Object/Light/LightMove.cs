@@ -27,7 +27,7 @@ public class LightMove : MonoBehaviour
 
     [SerializeField] LayerMask FrameLayer, WaterLayer;
     [SerializeField] Surface surface;
-    Color m_color;
+    public Color m_color;
 
     RaycastHit2D ray;
 
@@ -157,6 +157,7 @@ public class LightMove : MonoBehaviour
                         //if(ray.collider)
                         EnterWater =
                             FrameLayerProcessing(ray.transform.tag, EnterWater);
+                        yield break;
                     }
                     else
                     {
