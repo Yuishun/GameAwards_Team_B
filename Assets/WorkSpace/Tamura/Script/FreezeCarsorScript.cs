@@ -8,18 +8,22 @@ public class FreezeCarsorScript : MonoBehaviour
     float MoveSpeed = 0.1f;
     Transform cam_root;
     SpriteRenderer spr;
+    [SerializeField]
     private Color Freezecolor = new Color(0.0f, 1.0f, 1.0f, 1.0f);
+    [SerializeField]
     private Color Meltcolor = new Color(1.0f, 0.4f, 0.0f, 1.0f);
 
     private string Layer_Water = "PostProcessing";
     private float CasorRange;
 
-
+    UIController sc_UIController;
     void Start()
     {
         spr = transform.GetComponent<SpriteRenderer>();
         cam_root = Camera.main.transform.root;
         CasorRange = transform.localScale.x * 0.6f;
+
+        sc_UIController = transform.root.GetChild(0).GetComponent<UIController>();
     }
     public void ControllerColliderHit(int type)
     {
@@ -42,14 +46,15 @@ public class FreezeCarsorScript : MonoBehaviour
 
     public void FreezeImage()
     {
+        sc_UIController.IceIcon();
         spr.color = Freezecolor;
         Collider2D target = Physics2D.OverlapCircle(transform.position, CasorRange, LayerMask.GetMask(Layer_Water));
-        
         if (target)
             target.SendMessage("Freeze");
     }
     public void MeltIMage()
     {
+        sc_UIController.UnzipIcon();
         spr.color = Meltcolor;
         Collider2D target = Physics2D.OverlapCircle(transform.position, CasorRange, LayerMask.GetMask(Layer_Water));
         if (target)

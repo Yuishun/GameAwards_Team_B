@@ -38,7 +38,13 @@ public class ProphecyScript : MonoBehaviour
     ParticleSystem RainEffect;
     [SerializeField, Header("雨粒。✓=軽量版")]
     bool WhichRainBlot;
-    
+
+    [SerializeField, Header("本の表紙・中1・中2")]
+    Texture booktex, booktex2, booktex3;
+    RectTransform bookleft, bookright;
+    RawImage bookl_maintex, bookr_maintex;
+    [SerializeField]
+    Color color1, color2;
     void Awake()
     {
         //1度だけのチェック
@@ -48,7 +54,15 @@ public class ProphecyScript : MonoBehaviour
             SceneManagerScript.ProphecyCheck = false;
             transform.GetChild(0).gameObject.SetActive(true);
             nextIcon = transform.GetChild(0).GetChild(4);
-            nextIcon.transform.localPosition = new Vector3(nextIcon.transform.localPosition.x, transform.transform.GetChild(0).GetChild(2).transform.localPosition.y,0);
+            nextIcon.transform.localPosition = 
+                new Vector3(nextIcon.transform.localPosition.x,
+                transform.transform.GetChild(0).GetChild(3).transform.localPosition.y+10,0);
+            bookleft = transform.GetChild(0).GetChild(0).GetComponent<RectTransform>();
+            bookright = transform.GetChild(0).GetChild(1).GetComponent<RectTransform>();
+            bookl_maintex = bookleft.GetComponent<RawImage>();
+            bookr_maintex = bookright.GetComponent<RawImage>();
+
+            StartCoroutine("BookOpen");
         }
         else
             Itdestroy();
@@ -57,7 +71,6 @@ public class ProphecyScript : MonoBehaviour
         if (WhichRainObjEffect)
             transform.GetChild(1).transform.GetComponent<ParticleSystemRenderer>().enabled = false;
 
-        StartCoroutine("BookOpen");
     }
 
     void Update()
@@ -71,7 +84,6 @@ public class ProphecyScript : MonoBehaviour
                 StartCoroutine(IconMove());
                 flag = false;
                 onceflag = true;
-
             }
             else
             {
@@ -116,9 +128,9 @@ public class ProphecyScript : MonoBehaviour
         {
             yield return new WaitForSeconds(0.4f);
             if (wayflag)
-                nextIcon.localPosition += new Vector3(0, 30);
+                nextIcon.localPosition += new Vector3(0, 10);
             else
-                nextIcon.localPosition -= new Vector3(0, 30);
+                nextIcon.localPosition -= new Vector3(0, 10);
             wayflag = !wayflag;
         }
     }
@@ -134,7 +146,43 @@ public class ProphecyScript : MonoBehaviour
 
     IEnumerator BookOpen()
     {
+        bookleft.gameObject.transform.SetSiblingIndex(1);
+        bookleft.localPosition = new Vector3(400, 0, 0);
+        var timer = 0f;
+        var flag = false;
+
+        bookleft.pivot = new Vector2(0, 0.5f);
+        while (timer <= 1) 
+        {
+            timer += Time.deltaTime*0.25f;
+            if (!flag)
+            {
+                if (timer < 0.5f)
+                {
+                    float angle = Mathf.LerpAngle(0f, 90f, timer*2);
+                    bookleft.eulerAngles = new Vector3(0, angle, 0);
+
+                    bookr_maintex.color = Color.Lerp(color1, color2, timer * 2);
+                }
+                else
+                {
+                    flag = true;
+                    bookl_maintex.texture = booktex2;
+                    bookleft.localPosition = new Vector3(-800, 0, 0);
+                    bookleft.pivot = new Vector2(1, 0.5f);
+                }
+            }
+            if (flag)
+            {
+                float angle = Mathf.LerpAngle(-90f, 0f, timer * 2 - 1);
+                bookleft.eulerAngles = new Vector3(0, angle, 0);
+
+                bookl_maintex.color = Color.Lerp(color1, color2, timer * 2 - 1);
+            }
+            yield return new WaitForEndOfFrame();
+        }
         yield return new WaitForEndOfFrame();
-        BookOpener = true;
+        BookOpener = false;
+        textScript.BookReadStart();
     }
 }

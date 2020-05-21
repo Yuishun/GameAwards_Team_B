@@ -12,7 +12,9 @@ public class SceneManagerScript : MonoBehaviour
     static int gamedata1 = 0;
     //ステージクリア数保存
     static int gamedata2 = 0;
-    static int[,] StageStatus = new int[7, 2] { { 1, 1 }, { 2, 0 }, { 3, 1 }, { 4, 0 }, { 5, 1 }, { 6, 0 }, { 7, 0 } };
+    [SerializeField, Header("デバッグ用クリアステージ数。不要になったら消去")]
+    public int DebugStage = 0;
+    static int[,] StageStatus = new int[7, 2] { { 1, 0 }, { 2, 0 }, { 3, 0 }, { 4, 0 }, { 5, 0 }, { 6, 0 }, { 7, 0 } };
     public static bool ProphecyCheck = true;
     
     string prevSceneName;
@@ -44,6 +46,13 @@ public class SceneManagerScript : MonoBehaviour
     
     void Awake()
     {
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Debug用
+        for (int i = 0; i < StageStatus.Length/2; i++)
+        {
+            if (i < DebugStage)
+                StageStatus[i, 1] = 1;
+        }
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         SceneManager.activeSceneChanged += SceneChanged;
         if (singleton == null)
         {
@@ -70,6 +79,7 @@ public class SceneManagerScript : MonoBehaviour
             SceneManagerScript.m_bMenu_InStage = true;
         else
             SceneManagerScript.m_bMenu_InStage = false;
+        MenuEnd();
     }
     //===================================================
     // 読み込みシーン選択＆フェード
@@ -198,7 +208,6 @@ public class SceneManagerScript : MonoBehaviour
         {
             NowLoading = !NowLoading;
             gamedata1 = type;
-            //MenuEnd();
             OnPushChangeScene();
         }
     }
@@ -236,15 +245,8 @@ public class SceneManagerScript : MonoBehaviour
     public void MenuEnd()
     {
         menuScript.enabled = false;
-        Debug.Log("MenuClose");
-        if (SceneManagerScript.m_bMenu_InStage)
-        {
-            singleton.StageMenu.gameObject.SetActive(false);
-        }
-        else
-        {
-            singleton.SelectMenu.gameObject.SetActive(false);
-        }
+        singleton.StageMenu.gameObject.SetActive(false);
+        singleton.SelectMenu.gameObject.SetActive(false);
     }
     //=============================================================
     // ステージ再読み込み

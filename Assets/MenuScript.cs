@@ -23,19 +23,27 @@ public class MenuScript : MonoBehaviour
     [SerializeField]
     Transform TargetMenu;
     [SerializeField]
+    Transform ControllerCanvas;
+    [SerializeField]
     Image image1, image2, image3, image4;
     Color color1, color2, color3, color4;
     Color color1b, color2b, color3b, color4b;
     float beforeAxis = 0;
+    InputController inputter;
+    bool ControllerMenuFlag = false;
     void Start()
     {
         sceneManagerScript = transform.GetComponent<SceneManagerScript>();
+    }
+    void OnEnable()
+    {
         m_bMenuOpen = true;
         if (SceneManagerScript.m_bMenu_InStage)
         {
             InStage = true;
             State = MenuState.Reset;
             TargetMenu = sceneManagerScript.StageMenu.transform;
+            inputter = GameObject.FindGameObjectWithTag("GameController").GetComponent<InputController>();
         }
         else
         {
@@ -43,6 +51,9 @@ public class MenuScript : MonoBehaviour
             State = MenuState.Controll;
             TargetMenu = sceneManagerScript.SelectMenu.transform;
         }
+        if (InStage)
+            inputter.menucontroll(false);
+
         image1 = TargetMenu.GetChild(1).GetComponent<Image>();
         image2 = TargetMenu.GetChild(2).GetComponent<Image>();
         image3 = TargetMenu.GetChild(3).GetComponent<Image>();
@@ -51,105 +62,129 @@ public class MenuScript : MonoBehaviour
         color2 = image2.color;
         color3 = image3.color;
         color4 = image4.color;
-        color1b = image1.color - new Color32(70,70,70,0);
-        color2b = image2.color - new Color32(70,70,70,0);
-        color3b = image3.color - new Color32(70,70,70,0);
-        color4b = image4.color - new Color32(70,70,70,0);
+        color1b = image1.color - new Color32(70, 70, 70, 0);
+        color2b = image2.color - new Color32(70, 70, 70, 0);
+        color3b = image3.color - new Color32(70, 70, 70, 0);
+        color4b = image4.color - new Color32(70, 70, 70, 0);
+
         value = 0;
     }
-    
+    void OnDisable()
+    {
+        if (InStage)
+            inputter.menucontroll(true);
+        m_bMenuOpen = false;
+        image1.color = color1;
+        image2.color = color2;
+        image3.color = color3;
+        image4.color = color4;
+
+    }
     void Update()
     {
+        if (!ControllerMenuFlag)
+        {
             float Lstick = Input.GetAxis("L_Vertical");
-        if (beforeAxis == 0 && 0 != Lstick) 
-        {
-            if (Lstick > 0)
+            if (beforeAxis == 0 && 0 != Lstick)
             {
-                value--;
-                if (value < 0)
-                    value = 3;
+                if (Lstick > 0)
+                {
+                    if (--value < 0) value = 3;
+                }
+                else if (Lstick < 0)
+                {
+                    if (++value > 3) value = 0;
+                }
             }
-            else if (Lstick < 0)
-            {
-                value++;
-                if (value > 3)
-                    value = 0;
-            }
-        }
-        beforeAxis = Lstick;
-        SelectLighting();
+            beforeAxis = Lstick;
+            SelectLighting();
 
 
-        if (InStage)
-        {
-            switch (value)
+            if (InStage)
             {
-                case 0:
-                    State = MenuState.Reset;
-                    break;
-                case 1:
-                    State = MenuState.ReSelect;
-                    break;
-                case 2:
-                    State = MenuState.Controll;
-                    break;
-                case 3:
-                    State = MenuState.Close;
-                    break;
+                switch (value)
+                {
+                    case 0:
+                        State = MenuState.Reset;
+                        break;
+                    case 1:
+                        State = MenuState.ReSelect;
+                        break;
+                    case 2:
+                        State = MenuState.Controll;
+                        break;
+                    case 3:
+                        State = MenuState.Close;
+                        break;
+                }
+            }
+            else
+            {
+                switch (value)
+                {
+                    case 0:
+                        State = MenuState.Controll;
+                        break;
+                    case 1:
+                        State = MenuState.Config;
+                        break;
+                    case 2:
+                        State = MenuState.Title;
+                        break;
+                    case 3:
+                        State = MenuState.Close;
+                        break;
+                }
+            }
+            if (Input.GetButtonDown("Button_START"))
+                sceneManagerScript.MenuEnd();
+            else if (Input.GetButtonDown("Button_A"))
+            {
+                switch (State)
+                {
+                    case MenuState.Controll:
+                        ControllerCanvas.gameObject.SetActive(true);
+                        if (!InStage)
+                        {
+                            ControllerCanvas.GetChild(1).gameObject.SetActive(true);
+                            ControllerCanvas.GetChild(2).gameObject.SetActive(false);
+                        }
+                        else
+                        {
+                            ControllerCanvas.GetChild(1).gameObject.SetActive(false);
+                            ControllerCanvas.GetChild(2).gameObject.SetActive(true);
+                        }
+                        if (!ControllerMenuFlag) ControllerMenuFlag = true;
+                        break;
+                    case MenuState.Config:
+                        //++++++++++++++++++++++++++++++未実装++++++++++++++++++++++++++++++++++++++++++++++++++++
+                        break;
+                    case MenuState.Title:
+                        sceneManagerScript.Loadstagenum(1000);
+                        break;
+                    case MenuState.Close:
+                        sceneManagerScript.MenuEnd();
+                        break;
+                    case MenuState.Reset:
+                        sceneManagerScript.ReStage();
+                        break;
+                    case MenuState.ReSelect:
+                        sceneManagerScript.Loadstagenum(500);
+                        break;
+                }
+                if (!ControllerMenuFlag)
+                    sceneManagerScript.MenuEnd();
             }
         }
         else
         {
-            switch (value)
+            if (Input.GetButtonDown("Button_A"))
             {
-                case 0:
-                    State = MenuState.Controll;
-                    break;
-                case 1:
-                    State = MenuState.Config;
-                    break;
-                case 2:
-                    State = MenuState.Title;
-                    break;
-                case 3:
-                    State = MenuState.Close;
-                    break;
+                ControllerCanvas.GetChild(1).gameObject.SetActive(false);
+                ControllerCanvas.GetChild(2).gameObject.SetActive(false);
+                ControllerCanvas.gameObject.SetActive(false);
+                if (ControllerMenuFlag) ControllerMenuFlag = false;
             }
-        }
-        if (Input.GetButtonDown("Button_START"))
-        {
-            if (SceneManagerScript.m_bMenu_InStage)
-                State = MenuState.Reset;
-            else
-                State = MenuState.Controll;
-            m_bMenuOpen = false;
-            sceneManagerScript.MenuEnd();
-        }
-        else if(Input.GetButtonDown("Button_A"))
-        {
-            switch (State)
-            {
-                case MenuState.Controll:
-                    //++++++++++++++++++++++++++++++未実装++++++++++++++++++++++++++++++++++++++++++++++++++++
-                    break;
-                case MenuState.Config:
-                    //++++++++++++++++++++++++++++++未実装++++++++++++++++++++++++++++++++++++++++++++++++++++
-                    break;
-                case MenuState.Title:
-                    sceneManagerScript.Loadstagenum(1000);
-                    break;
-                case MenuState.Close:
-                    m_bMenuOpen = false;
-                    sceneManagerScript.MenuEnd();
-                    break;
-                case MenuState.Reset:
-                    sceneManagerScript.ReStage();
-                    break;
-                case MenuState.ReSelect:
-                    sceneManagerScript.Loadstagenum(500);
-                    break;
-            }
-            sceneManagerScript.MenuEnd();
         }
     }
 
