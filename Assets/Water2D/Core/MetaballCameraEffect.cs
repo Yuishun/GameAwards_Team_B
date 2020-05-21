@@ -107,24 +107,24 @@ namespace UnityStandardAssets.ImageEffects
                 );
         }
 
-
+        //全てのレンダリングが完了しRenterTextureにレンダリングされた後に呼び出される。
         // Called by the camera to apply the image effect
 		RenderTexture buffer;
 		RenderTexture buffer3;
 		RenderTexture buffer2;
         void OnRenderImage(RenderTexture source, RenderTexture destination)
         {
-			//if(!Application.isPlaying)
-			//	return;
-
+            //if(!Application.isPlaying)
+            //	return;
             int rtW = source.width / 4;
             int rtH = source.height / 4;
+            //描画範囲と深度
             buffer = RenderTexture.GetTemporary(rtW, rtH, 0);
-			// Copy source to the 4x4 smaller texture.
-			DownSample4x(source, buffer);
+            // Copy source to the 4x4 smaller texture. ソースを4x4の小さいテクスチャにコピーします
+            DownSample4x(source, buffer);
+            //UnityEditor.EditorApplication.isPaused = true;
 
-
-            // Blur the small texture
+            // Blur the small texture 小さなテクスチャをぼかします
             for (int i = 0; i < iterations; i++)
             {
 					buffer2 = RenderTexture.GetTemporary (rtW, rtH, 0);

@@ -11,9 +11,9 @@ public class TextScript : MonoBehaviour
     private string loadText;
     //　配列に入れる
     private string[] splitText;
-    
-    private bool TextEndFlag = false;
-    
+
+    private bool TextEndFlag = true;
+    private bool TextStartFlag = false;
 
     [SerializeField][Range(0.01f,0.3f)]
     float interval = 0.05f;                         // 1文字の表示にかける時間
@@ -87,8 +87,19 @@ public class TextScript : MonoBehaviour
     }
     IEnumerator StartText()
     {
-        while (!SceneManagerScript.m_bFadeInEnd)
+        while (!SceneManagerScript.m_bFadeInEnd || !TextStartFlag)
+        {
             yield return new WaitForEndOfFrame();
+        }
         NextText();
     }
+    //=====================================================
+    // 文章開始用
+    //=====================================================
+    public void BookReadStart()
+    {
+        TextEndFlag = false;
+        TextStartFlag = true;
+    }
+
 }

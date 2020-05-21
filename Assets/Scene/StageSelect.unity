@@ -4886,7 +4886,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: ce10bacf5483af74a8ccd0712efd46e8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -10408,10 +10408,10 @@ RectTransform:
   m_Father: {fileID: 368342247}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 335, y: -235.00002}
-  m_SizeDelta: {x: -750, y: -832}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 280, y: -185}
+  m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &287339475
 MonoBehaviour:
@@ -10777,7 +10777,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: ce10bacf5483af74a8ccd0712efd46e8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -10856,7 +10856,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: ce10bacf5483af74a8ccd0712efd46e8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -11074,7 +11074,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: ce10bacf5483af74a8ccd0712efd46e8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -11211,6 +11211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75547ebeaebb6594193043dbd4ddf327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nextIcon: {fileID: 0}
   m_iImage: {fileID: 1108747391}
   textScript: {fileID: 964026697}
   stageSelectScript: {fileID: 160150614}
@@ -11220,6 +11221,11 @@ MonoBehaviour:
   WhichRainObjEffect: 1
   RainEffect: {fileID: 54865048}
   WhichRainBlot: 1
+  booktex: {fileID: 2800000, guid: 7471eed155c6700478cf63344cb29d31, type: 3}
+  booktex2: {fileID: 2800000, guid: 01bf8656844a18443a30d173721c55c2, type: 3}
+  booktex3: {fileID: 2800000, guid: 386b2203b78ef9e43975001fd9d375f6, type: 3}
+  color1: {r: 0.54901963, g: 0.54901963, b: 0.54901963, a: 1}
+  color2: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &964026697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11513,7 +11519,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 01bf8656844a18443a30d173721c55c2, type: 3}
+  m_Texture: {fileID: 2800000, guid: 7471eed155c6700478cf63344cb29d31, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -11542,10 +11548,10 @@ RectTransform:
   m_Father: {fileID: 368342247}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -190, y: 0}
-  m_SizeDelta: {x: 380, y: 410}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -200, y: 0}
+  m_SizeDelta: {x: -400, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1128716712
 GameObject:
@@ -11726,7 +11732,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 154.99998, y: -245}
+  m_AnchoredPosition: {x: 115, y: -195}
   m_SizeDelta: {x: 330, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1257425768
@@ -11749,7 +11755,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 25
+    m_FontSize: 22
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 0
@@ -12053,8 +12059,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -5}
-  m_SizeDelta: {x: -120, y: -110}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -220, y: -60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1371673590
 MonoBehaviour:
@@ -12076,18 +12082,18 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 26
+    m_FontSize: 22
     m_FontStyle: 1
-    m_BestFit: 0
-    m_MinSize: 0
-    m_MaxSize: 40
+    m_BestFit: 1
+    m_MinSize: 10
+    m_MaxSize: 22
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: "\u3044\u3064\u304B\u3001\u96E8\u304C\u964D\u3063\u305F\u3002\n\u305D\u306E\u96E8\u306F\u6B62\u3080\u3053\u3068\u306F\u306A\u304F\u3001\u5E83\u304C\u308A\u964D\u308A\u7D9A\u3051\u305F\u3002\n\u307E\u308C\u306B\u4E03\u8272\u306E\u8679\u304C\u51FA\u308B\u3053\u3068\u3082\u3042\u3063\u305F\u304C\u3001\r\n\u305D\u306E\u8679\u306E\u8272\u3082\u96E8\u306B\u6EB6\u3051\u51FA\u3057\u3044\u3064\u3057\u304B\u8679\u306F\u305D\u306E\u8272\u3092\u5931\u3063\u305F\u3002\r\n\u305D\u306E\u6642\u3092\u6A5F\u306B\u3001\u96E8\u306F\u3044\u3063\u305D\u3046\u5F37\u304F\u964D\u308A\u4E16\u754C\u306F\u6697\u304F\u3001\r\n\u6C34\u3067\u6E80\u305F\u3055\u308C\u305F\u4E16\u754C\u3078\u3068\u5909\u308F\u3063\u3066\u3057\u307E\u3063\u305F\u3002\r\n\u3053\u306E\u8272\u306E\u5C11\u306A\u3044\u51B7\u305F\u3044\u4E16\u754C\u3092\u3001\u96E8\u7A7A\u3092\u6674\u308C\u306B\u3057\u306A\u304F\u3066\u306F\u3002\r\n\u2026\u2026\u8679\u306E\u82B1\u3068\u3044\u3046\u3082\u306E\u304C\u3042\u308B\u3089\u3057\u3044\u3002\r\n\u6C34\u3068\u5149\u3067\u6210\u9577\u3057\u8272\u3092\u751F\u307F\u3001\u305D\u306E\u8272\u3092\u7A2E\u306B\u3057\u3066\u7E4B\u3052\u3066\u3044\u304F\u82B1\r\n\u305D\u306E\u82B1\u3092\u54B2\u304B\u305B\u308C\u3070\u8679\u306E\u8272\u3092\u623B\u305B\u308B\u304B\u3082\u3057\u308C\u306A\u3044\u3002\r\n\u8679\u306E\u8272\u306E\u5149\u3068\u6C34\u3092\u96C6\u3081\u3066\u304A\u304B\u306A\u304F\u3066\u306F\u3002\r\n\u2015\u2014\u51FA\u6765\u305F\u3002\u3053\u308C\u3067\u5F8C\u306F\u2026\u2026\u52D5\u304B\u3059\u3060\u3051\u3060\u3002\r\n\u3067\u3082\u2026\u2026\u307E\u3060\u3060\u3002\u307E\u3060\u5B8C\u74A7\u3058\u3083\u306A\u3044\u3002\r\n\u3053\u3053\u304B\u3089\u304C\u3001\u6B63\u5FF5\u5834\u2026\u2026\u3060\u2026\u2026"
 --- !u!222 &1371673591
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -12270,10 +12276,10 @@ RectTransform:
   m_Father: {fileID: 368342247}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 190, y: 0}
-  m_SizeDelta: {x: 380, y: 410}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 200, y: 0}
+  m_SizeDelta: {x: -400, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1639534403
 MonoBehaviour:
@@ -12680,7 +12686,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: ce10bacf5483af74a8ccd0712efd46e8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -12759,7 +12765,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: ce10bacf5483af74a8ccd0712efd46e8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -12838,7 +12844,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: ce10bacf5483af74a8ccd0712efd46e8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

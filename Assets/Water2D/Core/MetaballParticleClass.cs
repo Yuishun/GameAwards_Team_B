@@ -19,6 +19,8 @@ public class MetaballParticleClass : MonoBehaviour {
 			}
 		}
 	}
+    [SerializeField,Header("屈折開始水粒の数"),Range(1,4)]
+    public int Count = 4;
 	public bool witinTarget; // si esta dentro de la zona de vaso de vidrio en la meta
 
 
@@ -81,7 +83,7 @@ public class MetaballParticleClass : MonoBehaviour {
         Collider2D[] col = new Collider2D[4];
             Physics2D.OverlapCircleNonAlloc(transform.position, 0.5f, col,
             LayerMask.GetMask("PostProcessing"));
-        for(int i = 0; i < 4; i++)
+        for(int i = 0; i < Count; i++)
         {
             if (!col[i])
                 return false;

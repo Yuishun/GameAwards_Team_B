@@ -7,9 +7,20 @@ public class Surface : MonoBehaviour
     Vector2 Hit_margin;
     string Layer_Container = "Container";
     string Layer_Water = "PostProcessing";
-
-    private float WaterRange = 0;
     private bool OneCheckWaterRange = false;
+    /// <summary>
+    /// 水の当たり半径
+    /// </summary>
+    [SerializeField, Header("水の当たり半径")]
+    private float WaterRange = 0;
+    /// <summary>
+    /// 水の描画半径
+    /// </summary>
+    [SerializeField,Header("水の描画半径")]
+    float m_fWaterSurfaceRange = 0;
+    SpriteRenderer spr;
+    
+
     void Start()
     {
         //Time.timeScale = 0.05f;
@@ -17,8 +28,10 @@ public class Surface : MonoBehaviour
     //水の半径を取得
     void CheckRange(RaycastHit2D target)
     {
+        m_fWaterSurfaceRange = target.transform.lossyScale.x * 1.95f;
         WaterRange = target.transform.lossyScale.x * target.transform.GetComponent<CircleCollider2D>().radius;
         OneCheckWaterRange = !OneCheckWaterRange;
+        spr = target.transform.GetComponent<SpriteRenderer>();
     }
     //=================================================================
     //入水面ここから
@@ -26,23 +39,12 @@ public class Surface : MonoBehaviour
     public Vector2 ReInVector2(Vector2 originpos, RaycastHit2D target, Vector2 m_dirvec)
     {
         if (!OneCheckWaterRange) CheckRange(target);
-
-        //Rayの飛んできた方向を取り、屈折をずらすための水滴の余白分を記録 (要らなさそう)
-        //thickness(originpos,target);
+        
         var vec = CheckTouchContainer(target, m_dirvec, originpos,true);
         Debug.DrawLine(originpos, target.point, Color.red);
         return vec;
     }
-    //=================================================================
-    //水面ずらし(必要であれば使うこと)
-    //=================================================================
-    void thickness(Vector2 origin, RaycastHit2D target)
-    {
-        var UpWay = target.transform.forward;
-        target.transform.LookAt(origin);
-        Hit_margin = target.transform.forward * target.transform.lossyScale.x * 0.3f;
-        target.transform.forward = UpWay;
-    }
+
     //=================================================================
     //容器・水面判定
     //=================================================================
@@ -51,15 +53,17 @@ public class Surface : MonoBehaviour
         Vector2 revec;
         RaycastHit2D container;
         //容器が存在するとき。容器のベクトルを返す。
-        if (flag)
+        if (flag)//入水時
             container = Physics2D.Raycast(target.point, -dir, WaterRange, LayerMask.GetMask(Layer_Container), 0, 2);
-        else
+        else//出水時
             container = Physics2D.Raycast(target.point, dir, WaterRange, LayerMask.GetMask(Layer_Container), 0, 2);
-        if (container)
+
+        if (container)//容器存在
         {
             //容器の壁が縦に長い時
             if (container.transform.lossyScale.x < container.transform.lossyScale.y)
             {
+                //左右どちらから入った？
                 if (originpos.x < container.transform.position.x)//左側に源
                     revec = -container.transform.right;
                 else
@@ -73,8 +77,7 @@ public class Surface : MonoBehaviour
                     revec = container.transform.up;
             }
         }
-        else
-        //容器が存在しないとき。水面の法線ベクトルを返す。
+        else//容器不在。水面の法線ベクトルを返す。
         {
             if (flag)
                 revec = Water_In_Normal(target, dir, originpos);
@@ -88,12 +91,29 @@ public class Surface : MonoBehaviour
     //=================================================================
     Vector2 Water_In_Normal(RaycastHit2D hit, Vector2 dir,Vector2 originpos)
     {
-        Collider2D[] hit_Around = Physics2D.OverlapCircleAll(
-            hit.point - dir*WaterRange, 
+        Collider2D[] WaterAround = new Collider2D[0];
+        Collider2D[] hitobj_Around = Physics2D.OverlapCircleAll(
+            hit.transform.position,
             WaterRange * 2,
             LayerMask.GetMask(Layer_Water));
+        Collider2D[] hit_Around = Physics2D.OverlapCircleAll(
+                    hit.point - dir * m_fWaterSurfaceRange,
+                    m_fWaterSurfaceRange * 2,
+                    LayerMask.GetMask(Layer_Water));
+        Debug.DrawLine(hit.point - dir * m_fWaterSurfaceRange, hit.point - dir * m_fWaterSurfaceRange+new Vector2(1,0), Color.black);
+        foreach(var obj in hitobj_Around)
+        {
+            foreach (var around in hit_Around)
+            {
+                if(obj == around)
+                {
+                    System.Array.Resize(ref WaterAround, WaterAround.Length + 1);
+                    WaterAround[WaterAround.Length - 1] = obj;
+                }
+            }
+        }
         //配列が空でないとき
-        if (hit_Around.Length > 1)
+        if (WaterAround.Length > 1)
         {
             float min_Firsttarget_distance = float.MaxValue;
             float min_Secondtarget_distance = float.MaxValue;
@@ -102,7 +122,8 @@ public class Surface : MonoBehaviour
 
             float Side1 = float.MinValue;
             float Side2 = float.MinValue;
-            foreach (var Around_one in hit_Around)
+            var hitpoint_Distance = Vector2.Distance(originpos,hit.point);
+            foreach (var Around_one in WaterAround)
             {
                 //前回のが次高点の場合の一時置き場
                 float onetime_distance = min_Firsttarget_distance;
@@ -114,11 +135,19 @@ public class Surface : MonoBehaviour
 
                 if (target_distance < min_Firsttarget_distance)
                 {
-                    min_Firsttarget_distance = target_distance;
-                    Trytarget1 = Around_one.gameObject;
-                    //左右どちらにあるか判別
-                    Side1 = SideDiscrimination(originpos, hit.transform.position, Trytarget1.transform.position);
-                    CheckFlag = true;
+                    if (target_distance < hitpoint_Distance)//hit.point より短い時
+                    {
+                        min_Firsttarget_distance = target_distance;
+                        Trytarget1 = Around_one.gameObject;
+                        //左右どちらにあるか判別
+                        Side1 = SideDiscrimination(originpos, hit.transform.position, Trytarget1.transform.position);
+                        CheckFlag = true;
+                    }
+                    else
+                    {
+                        min_Firsttarget_distance = hitpoint_Distance;
+                        Trytarget1 = hit.transform.gameObject;
+                    }
                 }
                 //Firstで別のものが入ったときかつ、前回と方向が違う場合
                 if (onetime_Side != Side1)
@@ -149,9 +178,7 @@ public class Surface : MonoBehaviour
                 if (Trytarget2 == null)
                     Trytarget2 = hit.collider.gameObject;
             }
-            //Trytarget1.transform.GetComponent<SpriteRenderer>().color = Color.black;
-            //Trytarget2.transform.GetComponent<SpriteRenderer>().color = Color.white;
-            //ここ調整する
+
             var a = Trytarget1.transform.position;
             var b = Trytarget2.transform.position;
             var c = new Vector3(a.x, 0, 1);
@@ -315,6 +342,10 @@ public class Surface : MonoBehaviour
         }
 
         float S = (origin_vec2_Unit_vector_X * origin_target_Unit_vector_Y) - (origin_vec2_Unit_vector_Y * origin_target_Unit_vector_X);
+        if (S < 0)
+            S = -1;
+        else
+            S = 1;
         return S;
     }
 }
