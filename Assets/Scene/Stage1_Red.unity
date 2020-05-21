@@ -692,6 +692,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MoveSpeed: 0.1
+  Freezecolor: {r: 0, g: 1, b: 1, a: 1}
+  Meltcolor: {r: 1, g: 0.4, b: 0, a: 1}
 --- !u!212 &246372704
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -772,6 +774,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 688a87c0a290a94498e16ad00c9e56ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nowrot_afterwards: " / 360 \u5EA6"
+  moverot_afterwards: "\u5EA6\u56DE\u8EE2"
+  Icon_Ice: {fileID: 0}
+  Icon_Unzip: {fileID: 0}
+  Icon_Rot: {fileID: 0}
+  BidIconMagnification: 3
+  IconSlideSpeed: 1
 --- !u!114 &276499478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2079,7 +2088,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!84 &1255433237
+--- !u!84 &1237166978
 RenderTexture:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2157,6 +2166,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2efab7876a7860429395c9af07e3c9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  WaterRange: 0
+  m_fWaterSurfaceRange: 0
 --- !u!114 &1280040363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2466,6 +2477,7 @@ MonoBehaviour:
   flower: {fileID: 21300000, guid: 9bebb84502d8c63418ac57a198959d2c, type: 3}
   material: {fileID: 2100000, guid: 74da7a8e2c5a8ff4c8b8a83c5ab6dca4, type: 2}
   ClearColor: {r: 1, g: 0, b: 0, a: 1}
+  stagenum: 1
 --- !u!212 &1490189975
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3050,7 +3062,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 1024
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 1255433237}
+  m_TargetTexture: {fileID: 1237166978}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
