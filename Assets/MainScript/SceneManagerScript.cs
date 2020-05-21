@@ -218,6 +218,17 @@ public class SceneManagerScript : MonoBehaviour
     {
         return StageStatus;
     }
+    //=============================================================
+    // 各ステージクリアしたとき
+    //=============================================================
+    public void OneStageClear(int val)
+    {
+        for (int i = 0; i < StageStatus.Length / 2; i++)
+        {
+            if (i == val)
+                StageStatus[i, 1] = 1;
+        }
+    }
 
     //=============================================================
     // Menu
