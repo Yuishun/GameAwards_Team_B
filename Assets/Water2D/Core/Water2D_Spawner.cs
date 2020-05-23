@@ -306,7 +306,7 @@
 					}
 
                     if (++sonss == 60)
-                        DelayBetweenParticles = 0.05f;
+                        DelayBetweenParticles = 0.01f;
                     if (waitBetweenDropSpawn)
 						yield return new WaitForSeconds (DelayBetweenParticles);
 

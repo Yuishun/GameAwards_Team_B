@@ -92,6 +92,12 @@ public class LightStartPoint : MonoBehaviour
         mesh.vertices = this.vertices.ToArray();
         mesh.uv = this.uvs.ToArray();
         mesh.triangles = this.tris.ToArray();
+        if (vertices.Count != colors.Count)
+        {
+            Debug.Log("LineArrayError\n" +
+                vertices.Count + " " + colors.Count);
+            Debug.Log(points.Count);
+        }
         mesh.colors = this.colors.ToArray();
 
         GetComponent<MeshFilter>().sharedMesh = mesh;

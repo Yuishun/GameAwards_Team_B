@@ -124,9 +124,9 @@ GameObject:
   - component: {fileID: 112680647}
   - component: {fileID: 112680646}
   - component: {fileID: 112680649}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Circle
-  m_TagString: Untagged
+  m_TagString: Frame
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -138,7 +138,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 112680645}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -203,7 +203,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 112680645}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.32, y: 0.3, z: 0}
+  m_LocalPosition: {x: 2.18, y: -1.49, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -240,7 +240,7 @@ GameObject:
   - component: {fileID: 168860474}
   m_Layer: 0
   m_Name: Gear(kari)
-  m_TagString: Untagged
+  m_TagString: Frame
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -311,17 +311,15 @@ PolygonCollider2D:
       - {x: 0.8577423, y: 1.124515}
       - {x: 0.43768597, y: 0.65526515}
       - {x: 0.17, y: 0.78}
-      - {x: 0.19532514, y: 1.3263313}
+      - {x: 0.17880511, y: 1.3197231}
       - {x: 0.17999999, y: 1.42}
       - {x: -0.17999999, y: 1.42}
-      - {x: -0.19939494, y: 1.3199999}
+      - {x: -0.18287468, y: 1.3133918}
       - {x: -0.17, y: 0.78}
-      - {x: -0.42, y: 0.68}
-      - {x: -0.84999996, y: 1.13}
-      - {x: -0.89, y: 1.13}
-      - {x: -1.12, y: 0.89}
-      - {x: -1.13, y: 0.84999996}
-      - {x: -0.89, y: 0.63}
+      - {x: -0.42132545, y: 0.6614429}
+      - {x: -0.8625834, y: 1.1228096}
+      - {x: -1.1264045, y: 0.86258304}
+      - {x: -0.8792145, y: 0.63179755}
       - {x: -0.65999997, y: 0.42999998}
       - {x: -0.74, y: 0.26999998}
       - {x: -0.77, y: 0.17}
@@ -334,10 +332,9 @@ PolygonCollider2D:
       - {x: -0.74, y: -0.26999998}
       - {x: -0.66999996, y: -0.42999998}
       - {x: -1.0272958, y: -0.75635207}
-      - {x: -1.15, y: -0.89}
+      - {x: -1.13254, y: -0.86672026}
       - {x: -0.870558, y: -1.1333537}
       - {x: -0.86897206, y: -1.134543}
-      - {x: -0.8609402, y: -1.1405672}
       - {x: -0.86545014, y: -1.1327913}
       - {x: -0.84999996, y: -1.12}
       - {x: -0.42999998, y: -0.68}
@@ -347,15 +344,9 @@ PolygonCollider2D:
       - {x: 0.17697525, y: -1.4109254}
       - {x: 0.17672682, y: -1.3199999}
       - {x: 0.17, y: -0.78}
-    - - {x: -0.13, y: -0.16}
-      - {x: -0.19, y: -0.089999996}
-      - {x: -0.11003971, y: 0.08003973}
-      - {x: -0.089999996, y: 0.19}
-      - {x: 0.13, y: 0.16}
+    - - {x: -0.19, y: -0.089999996}
       - {x: 0.19, y: 0.089999996}
-      - {x: 0.16, y: -0.13}
-      - {x: 0.089999996, y: -0.19}
-      - {x: -0.02, y: -0.19999999}
+      - {x: -0.0068411827, y: -0.0036290884}
 --- !u!212 &168860476
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -589,6 +580,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   surface: {fileID: 215651234}
+  m_color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!58 &215651237
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -960,7 +952,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 1024
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 2059900566}
+  m_TargetTexture: {fileID: 1099311147}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
@@ -1696,6 +1688,7 @@ MonoBehaviour:
   bloom: {fileID: 21300000, guid: 9b2ca7a0bae1aff4198999768ef25a0c, type: 3}
   flower: {fileID: 21300000, guid: 9bebb84502d8c63418ac57a198959d2c, type: 3}
   material: {fileID: 2100000, guid: 74da7a8e2c5a8ff4c8b8a83c5ab6dca4, type: 2}
+  ClearColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!212 &1002175579
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1970,6 +1963,38 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!84 &1099311147
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_Width: 522
+  m_Height: 294
+  m_AntiAliasing: 1
+  m_DepthFormat: 1
+  m_ColorFormat: 7
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
 --- !u!1 &1114497310
 GameObject:
   m_ObjectHideFlags: 0
@@ -2962,38 +2987,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!84 &2059900566
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_Width: 522
-  m_Height: 294
-  m_AntiAliasing: 1
-  m_DepthFormat: 1
-  m_ColorFormat: 7
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 0
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
 --- !u!1 &2063478942
 GameObject:
   m_ObjectHideFlags: 0

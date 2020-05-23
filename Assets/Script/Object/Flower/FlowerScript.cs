@@ -26,6 +26,10 @@ public class FlowerScript : MonoBehaviour
     //衝突フラグ
     bool m_bCollisiontFlag = false;
     Collider2D[] col = new Collider2D[1];
+    [SerializeField]
+    Color ClearColor = Color.white;
+    [SerializeField]
+    int stagenum;
 
     void Start()
     {
@@ -100,6 +104,9 @@ public class FlowerScript : MonoBehaviour
             yield return null;
         }
         material.color = new Color(1, 1, 1, 1);
+        yield return new WaitForSeconds(1.5f);
+        GameObject.Find("AllSceneManager").GetComponent<SceneManagerScript>().
+            OneStageClear(stagenum);
     }
     IEnumerator Swing()
     {
@@ -129,6 +136,10 @@ public class FlowerScript : MonoBehaviour
             col, LayerMask.GetMask("Light"));
         if (col[0])
         {
+            if (col[0].GetComponent<LightMove>().m_color
+                != ClearColor)
+                return;
+
             m_iCollisionTimer++;
             if (m_iCollisionTimer > m_iLimitCollisionTime)
             {
