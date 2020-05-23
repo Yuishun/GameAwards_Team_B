@@ -12,6 +12,7 @@ TagManager:
   - Frame
   - ColorWall
   - AllScene2
+  - BG
   layers:
   - Default
   - TransparentFX
