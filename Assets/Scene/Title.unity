@@ -490,7 +490,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0.000061035156, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &175463226
@@ -1288,10 +1288,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9879cddacea10b47a3b3e11d0118579, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DebugStage: 0
+  DebugStage: 7
   Scenefader: {fileID: 151958311}
+  ClearScenefader: {fileID: 21300000, guid: 8a097230f3e240740af99d4db1b3e36a, type: 3}
   m_mTransitionIn: {fileID: 2100000, guid: 198e19539521cff4d997e6002cd71a6e, type: 2}
   m_mTransitionOut: {fileID: 2100000, guid: 5d424d1a948a1bc429f6ac83e2cefdda, type: 2}
+  m_mTransition_ClearIn: {fileID: 2100000, guid: 0041cc9c018b3ca4c9d363a731d439bd,
+    type: 2}
+  m_mTransition_ClearOut: {fileID: 2100000, guid: 5d424d1a948a1bc429f6ac83e2cefdda,
+    type: 2}
   m_bFadeOut: 1
   m_bFadeEnd: 0
   menuScript: {fileID: 854677074}

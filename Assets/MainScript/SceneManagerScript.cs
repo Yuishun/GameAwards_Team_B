@@ -21,19 +21,26 @@ public class SceneManagerScript : MonoBehaviour
     static bool OneLoad = true;
     [SerializeField]
     public Image Scenefader;
-    
+    [SerializeField]
+    public Sprite ClearScenefader;
     [SerializeField]
     public Material m_mTransitionIn;
     [SerializeField]
     public Material m_mTransitionOut;
     [SerializeField]
+    public Material m_mTransition_ClearIn;
+    [SerializeField]
+    public Material m_mTransition_ClearOut;
+    [SerializeField]
     public bool m_bFadeOut = true;
     [SerializeField]
     public bool m_bFadeEnd = false;
-    [SerializeField]
+
+    Color default_fadeColor = new Color32(112,180,255, 255);
     public static bool m_bFadeInEnd = false;
     public static bool m_bMenu_InStage = false;
-    
+    bool m_bClearFade = false;
+
     [SerializeField, Header("メニュースクリプト")]
     MenuScript menuScript;
     
@@ -72,6 +79,8 @@ public class SceneManagerScript : MonoBehaviour
         singleton.m_bFadeOut = false;
         Debug.Log(prevSceneName + "->" + nextScene.name);
 
+        if (gamedata1 == 100)
+            ClearSceneFadeOut();
         StartCoroutine(BeginTransition());
         prevSceneName = nextScene.name;
 
@@ -86,6 +95,8 @@ public class SceneManagerScript : MonoBehaviour
     //===================================================
     public void OnPushChangeScene()
     {
+        if (gamedata1 == 100)
+            ClearFadeSet();
         singleton.m_bFadeOut = true;
         StartCoroutine(BeginTransition());
         switch (gamedata1)
@@ -166,12 +177,20 @@ public class SceneManagerScript : MonoBehaviour
         {
             if (m_bFadeOut)
             {
-                yield return Animate(m_mTransitionOut, 1);
+                if (m_bClearFade)
+                {
+                    yield return Animate(m_mTransition_ClearOut, 1);
+                }
+                else
+                    yield return Animate(m_mTransitionOut, 1);
                 yield return new WaitForEndOfFrame();
             }
             else
             {
-                yield return Animate(m_mTransitionIn, 1);
+                if (m_bClearFade)
+                    yield return Animate(m_mTransition_ClearIn, 1);
+                else
+                    yield return Animate(m_mTransitionIn, 1);
             }
         }
     }
@@ -265,5 +284,27 @@ public class SceneManagerScript : MonoBehaviour
     public void ReStage()
     {
         Loadstagenum(gamedata1);
+    }
+
+    //=============================================================
+    // ステージクリアフェードセット
+    //=============================================================
+    void ClearFadeSet()
+    {
+        m_bClearFade = true;
+        m_mTransition_ClearOut.color = Color.white;
+        Scenefader.GetComponent<Image>().sprite = ClearScenefader;
+    }
+    void ClearSceneFadeOut()
+    {
+        Vector3 scale = transform.localScale;
+        scale.y = -1;
+        Scenefader.transform.localScale = scale;
+        Invoke("LateClearSceneFade", 1);
+    }
+    void LateClearSceneFade()
+    {
+        m_mTransition_ClearOut.color = default_fadeColor;
+        m_bClearFade = false;
     }
 }

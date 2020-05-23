@@ -139,6 +139,9 @@ public class StageSelectScript : MonoBehaviour
     //===================================================
     public void StageSelect(int Stagenam)
     {
+        if (Stagenam == 8)
+            Stagenam = 100;
+
         if (allScene)
             allScene.Loadstagenum(Stagenam);
     }
