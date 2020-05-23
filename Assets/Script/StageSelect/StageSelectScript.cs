@@ -16,6 +16,8 @@ public class StageSelectScript : MonoBehaviour
     GameObject ClearEffectObj;
     [SerializeField, Header("クリア時生成エフェクトColor")]
     ParticleSystem.MinMaxGradient[] colors;
+    static Transform[] StageIcon;
+    GameObject BGSea;
 
     void Start()
     {
@@ -23,6 +25,7 @@ public class StageSelectScript : MonoBehaviour
         {
             allScene = GameObject.FindGameObjectWithTag("AllScene").transform.GetComponent<SceneManagerScript>();
             ClearStageNum = allScene.GetClearData();
+            BGSea = GameObject.FindWithTag("BG").gameObject;
             ClearStageCheck();
             CheckFind_SceneManager = true;
         }
@@ -158,28 +161,29 @@ public class StageSelectScript : MonoBehaviour
     //===================================================
     IEnumerator StageClear(int val)
     {
-        var obj = Instantiate(ClearEffectObj).gameObject.GetComponent<ParticleSystem>().main;
+        var pos = BGSea.transform.GetChild(0).GetChild(val).transform.position;
+        var obj = Instantiate(ClearEffectObj, pos,Quaternion.identity).gameObject.GetComponent<ParticleSystem>().main;
         switch (val)
         {
-            case 1:
+            case 0:
                 obj.startColor = colors[0];
                 break;
-            case 2:
+            case 1:
                 obj.startColor = colors[1];
                 break;
-            case 3:
+            case 2:
                 obj.startColor = colors[2];
                 break;
-            case 4:
+            case 3:
                 obj.startColor = colors[3];
                 break;
-            case 5:
+            case 4:
                 obj.startColor = colors[4];
                 break;
-            case 6:
+            case 5:
                 obj.startColor = colors[5];
                 break;
-            case 7:
+            case 6:
                 obj.startColor = colors[6];
                 break;
         }
