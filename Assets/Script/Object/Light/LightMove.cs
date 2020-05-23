@@ -243,7 +243,7 @@ public class LightMove : MonoBehaviour
             case "Mirror":
                 m_pos = ray.point;
                 float C = -Vector2.Dot(m_dirVec, ray.normal);
-                m_dirVec = (m_dirVec + 2 * C * ray.normal).normalized;
+                m_dirVec = (m_dirVec + 2 * C * ray.normal).normalized;                
                 AddLineRenderer();
                 m_pos += m_dirVec * 0.01f;
                 return flag;

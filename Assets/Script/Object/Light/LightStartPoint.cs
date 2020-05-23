@@ -34,9 +34,8 @@ public class LightStartPoint : MonoBehaviour
 
     void CreateMesh(float size,int i)
     {
-        //Vector2 plus90 = top + new Vector2(-dir.y, dir.x) * size;
-        //Vector2 minus90 = top + new Vector2(dir.y, -dir.x) * size;
 
+        //bool trisFlag = false;
         Vector2 verticesVec;
         if (i == points.Count - 1)
         {
@@ -47,10 +46,17 @@ public class LightStartPoint : MonoBehaviour
         {
             Vector2 Lvec1 = new Vector2(-vectors[i - 1].y, vectors[i - 1].x);
             Vector2 Lvec2 = new Vector2(-vectors[i].y, vectors[i].x);
-            verticesVec = Vector2.Lerp(Lvec1, Lvec2, 0.5f).normalized;                        
+            verticesVec = Vector2.Lerp(Lvec1, Lvec2, 0.5f).normalized;
+
+            //if ((vectors[i - 1] + 2 * -Vector2.Dot(vectors[i - 1], verticesVec)
+            //    * verticesVec).normalized == vectors[i])
+            //{
+            //    verticesVec = new Vector2(-verticesVec.y, verticesVec.x);
+            //    trisFlag = true;
+            //}
+
         }
 
-        //verticesVec.x = Mathf.Abs(verticesVec.x);
 
         //Debug.Log("vertVec" + verticesVec);
         verticesVec = transform.InverseTransformVector(verticesVec);            
