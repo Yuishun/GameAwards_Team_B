@@ -14,7 +14,7 @@ public class FlowerScript : MonoBehaviour
     Sprite flower;
     [SerializeField]
     Material material;
-    SpriteRenderer SpriteRenderer;
+    SpriteRenderer SpriteRender;
     float Alpha = 1.0f;
     float swingtime = 0;
     bool swingway = true;
@@ -30,17 +30,22 @@ public class FlowerScript : MonoBehaviour
     Color ClearColor = Color.white;
     [SerializeField]
     int stagenum;
+    //一度だけゴール判定
+    bool m_bGoal = false;
+
 
     void Start()
     {
-        SpriteRenderer = transform.GetComponent<SpriteRenderer>();
-        SpriteRenderer.material = material;
-        SpriteRenderer.sprite = seed;
+        SpriteRender = transform.GetComponent<SpriteRenderer>();
+        SpriteRender.material = material;
+        material.color = new Color(1, 1, 1, 1);
+        SpriteRender.sprite = seed;
         StartCoroutine("Swing");
     }
-    //他スクリプトからここを呼び出すことでクリア花開花画像切り替えが始まる
-    public void GoalFlower()
+
+    void GoalFlower()
     {
+        GameObject.FindGameObjectWithTag("GameController").GetComponent<InputController>().NoControll();
         StopCoroutine("Swing");
         StartCoroutine("Blooming");
     }
@@ -48,65 +53,70 @@ public class FlowerScript : MonoBehaviour
     public void SkipFlower()
     {
         StopCoroutine("Blooming");
+        var find = GameObject.Find("AllSceneManager");
+        if (find)
+            find.GetComponent<SceneManagerScript>().OneStageClear(stagenum);
     }
 
     IEnumerator Blooming()
     {
-        transform.eulerAngles = new Vector3(0, 0, 0);
+        transform.rotation = Quaternion.Euler(0, 0, 0);
+        transform.up = transform.root.up;
         //FadeOut
-        for (int i = 0; i < 8*2; i++)
+        for (int i = 0; i < 8 * 2; i++) 
         {
             Alpha -= 0.05f;
             material.color = new Color(1, 1, 1, Alpha);
             yield return new WaitForSeconds(0.05f);
         }
         //画像切り替え：芽
-        SpriteRenderer.sprite = sprout;
+        SpriteRender.sprite = sprout;
         //FadeIn
-        for (int i = 0; i < 8*2; i++)
+        for (int i = 0; i < 8; i++) 
         {
-            Alpha += 0.05f;
+            Alpha += 0.1f;
             material.color = new Color(1, 1, 1, Alpha);
             yield return null;
         }
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         //FadeOut
-        for (int i = 0; i < 8*2; i++)
+        for (int i = 0; i < 8 * 2; i++) 
         {
             Alpha -= 0.05f;
             material.color = new Color(1, 1, 1, Alpha);
             yield return new WaitForSeconds(0.05f);
         }
         //画像切り替え：蕾
-        SpriteRenderer.sprite = bloom;
+        SpriteRender.sprite = bloom;
         //FadeIn
-        for (int i = 0; i < 8*2; i++)
+        for (int i = 0; i < 8; i++)
         {
-            Alpha += 0.05f;
+            Alpha += 0.1f;
             material.color = new Color(1, 1, 1, Alpha);
             yield return null;
         }
         yield return new WaitForSeconds(1f);
         //FadeOut
-        for (int i = 0; i < 8*2; i++)
+        for (int i = 0; i < 8 * 2; i++) 
         {
             Alpha -= 0.05f;
             material.color = new Color(1, 1, 1, Alpha);
             yield return new WaitForSeconds(0.05f);
         }
         //画像切り替え：花
-        SpriteRenderer.sprite = flower;
+        SpriteRender.sprite = flower;
         //FadeIn
-        for (int i = 0; i < 8*2; i++)
+        for (int i = 0; i < 8; i++)
         {
-            Alpha += 0.05f;
+            Alpha += 0.1f;
             material.color = new Color(1, 1, 1, Alpha);
             yield return null;
         }
         material.color = new Color(1, 1, 1, 1);
         yield return new WaitForSeconds(1.5f);
-        GameObject.Find("AllSceneManager").GetComponent<SceneManagerScript>().
-            OneStageClear(stagenum);
+        var find = GameObject.Find("AllSceneManager");
+        if (find)
+            find.GetComponent<SceneManagerScript>().OneStageClear(stagenum);
     }
     IEnumerator Swing()
     {
@@ -131,24 +141,35 @@ public class FlowerScript : MonoBehaviour
 
     private void Update()
     {
-        col[0] = null;
+        if (!m_bGoal)
+        {
+            col[0] = null;
             Physics2D.OverlapCircleNonAlloc(transform.position, 0.6f,
             col, LayerMask.GetMask("Light"));
-        if (col[0])
-        {
-            if (col[0].GetComponent<LightMove>().m_color
-                != ClearColor)
-                return;
-
-            m_iCollisionTimer++;
-            if (m_iCollisionTimer > m_iLimitCollisionTime)
+            if (col[0])
             {
-                GoalFlower();
+                if (col[0].GetComponent<LightMove>().m_color
+                    != ClearColor)
+                    return;
+
+                m_iCollisionTimer++;
+                if (m_iCollisionTimer > m_iLimitCollisionTime)
+                {
+                    m_bGoal = !m_bGoal;
+                    GoalFlower();
+                }
+            }
+            else if (m_iCollisionTimer > 0)
+            {
+                m_iCollisionTimer = 0;
             }
         }
-        else if (m_iCollisionTimer > 0)
+        else
         {
-            m_iCollisionTimer = 0;
+            if (Input.GetButtonDown("Button_A"))
+            {
+                SkipFlower();
+            }
         }
     }
 }

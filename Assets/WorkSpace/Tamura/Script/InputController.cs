@@ -113,4 +113,8 @@ public class InputController : MonoBehaviour
     {
         m_bControll_ok = true;
     }
+    public void NoControll()
+    {
+        m_bControll_ok = false;
+    }
 }
