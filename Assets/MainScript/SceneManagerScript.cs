@@ -12,7 +12,7 @@ public class SceneManagerScript : MonoBehaviour
     static int gamedata1 = 0;
     //ステージクリア数保存
     static int gamedata2 = 0;
-    [SerializeField, Header("デバッグ用クリアステージ数。不要になったら消去")]
+    [SerializeField, Header("デバッグ用クリアステージ数。不要になったら消去"),Range(0,7)]
     public int DebugStage = 0;
     static int[,] StageStatus = new int[7, 2] { { 1, 0 }, { 2, 0 }, { 3, 0 }, { 4, 0 }, { 5, 0 }, { 6, 0 }, { 7, 0 } };
     public static bool ProphecyCheck = true;
@@ -47,7 +47,7 @@ public class SceneManagerScript : MonoBehaviour
     void Awake()
     {
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Debug用
-        for (int i = 0; i < StageStatus.Length/2; i++)
+        for (int i = 0; i < StageStatus.Length / 2; i++) 
         {
             if (i < DebugStage)
                 StageStatus[i, 1] = 1;
