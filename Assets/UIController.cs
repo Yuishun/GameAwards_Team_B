@@ -13,6 +13,8 @@ public class UIController : MonoBehaviour
     GravityControllerScript gravityController;
     [SerializeField]
     RectTransform Icon_Ice, Icon_Unzip, Icon_Rot;
+    [SerializeField]
+    RectTransform Icon_A, Icon_B, Icon_X, Icon_Y, Icon_R, Icon_L;
     bool m_bIconSpin = false;
     [SerializeField]
     float BidIconMagnification = 3;
@@ -26,7 +28,7 @@ public class UIController : MonoBehaviour
         gravityController = transform.root.GetChild(1).GetComponent<GravityControllerScript>();
         
         UI_NowRotframe = transform.GetChild(0).GetComponent<RectTransform>();
-        UI_NowRotframe.sizeDelta = new Vector2(worldScreenHeight*20, 100);
+        UI_NowRotframe.sizeDelta = new Vector2(worldScreenHeight * 20, 100);
         UI_NowRotframe.localPosition += new Vector3(-UI_NowRotframe.rect.width * 0.5f, -UI_NowRotframe.rect.height * 0.5f);
 
         UI_MoveRotframe = transform.GetChild(1).GetComponent<RectTransform>();
@@ -47,10 +49,13 @@ public class UIController : MonoBehaviour
         BigIconpos = Icon_Unzip.localPosition;
         smallIconvec = Icon_Ice.sizeDelta;
         smallIconpos = Icon_Ice.localPosition;
-        
 
-        Icon_Rot.sizeDelta = new Vector2(UI_NowRotframe.sizeDelta.x, UI_NowRotframe.sizeDelta.x);
+        //RotIcon
+        Icon_Rot.sizeDelta = new Vector2(UI_NowRotframe.sizeDelta.x * 0.8f, UI_NowRotframe.sizeDelta.x * 0.8f);
         Icon_Rot.transform.localPosition = UI_MoveRotframe.localPosition - new Vector3(0, Icon_Rot.rect.height * 0.5f + UI_MoveRotframe.rect.height * 0.5f);
+        //LRボタン位置(RotIconに付随して動くため、RotIconを移動させること)
+        Icon_R.transform.localPosition = Icon_Rot.transform.localPosition + new Vector3( 80,-110,0);
+        Icon_L.transform.localPosition = Icon_Rot.transform.localPosition + new Vector3(-80,-110,0);
     }
 
     // Update is called once per frame

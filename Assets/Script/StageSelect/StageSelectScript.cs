@@ -18,19 +18,35 @@ public class StageSelectScript : MonoBehaviour
     ParticleSystem.MinMaxGradient[] colors;
     static Transform[] StageIcon;
     GameObject BGSea;
-
+    [SerializeField]
+    Material Cloudmat, Seamat;
+    ParticleSystem RainParticle;
+    [SerializeField]
+    private float ClearAnimationTime = 5;
+    [SerializeField]
+    private float WaveHeight = 0.7f;
     void Start()
     {
+        BGSea = GameObject.FindWithTag("BG").gameObject;
         if (GameObject.FindGameObjectWithTag("AllScene"))
         {
             allScene = GameObject.FindGameObjectWithTag("AllScene").transform.GetComponent<SceneManagerScript>();
             ClearStageNum = allScene.GetClearData();
-            BGSea = GameObject.FindWithTag("BG").gameObject;
             ClearStageCheck();
             CheckFind_SceneManager = true;
         }
         if (!CheckFind_SceneManager)
             Debug.Log("シーンマネージャーがないよ！");
+        if (Cloudmat)
+        {
+            Cloudmat.EnableKeyword("cloudClear");
+            Cloudmat.SetFloat("_cloudClear", 0);
+        }
+        if (Seamat)
+        {
+            Seamat.EnableKeyword("WaveHeight");
+            Seamat.SetFloat("_WaveHeight", WaveHeight);
+        }
     }
     //===================================================
     // ステージクリア状態チェック
@@ -41,14 +57,10 @@ public class StageSelectScript : MonoBehaviour
         int num = 0;
         while (num < ClearStageNum.Length / 2)
         {
-            switch (ClearStageNum[num, 1])
+            if (ClearStageNum[num, 1] == 1)
             {
-                case 0:
-                    break;
-                case 1:
-                    clearNum++;
-                    StartCoroutine(StageClear(num));
-                    break;
+                clearNum++;
+                StartCoroutine(StageClear(num));
             }
             num++;
         }
@@ -72,9 +84,7 @@ public class StageSelectScript : MonoBehaviour
                 }
             }
             else
-            {
                 m_bMenuOpen = !m_bMenuOpen;
-            }
         }
         //StageNext
         else if (Input.GetButtonDown("Button_A"))
@@ -84,24 +94,8 @@ public class StageSelectScript : MonoBehaviour
                 {
                     if (CheckFind_SceneManager)
                     {
-                        int clearnum = 0;
-                        int num = 0;
-                        while (num < ClearStageNum.Length / 2)
-                        {
-                            switch (ClearStageNum[num, 1])
-                            {
-                                case 0:
-                                    break;
-                                case 1:
-                                    clearnum++;
-                                    break;
-                            }
-                            num++;
-                        }
-                        StageSelect(clearnum + 1);
+                        StageSelect(BackClearStageNum() + 1);
                     }
-                    else
-                        Debug.Log("シーンマネージャーがないよ！");
                 }
         }
         if (!prophecy.activeSelf)
@@ -128,6 +122,9 @@ public class StageSelectScript : MonoBehaviour
         else
         if (Input.GetKeyDown(KeyCode.Alpha7))
             StageSelect(7);
+        
+        if (Input.GetKeyDown(KeyCode.Alpha7))
+            StageSelect(8);
         //==*************************************************************
     }
     public void SelectButtonActivateion()
@@ -138,23 +135,42 @@ public class StageSelectScript : MonoBehaviour
         }
     }
     //===================================================
-    // ステージ選択用
+    // ステージ選択用(シーンロード指定)
     //===================================================
     public void StageSelect(int Stagenam)
     {
         if (Stagenam == 8)
-            Stagenam = 100;
-
+            StartCoroutine("AllStageClear");
+        else
         if (allScene)
             allScene.Loadstagenum(Stagenam);
     }
 
     //===================================================
-    // ステージクリア直後処理
+    // 全ステージクリア直後処理
     //===================================================
-    IEnumerator OneStageClear()
+    IEnumerator AllStageClear()
     {
+        RainParticle = BGSea.transform.GetChild(1).GetComponent<ParticleSystem>();
+        var emission = RainParticle.emission;
+        Cloudmat.EnableKeyword("_cloudClear");
+        Seamat.EnableKeyword("WaveHeight");
+        var val = 0f;
+        while (val <= ClearAnimationTime) 
+        {
+            val += Time.deltaTime;
+            var count = val / ClearAnimationTime;
+            if (count < 1)
+            {
+                emission.rateOverTime = 300 - 300 * ((val + 1.5f)/ ClearAnimationTime);
+                Cloudmat.SetFloat("_cloudClear", count);
+                Seamat.SetFloat("_WaveHeight", WaveHeight + 0.1f - WaveHeight * count);
+            }
+            yield return new WaitForEndOfFrame();
+        }
         yield return new WaitForEndOfFrame();
+        if (allScene)
+            allScene.Loadstagenum(100);
     }
     //===================================================
     // クリアステージ処理
@@ -193,7 +209,6 @@ public class StageSelectScript : MonoBehaviour
 
     public int BackClearStageNum()
     {
-
         int clearNum = 0;
         int num = 0;
         if (CheckFind_SceneManager)
