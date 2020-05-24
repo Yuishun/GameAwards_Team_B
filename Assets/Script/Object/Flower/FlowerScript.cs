@@ -33,7 +33,6 @@ public class FlowerScript : MonoBehaviour
     //一度だけゴール判定
     bool m_bGoal = false;
 
-
     void Start()
     {
         SpriteRender = transform.GetComponent<SpriteRenderer>();
@@ -53,6 +52,9 @@ public class FlowerScript : MonoBehaviour
     public void SkipFlower()
     {
         StopCoroutine("Blooming");
+        SpriteRender.sprite = flower;
+        material.color = new Color(1, 1, 1, 1);
+
         var find = GameObject.Find("AllSceneManager");
         if (find)
             find.GetComponent<SceneManagerScript>().OneStageClear(stagenum);

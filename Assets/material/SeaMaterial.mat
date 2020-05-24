@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: SeaMaterial
   m_Shader: {fileID: 4800000, guid: 0052e0632206f6e448540357bb46496e, type: 3}
-  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA WaveHeight
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -44,7 +44,7 @@ Material:
     - _Gloss: 0
     - _Metallic: 0
     - _Speed: 0.43
-    - _WaveHeight: 0.6
+    - _WaveHeight: 0.7
     - _WaveIop: 1
     - _WaveTop: 1
     - _WaveWidth: 0
