@@ -85,7 +85,7 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
-    - _cloudClear: 0
+    - _cloudClear: 0.9973135
     - _node_4745: 0
     - _slider: 1
     - _width: 0
