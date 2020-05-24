@@ -27,6 +27,7 @@ public class StageSelectScript : MonoBehaviour
     private float WaveHeight = 0.7f;
     void Start()
     {
+        BGSea = GameObject.FindWithTag("BG").gameObject;
         if (GameObject.FindGameObjectWithTag("AllScene"))
         {
             allScene = GameObject.FindGameObjectWithTag("AllScene").transform.GetComponent<SceneManagerScript>();
@@ -46,8 +47,6 @@ public class StageSelectScript : MonoBehaviour
             Seamat.EnableKeyword("WaveHeight");
             Seamat.SetFloat("_WaveHeight", WaveHeight);
         }
-        BGSea = GameObject.FindWithTag("BG").gameObject;
-
     }
     //===================================================
     // ステージクリア状態チェック
