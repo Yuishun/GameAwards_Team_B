@@ -116,7 +116,7 @@ public class FlowerScript : MonoBehaviour
         }
         material.color = new Color(1, 1, 1, 1);
         yield return new WaitForSeconds(1.5f);
-        var find = GameObject.Find("AllSceneManager");
+        var find = GameObject.FindWithTag("AllScene");
         if (find)
             find.GetComponent<SceneManagerScript>().OneStageClear(stagenum);
     }

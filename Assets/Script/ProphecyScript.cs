@@ -141,12 +141,11 @@ public class ProphecyScript : MonoBehaviour
         IconFlag = false;
         SceneManagerScript.SetButton_Active();
         gameObject.SetActive(false);
-        //Destroy(gameObject);
     }
 
     IEnumerator BookOpen()
     {
-        bookleft.gameObject.transform.SetSiblingIndex(1);
+        bookleft.gameObject.transform.SetSiblingIndex(4);
         bookleft.localPosition = new Vector3(400, 0, 0);
         var timer = 0f;
         var flag = false;

@@ -25,6 +25,7 @@ public class StageSelectScript : MonoBehaviour
     private float ClearAnimationTime = 5;
     [SerializeField]
     private float WaveHeight = 0.7f;
+    
     void Start()
     {
         BGSea = GameObject.FindWithTag("BG").gameObject;
@@ -151,6 +152,10 @@ public class StageSelectScript : MonoBehaviour
     //===================================================
     IEnumerator AllStageClear()
     {
+        Light directlight = GameObject.FindGameObjectWithTag("Light").transform.GetComponent<Light>();
+        Camera cam = Camera.main.gameObject.GetComponent<Camera>();
+        var nowcolor = directlight.color;
+        var lightpos = directlight.transform.position;
         RainParticle = BGSea.transform.GetChild(1).GetComponent<ParticleSystem>();
         var emission = RainParticle.emission;
         Cloudmat.EnableKeyword("_cloudClear");
@@ -162,13 +167,15 @@ public class StageSelectScript : MonoBehaviour
             var count = val / ClearAnimationTime;
             if (count < 1)
             {
+                directlight.transform.position = Vector3.Lerp(lightpos, new Vector3(0, 50, -10), count);
+                directlight.color = Color.Lerp(nowcolor, Color.white, count);
+                cam.backgroundColor = directlight.color;
                 emission.rateOverTime = 300 - 300 * ((val + 1.5f)/ ClearAnimationTime);
                 Cloudmat.SetFloat("_cloudClear", count);
                 Seamat.SetFloat("_WaveHeight", WaveHeight + 0.1f - WaveHeight * count);
             }
             yield return new WaitForEndOfFrame();
         }
-        yield return new WaitForEndOfFrame();
         if (allScene)
             allScene.Loadstagenum(100);
     }

@@ -247,6 +247,7 @@ public class SceneManagerScript : MonoBehaviour
             if (i == val)
                 StageStatus[i, 1] = 1;
         }
+        Loadstagenum(500);
     }
 
     //=============================================================

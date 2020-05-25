@@ -13,6 +13,7 @@ TagManager:
   - ColorWall
   - AllScene2
   - BG
+  - Light
   layers:
   - Default
   - TransparentFX
