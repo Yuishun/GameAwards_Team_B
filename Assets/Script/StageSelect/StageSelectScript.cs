@@ -61,7 +61,7 @@ public class StageSelectScript : MonoBehaviour
             if (ClearStageNum[num, 1] == 1)
             {
                 clearNum++;
-                StartCoroutine(StageClear(num));
+                StageClear(num);
             }
             num++;
         }
@@ -182,7 +182,7 @@ public class StageSelectScript : MonoBehaviour
     //===================================================
     // クリアステージ処理
     //===================================================
-    IEnumerator StageClear(int val)
+    void StageClear(int val)
     {
         var pos = BGSea.transform.GetChild(0).GetChild(val).transform.position;
         var obj = Instantiate(ClearEffectObj, pos,Quaternion.identity).gameObject.GetComponent<ParticleSystem>().main;
@@ -210,7 +210,6 @@ public class StageSelectScript : MonoBehaviour
                 obj.startColor = colors[6];
                 break;
         }
-        yield return new WaitForEndOfFrame();
     }
 
 

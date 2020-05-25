@@ -53,10 +53,10 @@ public class ProphecyScript : MonoBehaviour
             gameObject.SetActive(true);
             SceneManagerScript.ProphecyCheck = false;
             transform.GetChild(0).gameObject.SetActive(true);
-            nextIcon = transform.GetChild(0).GetChild(4);
+            nextIcon = transform.GetChild(0).GetChild(7);
             nextIcon.transform.localPosition = 
                 new Vector3(nextIcon.transform.localPosition.x,
-                transform.transform.GetChild(0).GetChild(3).transform.localPosition.y+10,0);
+                transform.transform.GetChild(0).GetChild(6).transform.localPosition.y+10,0);
             bookleft = transform.GetChild(0).GetChild(0).GetComponent<RectTransform>();
             bookright = transform.GetChild(0).GetChild(1).GetComponent<RectTransform>();
             bookl_maintex = bookleft.GetComponent<RawImage>();
@@ -79,7 +79,7 @@ public class ProphecyScript : MonoBehaviour
         {
             if (flag)
             {
-                transform.GetChild(0).GetChild(3).gameObject.SetActive(true);
+                transform.GetChild(0).GetChild(6).gameObject.SetActive(true);
                 nextIcon.gameObject.SetActive(true);
                 StartCoroutine(IconMove());
                 flag = false;
