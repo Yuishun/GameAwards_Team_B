@@ -25,6 +25,7 @@ public class StageSelectScript : MonoBehaviour
     private float ClearAnimationTime = 5;
     [SerializeField]
     private float WaveHeight = 0.7f;
+    ParticleSystem[] rainbows = new ParticleSystem[] { };
     
     void Start()
     {
@@ -152,6 +153,9 @@ public class StageSelectScript : MonoBehaviour
     //===================================================
     IEnumerator AllStageClear()
     {
+        for (int i = 0; i < rainbows.Length; i++)
+            rainbows[i].gameObject.SetActive(true);
+        
         Light directlight = GameObject.FindGameObjectWithTag("Light").transform.GetComponent<Light>();
         Camera cam = Camera.main.gameObject.GetComponent<Camera>();
         var nowcolor = directlight.color;
@@ -160,6 +164,7 @@ public class StageSelectScript : MonoBehaviour
         var emission = RainParticle.emission;
         Cloudmat.EnableKeyword("_cloudClear");
         Seamat.EnableKeyword("WaveHeight");
+        yield return new WaitForSeconds(5f);
         var val = 0f;
         while (val <= ClearAnimationTime) 
         {
@@ -173,7 +178,13 @@ public class StageSelectScript : MonoBehaviour
                 emission.rateOverTime = 300 - 300 * ((val + 1.5f)/ ClearAnimationTime);
                 Cloudmat.SetFloat("_cloudClear", count);
                 Seamat.SetFloat("_WaveHeight", WaveHeight + 0.1f - WaveHeight * count);
+                for (int i = 0; i < rainbows.Length; i++)
+                    rainbows[i].transform.localScale =
+                        new Vector3(rainbows[i].transform.localScale.x,
+                        Mathf.Lerp(rainbows[i].transform.localScale.y, 0.5f, count),
+                        rainbows[i].transform.localScale.z);
             }
+
             yield return new WaitForEndOfFrame();
         }
         if (allScene)
@@ -184,32 +195,41 @@ public class StageSelectScript : MonoBehaviour
     //===================================================
     void StageClear(int val)
     {
-        var pos = BGSea.transform.GetChild(0).GetChild(val).transform.position;
-        var obj = Instantiate(ClearEffectObj, pos,Quaternion.identity).gameObject.GetComponent<ParticleSystem>().main;
+        var target = BGSea.transform.GetChild(0).GetChild(val).transform;
+        var pos = target.position;
+        var obj = Instantiate(ClearEffectObj, pos, Quaternion.identity).gameObject.GetComponent<ParticleSystem>();
+        var objmain = obj.main;
+        var objchild = obj.transform.GetChild(0).GetComponent<ParticleSystem>();
+        var objchildmain = objchild.main;
+ 
         switch (val)
         {
             case 0:
-                obj.startColor = colors[0];
+                objmain.startColor = objchildmain.startColor = colors[0];
                 break;
             case 1:
-                obj.startColor = colors[1];
+                objmain.startColor = objchildmain.startColor = colors[1];
                 break;
             case 2:
-                obj.startColor = colors[2];
+                objmain.startColor = objchildmain.startColor = colors[2];
                 break;
             case 3:
-                obj.startColor = colors[3];
+                objmain.startColor = objchildmain.startColor = colors[3];
                 break;
             case 4:
-                obj.startColor = colors[4];
+                objmain.startColor = objchildmain.startColor = colors[4];
                 break;
             case 5:
-                obj.startColor = colors[5];
+                objmain.startColor = objchildmain.startColor = colors[5];
                 break;
             case 6:
-                obj.startColor = colors[6];
+                objmain.startColor = objchildmain.startColor = colors[6];
                 break;
         }
+        var array = rainbows;
+        rainbows = new ParticleSystem[array.Length + 1];
+        System.Array.Copy(array, rainbows, array.Length);
+        rainbows[array.Length] = objchild;
     }
 
 
@@ -227,5 +247,10 @@ public class StageSelectScript : MonoBehaviour
             }
         }
         return clearNum;
+    }
+
+    public ParticleSystem.MinMaxGradient[] GetColor()
+    {
+        return colors;
     }
 }
