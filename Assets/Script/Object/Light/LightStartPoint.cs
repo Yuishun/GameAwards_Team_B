@@ -23,6 +23,7 @@ public class LightStartPoint : MonoBehaviour
     int offset = 0;
     float xoffset = 0;
     float penSize = 0.25f;          // 筆の太さ
+    Collider2D[] cols = new Collider2D[1];
 
     private void Awake()
     {
@@ -34,8 +35,6 @@ public class LightStartPoint : MonoBehaviour
 
     void CreateMesh(float size,int i)
     {
-
-        //bool trisFlag = false;
         Vector2 verticesVec;
         if (i == points.Count - 1)
         {
@@ -48,42 +47,55 @@ public class LightStartPoint : MonoBehaviour
             Vector2 Lvec2 = new Vector2(-vectors[i].y, vectors[i].x);
             verticesVec = Vector2.Lerp(Lvec1, Lvec2, 0.5f).normalized;
 
-            //if ((vectors[i - 1] + 2 * -Vector2.Dot(vectors[i - 1], verticesVec)
-            //    * verticesVec).normalized == vectors[i])
-            //{
-            //    verticesVec = new Vector2(-verticesVec.y, verticesVec.x);
-            //    trisFlag = true;
-            //}
-
+            cols[0] = null;
+            if (Physics2D.OverlapCircleNonAlloc(points[i], 0.05f,
+                cols, LayerMask.GetMask("Default")) == 1)
+            {
+                if (cols[0].transform.tag == "Mirror")
+                {
+                    verticesVec = new Vector2(verticesVec.y, -verticesVec.x);
+                }
+            }
         }
 
 
         //Debug.Log("vertVec" + verticesVec);
         verticesVec = transform.InverseTransformVector(verticesVec);            
         
-
         Vector2 point = transform.InverseTransformPoint(points[i]);
         Vector2 leftpoint = point + verticesVec * size;
-        Vector2 rightpoint = point - verticesVec * size;        
+        Vector2 rightpoint = point - verticesVec * size;
 
         // 頂点を追加
-        this.vertices.Add(leftpoint);
-        this.vertices.Add(rightpoint);
+        if (LineSegmentsIntersection(vertices[offset], leftpoint,
+            vertices[offset + 1], rightpoint))
+        {
+            this.vertices.Add(rightpoint);
+            this.vertices.Add(leftpoint);
+        }
+        else
+        {
+            this.vertices.Add(leftpoint);
+            this.vertices.Add(rightpoint);
+        }        
+
+        //Debug.Log("vec" + transform.InverseTransformVector(vectors[i - 1])
+        //    + "vert" + (vertices[offset + 2] - vertices[offset]).normalized);
 
         // UVを追加
         this.uvs.Add(new Vector2(xoffset, 0));
         this.uvs.Add(new Vector2(xoffset, 1));
         xoffset = (xoffset + 1) % 2;
-        //xoffset += (top - prev).magnitude / 6.0f;////uScrollSpeed; 
 
-        // インデックスを追加
+        //インデックスを追加
+        
         this.tris.Add(offset);
         this.tris.Add(offset + 1);
         this.tris.Add(offset + 2);
         this.tris.Add(offset + 1);
         this.tris.Add(offset + 3);
         this.tris.Add(offset + 2);
-
+        
         offset += 2;
 
     }
@@ -98,12 +110,6 @@ public class LightStartPoint : MonoBehaviour
         mesh.vertices = this.vertices.ToArray();
         mesh.uv = this.uvs.ToArray();
         mesh.triangles = this.tris.ToArray();
-        if (vertices.Count != colors.Count)
-        {
-            Debug.Log("LineArrayError\n" +
-                vertices.Count + " " + colors.Count);
-            Debug.Log(points.Count);
-        }
         mesh.colors = this.colors.ToArray();
 
         GetComponent<MeshFilter>().sharedMesh = mesh;
@@ -157,4 +163,33 @@ public class LightStartPoint : MonoBehaviour
         colors.Add(color);
     }
 
+    public static bool LineSegmentsIntersection(
+    Vector2 p1,
+    Vector2 p2,
+    Vector2 p3,
+    Vector3 p4)
+    //out Vector2 intersection)
+    {
+       // intersection = Vector2.zero;
+
+        var d = (p2.x - p1.x) * (p4.y - p3.y) - (p2.y - p1.y) * (p4.x - p3.x);
+
+        if (d == 0.0f)
+        {
+            return false;
+        }
+
+        var u = ((p3.x - p1.x) * (p4.y - p3.y) - (p3.y - p1.y) * (p4.x - p3.x)) / d;
+        var v = ((p3.x - p1.x) * (p2.y - p1.y) - (p3.y - p1.y) * (p2.x - p1.x)) / d;
+
+        if (u < 0.0f || u > 1.0f || v < 0.0f || v > 1.0f)
+        {
+            return false;
+        }
+
+        //intersection.x = p1.x + u * (p2.x - p1.x);
+        //intersection.y = p1.y + u * (p2.y - p1.y);
+
+        return true;
+    }
 }

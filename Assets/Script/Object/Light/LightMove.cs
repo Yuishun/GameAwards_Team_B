@@ -103,7 +103,7 @@ public class LightMove : MonoBehaviour
                     continue;
                 }
                 //ray.transform.GetComponent<>().
-                //ray.transform.GetComponent<WaterSurface>().Rerurn_dirVec(m_pos, ray, m_dirVec);
+                //ray = ray.transform.GetComponent<MetaballParticleClass>().WaterNormalVec(ray);
                 var watersurface = surface.ReInVector2(m_pos, ray, m_dirVec);
                 // 空気から水への屈折したベクトルを取得
                 m_dirVec = Refractioning(GetRefractiveIndex(RefractiveIndex.Air),
@@ -138,8 +138,9 @@ public class LightMove : MonoBehaviour
                        // m_color = ray.transform.GetComponent<MetaballParticleClass>().
                        //     spRend.color;
                         // Debug.Log("Exit" + ray2.point);
-                        // Debug.Log("ExitN" + ray2.normal);
+                        //Debug.Log("ExitN" + ray.normal);
                         m_pos = ray.point + m_dirVec * 0.001f; // 位置調整
+                        //ray = ray.transform.GetComponent<MetaballParticleClass>().WaterNormalVec(ray);                        
                         var watersurface = surface.ReInVector2(m_pos, ray, -m_dirVec);
                         m_dirVec = Refractioning(GetRefractiveIndex(RefractiveIndex.Water),
                                 GetRefractiveIndex(RefractiveIndex.Air),
@@ -157,7 +158,8 @@ public class LightMove : MonoBehaviour
                         //if(ray.collider)
                         EnterWater =
                             FrameLayerProcessing(ray.transform.tag, EnterWater);
-                        yield break;
+                        if(!EnterWater)
+                            yield break;
                     }
                     else
                     {
