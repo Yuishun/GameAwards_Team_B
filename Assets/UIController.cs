@@ -15,6 +15,8 @@ public class UIController : MonoBehaviour
     RectTransform Icon_Ice, Icon_Unzip, Icon_Rot;
     [SerializeField]
     RectTransform Icon_A, Icon_B, Icon_X, Icon_Y, Icon_R, Icon_L;
+    [SerializeField]
+    RectTransform Icon_Lst, Icon_Rst;
     bool m_bIconSpin = false;
     [SerializeField]
     float BidIconMagnification = 3;
@@ -22,26 +24,29 @@ public class UIController : MonoBehaviour
     Vector2 BigIconpos, smallIconpos;
     [SerializeField, Header("アイコン移動速度"), Range(0.1f, 4)]
     float IconSlideSpeed = 1;
+    Image Icon_rotImage;
+
+    Image Icon_X_Arrow, Icon_Y_Arrow;
     void Start()
     {
         float worldScreenHeight = Camera.main.orthographicSize * 2f;
         gravityController = transform.root.GetChild(1).GetComponent<GravityControllerScript>();
-        
+        //UI_NowRotframe
         UI_NowRotframe = transform.GetChild(0).GetComponent<RectTransform>();
         UI_NowRotframe.sizeDelta = new Vector2(worldScreenHeight * 20, 100);
         UI_NowRotframe.localPosition += new Vector3(-UI_NowRotframe.rect.width * 0.5f, -UI_NowRotframe.rect.height * 0.5f);
-
+        //UI_MoveRotframe
         UI_MoveRotframe = transform.GetChild(1).GetComponent<RectTransform>();
         UI_MoveRotframe.sizeDelta = UI_NowRotframe.sizeDelta;
         UI_MoveRotframe.localPosition = UI_NowRotframe.localPosition + new Vector3(0,-UI_NowRotframe.rect.height*0.5f) + new Vector3(0, -UI_MoveRotframe.rect.height*0.5f);
-
+        //UI_NowRotText
         UI_NowRotText = transform.GetChild(0).GetChild(0).GetComponent<Text>();
         UI_NowRotText.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(UI_NowRotframe.rect.width, UI_NowRotframe.rect.height);
-
+        //UI_MoveRotText
         UI_MoveRotText = transform.GetChild(1).GetChild(0).GetComponent<Text>();
         UI_MoveRotText.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(UI_MoveRotframe.rect.width, UI_MoveRotframe.rect.height);
 
-        //IceUnzipアイコン左下端
+        //Ice/Unzipアイコン左下端
         Icon_Unzip.sizeDelta *= BidIconMagnification;
         Icon_Ice.transform.localPosition += new Vector3(Icon_Ice.rect.width * 0.5f, Icon_Ice.rect.height * 0.5f);
         Icon_Unzip.transform.localPosition += new Vector3(Icon_Unzip.rect.width * 0.5f, Icon_Unzip.rect.height * 0.5f);
@@ -51,11 +56,21 @@ public class UIController : MonoBehaviour
         smallIconpos = Icon_Ice.localPosition;
 
         //RotIcon
-        Icon_Rot.sizeDelta = new Vector2(UI_NowRotframe.sizeDelta.x * 0.8f, UI_NowRotframe.sizeDelta.x * 0.8f);
-        Icon_Rot.transform.localPosition = UI_MoveRotframe.localPosition - new Vector3(0, Icon_Rot.rect.height * 0.5f + UI_MoveRotframe.rect.height * 0.5f);
+        Icon_Rot.sizeDelta = new Vector2(UI_NowRotframe.sizeDelta.x * 0.7f, UI_NowRotframe.sizeDelta.x * 0.7f);
+        Icon_Rot.transform.localPosition += new Vector3(-Icon_Rot.rect.width, Icon_Rot.rect.height*0.8f);
+
+        Icon_rotImage = Icon_Rot.transform.GetChild(0).GetComponent<Image>();
         //LRボタン位置(RotIconに付随して動くため、RotIconを移動させること)
-        Icon_R.transform.localPosition = Icon_Rot.transform.localPosition + new Vector3( 80,-110,0);
-        Icon_L.transform.localPosition = Icon_Rot.transform.localPosition + new Vector3(-80,-110,0);
+        Icon_R.transform.localPosition = Icon_Rot.transform.localPosition + new Vector3( 80, 110, 0);
+        Icon_L.transform.localPosition = Icon_Rot.transform.localPosition + new Vector3(-80, 110, 0);
+        Icon_X.transform.localPosition = Icon_Rot.transform.localPosition + new Vector3( 80,-110, 0);
+        Icon_Y.transform.localPosition = Icon_Rot.transform.localPosition + new Vector3(-80,-110, 0);
+        Icon_X_Arrow = Icon_X.GetChild(0).GetComponent<Image>();
+        Icon_Y_Arrow = Icon_Y.GetChild(0).GetComponent<Image>();
+
+        //LRStick
+        Icon_Lst.transform.localPosition += new Vector3(100,0,0);
+        Icon_Rst.transform.localPosition += new Vector3(100,0,0);
     }
 
     // Update is called once per frame
@@ -74,7 +89,7 @@ public class UIController : MonoBehaviour
                 if(m_bIconSpin)
                 {
                     m_bIconSpin = !m_bIconSpin;
-                    Icon_Rot.localScale = new Vector3(1, 1, 1);
+                    Icon_Rot.localScale = new Vector3(-1, 1, 1);
                 }
                 break;
             case 2:
@@ -83,10 +98,31 @@ public class UIController : MonoBehaviour
                 if (m_bIconSpin)
                 {
                     m_bIconSpin = !m_bIconSpin;
-                    Icon_Rot.localScale = new Vector3(-1, 1, 1);
+                    Icon_Rot.localScale = new Vector3(1, 1, 1);
                 }
                 break;
         }
+        var rollangle = gravityController.BackAngle();
+        switch (rollangle)
+        {
+            case 10:
+                Icon_rotImage.fillAmount = 0.33f;
+                Icon_X_Arrow.fillAmount = 1f;
+                Icon_Y_Arrow.fillAmount = 0.66f;
+                break;
+            case 15:
+                Icon_rotImage.fillAmount = 0.66f;
+                Icon_X_Arrow.fillAmount = 0.33f;
+                Icon_Y_Arrow.fillAmount = 1f;
+                break;
+            case 20:
+                Icon_rotImage.fillAmount = 1f;
+                Icon_X_Arrow.fillAmount = 0.66f;
+                Icon_Y_Arrow.fillAmount = 0.33f;
+                break;
+        }
+
+
 
         var diff = -Camera.main.transform.up;
         var axis = Vector3.Cross(-Vector3.up, diff);

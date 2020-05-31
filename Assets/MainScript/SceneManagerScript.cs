@@ -130,6 +130,9 @@ public class SceneManagerScript : MonoBehaviour
             case 100:
                 if (singleton)
                     singleton.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
+                for (int i = 0; i < StageStatus.Length / 2; i++)
+                    if (i < DebugStage)
+                        StageStatus[i, 1] = 0;
                 StartCoroutine(SceneChange("GameClear"));
                 break;
             case 500:
@@ -247,6 +250,7 @@ public class SceneManagerScript : MonoBehaviour
             if (i == val)
                 StageStatus[i, 1] = 1;
         }
+        Loadstagenum(500);
     }
 
     //=============================================================
