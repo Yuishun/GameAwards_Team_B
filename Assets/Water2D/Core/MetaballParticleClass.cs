@@ -92,25 +92,33 @@ public class MetaballParticleClass : MonoBehaviour {
             return true;
     }
 
+    // 水面の法線を返す
     public RaycastHit2D WaterNormalVec(RaycastHit2D ray)
     {
+        // 周囲に水の粒があるか
         Collider2D[] col = Physics2D.OverlapCircleAll(transform.position, 0.2f
             , LayerMask.GetMask("PostProcessing"));
         for(int i = 0; i < col.Length; i++)
         {
+            // 自分自身なら処理を飛ばす
             if (col[i].transform.position == transform.position)
                 continue;
 
+            // rayの当たっている点から
+            // 水面の線分への垂線が線分のどの部分に当たっているか
             Vector2 point = nearPoint(transform.position,
                 col[i].transform.position, ray.point);
+            // 垂線が線分と交わっていないとき処理を飛ばす
             if (point == Vector2.zero)
                 continue;
+            // 線分からrayの当たっているところへのベクトルを法線とする
             ray.normal = (ray.point - point).normalized;
 
         }
         return ray;
     }
 
+    // 線分と点から線分への垂線がどこで交わっているか
     Vector2 nearPoint(Vector2 A,Vector2 B, Vector2 P)
     {
         Vector2 a, b;
