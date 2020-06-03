@@ -26,7 +26,7 @@ public class StageSelectScript : MonoBehaviour
     [SerializeField]
     private float WaveHeight = 0.7f;
     ParticleSystem[] rainbows = new ParticleSystem[] { };
-    
+    public static ParticleSystem.MinMaxGradient nowStageColor;
     void Start()
     {
         BGSea = GameObject.FindWithTag("BG").gameObject;
@@ -66,6 +66,7 @@ public class StageSelectScript : MonoBehaviour
             }
             num++;
         }
+        nowStageColor = colors[clearNum];
         if (clearNum <= 7)
             ButtonFlag = false;
     }

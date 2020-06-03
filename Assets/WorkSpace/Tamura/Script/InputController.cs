@@ -10,6 +10,7 @@ public class InputController : MonoBehaviour
     bool m_bControll_ok = true;
     void Start()
     {
+        gameObject.tag = "GameController";
         GravityController = transform.GetChild(1).transform.GetComponent<GravityControllerScript>();
         FreezeCarsor = transform.GetChild(2).transform.GetComponent<FreezeCarsorScript>();
         if (GameObject.FindWithTag("AllScene"))

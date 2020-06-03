@@ -247,7 +247,7 @@ public class SceneManagerScript : MonoBehaviour
     {
         for (int i = 0; i < StageStatus.Length / 2; i++)
         {
-            if (i == val)
+            if (i + 1 == val)
                 StageStatus[i, 1] = 1;
         }
         Loadstagenum(500);
