@@ -32,14 +32,17 @@ public class FlowerScript : MonoBehaviour
     int stagenum;
     //一度だけゴール判定
     bool m_bGoal = false;
-
+    GameObject ef_flower;
+    ParticleSystem.MinMaxGradient[] color;
     void Start()
     {
+        Debug.Log(StageSelectScript.nowStageColor);
         SpriteRender = transform.GetComponent<SpriteRenderer>();
         SpriteRender.material = material;
         material.color = new Color(1, 1, 1, 1);
         SpriteRender.sprite = seed;
         StartCoroutine("Swing");
+        ef_flower = Resources.Load<GameObject>("FlowerEffect");
     }
 
     void GoalFlower()
@@ -62,8 +65,20 @@ public class FlowerScript : MonoBehaviour
 
     IEnumerator Blooming()
     {
+        var rot = Quaternion.Euler(-90, 0, 0);
+        
         transform.rotation = Quaternion.Euler(0, 0, 0);
         transform.up = transform.root.up;
+        var eff = Instantiate(ef_flower, transform.position, rot, transform);
+        eff.transform.localRotation = rot;
+        var Psys = eff.GetComponent<ParticleSystem>();
+        var main = Psys.main;
+        
+        main.startColor = StageSelectScript.nowStageColor;
+        if(StageSelectScript.nowStageColor.color.a == 0)
+            main.startColor = new Color(255, 255, 255, 255);
+        Psys.Play();
+
         //FadeOut
         for (int i = 0; i < 8 * 2; i++) 
         {

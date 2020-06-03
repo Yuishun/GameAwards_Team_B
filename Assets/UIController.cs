@@ -14,18 +14,22 @@ public class UIController : MonoBehaviour
     [SerializeField]
     RectTransform Icon_Ice, Icon_Unzip, Icon_Rot;
     [SerializeField]
+    RectTransform Icon_Frask;
+    Image Icon_Frask_Rendrer;
+    [SerializeField]
     RectTransform Icon_A, Icon_B, Icon_X, Icon_Y, Icon_R, Icon_L;
     [SerializeField]
     RectTransform Icon_Lst, Icon_Rst;
     bool m_bIconSpin = false;
-    [SerializeField]
-    float BidIconMagnification = 3;
+    [SerializeField,Range(0.1f,1f)]
+    float BidIconMagnification = 1;
     Vector2 BigIconvec, smallIconvec;
     Vector2 BigIconpos, smallIconpos;
     [SerializeField, Header("アイコン移動速度"), Range(0.1f, 4)]
     float IconSlideSpeed = 1;
     Image Icon_rotImage;
-
+    [SerializeField]
+    Sprite Icon_Ice_Frask, Icon_Unzip_Frask;
     Image Icon_X_Arrow, Icon_Y_Arrow;
     void Start()
     {
@@ -33,7 +37,7 @@ public class UIController : MonoBehaviour
         gravityController = transform.root.GetChild(1).GetComponent<GravityControllerScript>();
         //UI_NowRotframe
         UI_NowRotframe = transform.GetChild(0).GetComponent<RectTransform>();
-        UI_NowRotframe.sizeDelta = new Vector2(worldScreenHeight * 20, 100);
+        UI_NowRotframe.sizeDelta = new Vector2(worldScreenHeight * 20, 80);
         UI_NowRotframe.localPosition += new Vector3(-UI_NowRotframe.rect.width * 0.5f, -UI_NowRotframe.rect.height * 0.5f);
         //UI_MoveRotframe
         UI_MoveRotframe = transform.GetChild(1).GetComponent<RectTransform>();
@@ -54,23 +58,36 @@ public class UIController : MonoBehaviour
         BigIconpos = Icon_Unzip.localPosition;
         smallIconvec = Icon_Ice.sizeDelta;
         smallIconpos = Icon_Ice.localPosition;
+        //Icon_Frask
+        Icon_Frask_Rendrer = Icon_Frask.gameObject.GetComponent<Image>();
+        Icon_Frask_Rendrer.sprite = Icon_Ice_Frask;
 
         //RotIcon
-        Icon_Rot.sizeDelta = new Vector2(UI_NowRotframe.sizeDelta.x * 0.7f, UI_NowRotframe.sizeDelta.x * 0.7f);
-        Icon_Rot.transform.localPosition += new Vector3(-Icon_Rot.rect.width, Icon_Rot.rect.height*0.8f);
+        var rotwidth = UI_NowRotframe.sizeDelta.x;
+        Icon_Rot.sizeDelta = new Vector2(rotwidth * 0.4f, rotwidth * 0.4f);
+        Icon_Rot.transform.localPosition += new Vector3(-rotwidth * 0.56f, Icon_Rot.rect.height * 0.8f);
 
         Icon_rotImage = Icon_Rot.transform.GetChild(0).GetComponent<Image>();
+        
+
         //LRボタン位置(RotIconに付随して動くため、RotIconを移動させること)
-        Icon_R.transform.localPosition = Icon_Rot.transform.localPosition + new Vector3( 80, 110, 0);
-        Icon_L.transform.localPosition = Icon_Rot.transform.localPosition + new Vector3(-80, 110, 0);
-        Icon_X.transform.localPosition = Icon_Rot.transform.localPosition + new Vector3( 80,-110, 0);
-        Icon_Y.transform.localPosition = Icon_Rot.transform.localPosition + new Vector3(-80,-110, 0);
+        var xypos = rotwidth;
+        Icon_R.transform.localScale *= 0.8f;
+        Icon_L.transform.localScale *= 0.8f;
+        Icon_X.transform.localScale *= 0.8f;
+        Icon_Y.transform.localScale *= 0.8f;
+        Icon_R.transform.localPosition = Icon_Rot.transform.localPosition + new Vector3( xypos*0.2f, xypos*0.3f, 0);
+        Icon_L.transform.localPosition = Icon_Rot.transform.localPosition + new Vector3(-xypos*0.2f, xypos*0.3f, 0);
+        Icon_X.transform.localPosition = Icon_Rot.transform.localPosition + new Vector3( xypos*0.2f,-xypos*0.3f, 0);
+        Icon_Y.transform.localPosition = Icon_Rot.transform.localPosition + new Vector3(-xypos*0.2f,-xypos*0.3f, 0);
         Icon_X_Arrow = Icon_X.GetChild(0).GetComponent<Image>();
         Icon_Y_Arrow = Icon_Y.GetChild(0).GetComponent<Image>();
 
         //LRStick
-        Icon_Lst.transform.localPosition += new Vector3(100,0,0);
-        Icon_Rst.transform.localPosition += new Vector3(100,0,0);
+        Icon_Lst.transform.localPosition += new Vector3(80,0,0);
+        Icon_Rst.transform.localPosition += new Vector3(120,0,0);
+
+
     }
 
     // Update is called once per frame
@@ -148,6 +165,7 @@ public class UIController : MonoBehaviour
     IEnumerator IceTurn()
     {
         Icon_Ice.gameObject.transform.SetSiblingIndex(3);
+        Icon_Frask_Rendrer.sprite = Icon_Ice_Frask;
         yield return new WaitForEndOfFrame();
         var timer = 0f;
         while (timer < 1)
@@ -164,6 +182,7 @@ public class UIController : MonoBehaviour
     IEnumerator UnzipTurn()
     {
         Icon_Unzip.gameObject.transform.SetSiblingIndex(3);
+        Icon_Frask_Rendrer.sprite = Icon_Unzip_Frask;
         yield return new WaitForEndOfFrame();
         var timer = 0f;
         while (timer < 1)
