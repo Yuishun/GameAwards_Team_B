@@ -17,6 +17,7 @@ public class FreezeCarsorScript : MonoBehaviour
     private float CasorRange;
 
     UIController sc_UIController;
+
     [SerializeField]
     Sprite Ice_flask, Unzip_flask;
     void Start()
