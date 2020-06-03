@@ -151,7 +151,7 @@ public class FlowerScript : MonoBehaviour
                 angle = Mathf.LerpAngle(-10, 10, swingtime);
             else
                 angle = Mathf.LerpAngle(10, -10, swingtime);
-            transform.eulerAngles = new Vector3(0, 0, angle);
+            transform.localEulerAngles = new Vector3(0, 0, angle);
             yield return null;
         }
     }
@@ -161,7 +161,7 @@ public class FlowerScript : MonoBehaviour
         if (!m_bGoal)
         {
             col[0] = null;
-            Physics2D.OverlapCircleNonAlloc(transform.position, 0.6f,
+            Physics2D.OverlapCircleNonAlloc(transform.position, 0.7f,
             col, LayerMask.GetMask("Light"));
             if (col[0])
             {

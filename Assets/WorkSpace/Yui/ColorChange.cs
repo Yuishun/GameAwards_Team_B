@@ -4,32 +4,24 @@ using UnityEngine;
 
 public class ColorChange : MonoBehaviour
 {
+    [SerializeField]
+    Color Change;
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-
-        if (Input.GetKeyDown(KeyCode.C))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("PostProcessing"))
         {
-            ColorChangeAll();
+            collision.GetComponent<MetaballParticleClass>().
+                spRend.color = Change;
         }
     }
 
-    void ColorChangeAll()
-    {
-        foreach(Transform child in transform)
-        {
-            SpriteRenderer sprite = child.GetComponent<SpriteRenderer>();
-            sprite.material.SetInt("_Ace", 1);//1で氷0で水
-        }
-    
-    }
-
-    public void TypeChange(List<SpriteRenderer> list,int type)
-    {
-        for(int i=0; i < list.Count; i++)
-        {
-            list[i].material.SetInt("_Ace", type);
-        }
-    }
+    //private void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    if (collision.gameObject.layer == LayerMask.NameToLayer("PostProcessing"))
+    //    {
+    //        collision.GetComponent<MetaballParticleClass>().
+    //            spRend.color = Color.gray;
+    //    }
+    //}
 }
