@@ -7,12 +7,14 @@ public class InputController : MonoBehaviour
     GravityControllerScript GravityController;
     FreezeCarsorScript FreezeCarsor;
     SceneManagerScript sceneManagerScript;
+    UIController uIController;
     bool m_bControll_ok = true;
     void Start()
     {
         gameObject.tag = "GameController";
         GravityController = transform.GetChild(1).transform.GetComponent<GravityControllerScript>();
         FreezeCarsor = transform.GetChild(2).transform.GetComponent<FreezeCarsorScript>();
+        uIController = FreezeCarsor.transform.root.GetChild(0).GetComponent<UIController>();
         if (GameObject.FindWithTag("AllScene"))
             sceneManagerScript = GameObject.FindWithTag("AllScene").GetComponent<SceneManagerScript>();
     }
@@ -62,22 +64,39 @@ public class InputController : MonoBehaviour
             if (LstickH < 0 || DpadH < 0)//左
             {
                 if (!MenuScript.m_bMenuOpen)
+                {
                     FreezeCarsor.ControllerColliderHit(1);
+                    uIController.CarsorWay(1);
+                }
             }
             else if (LstickH > 0 || DpadH > 0)//右
             {
                 if (!MenuScript.m_bMenuOpen)
+                {
                     FreezeCarsor.ControllerColliderHit(2);
+                    uIController.CarsorWay(2);
+                }
             }
             if (LstickV > 0 || DpadV > 0)//上
             {
                 if (!MenuScript.m_bMenuOpen)
+                {
                     FreezeCarsor.ControllerColliderHit(3);
+                    uIController.CarsorWay(3);
+                }
             }
             else if (LstickV < 0 || DpadV < 0)//下
             {
                 if (!MenuScript.m_bMenuOpen)
+                {
                     FreezeCarsor.ControllerColliderHit(4);
+                    uIController.CarsorWay(4);
+                }
+            }
+            if (LstickH == 0 && DpadH == 0 && DpadV == 0 && LstickV == 0) 
+            {
+                if (!MenuScript.m_bMenuOpen)
+                    uIController.CarsorWay(0);
             }
             //===============================================
             //氷結・融解(押下のみ判定)

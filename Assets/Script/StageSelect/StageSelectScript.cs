@@ -16,7 +16,6 @@ public class StageSelectScript : MonoBehaviour
     GameObject ClearEffectObj;
     [SerializeField, Header("クリア時生成エフェクトColor")]
     ParticleSystem.MinMaxGradient[] colors;
-    static Transform[] StageIcon;
     GameObject BGSea;
     [SerializeField]
     Material Cloudmat, Seamat;
@@ -27,9 +26,23 @@ public class StageSelectScript : MonoBehaviour
     private float WaveHeight = 0.7f;
     ParticleSystem[] rainbows = new ParticleSystem[] { };
     public static ParticleSystem.MinMaxGradient nowStageColor;
+    SpriteRenderer[] islandstage;
+    Color StageIconColor = new Color(180, 180, 180);
+    [SerializeField]
+    Color[] Stagecolors;
     void Start()
     {
         BGSea = GameObject.FindWithTag("BG").gameObject;
+        islandstage = new SpriteRenderer[7]
+{
+        BGSea.transform.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>(),
+        BGSea.transform.GetChild(0).GetChild(1).GetComponent<SpriteRenderer>(),
+        BGSea.transform.GetChild(0).GetChild(2).GetComponent<SpriteRenderer>(),
+        BGSea.transform.GetChild(0).GetChild(3).GetComponent<SpriteRenderer>(),
+        BGSea.transform.GetChild(0).GetChild(4).GetComponent<SpriteRenderer>(),
+        BGSea.transform.GetChild(0).GetChild(5).GetComponent<SpriteRenderer>(),
+        BGSea.transform.GetChild(0).GetChild(6).GetComponent<SpriteRenderer>()
+};
         if (GameObject.FindGameObjectWithTag("AllScene"))
         {
             allScene = GameObject.FindGameObjectWithTag("AllScene").transform.GetComponent<SceneManagerScript>();
@@ -63,8 +76,15 @@ public class StageSelectScript : MonoBehaviour
             {
                 clearNum++;
                 StageClear(num);
+                islandstage[num].color = Stagecolors[num];
+            }
+            else
+            {
+                islandstage[num].color = Color.white;
             }
             num++;
+            if (num < ClearStageNum.Length / 2)
+                islandstage[num].color = StageIconColor;
         }
         nowStageColor = colors[clearNum];
         if (clearNum <= 7)

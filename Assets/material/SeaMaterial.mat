@@ -40,8 +40,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _BlurryHorizon: 0.25
     - _Cutoff: 0.5
     - _Gloss: 0
+    - _Horizon: 0
+    - _Horizon_copy: 0.9900173
     - _Metallic: 0
     - _Speed: 0.43
     - _WaveHeight: 0.7

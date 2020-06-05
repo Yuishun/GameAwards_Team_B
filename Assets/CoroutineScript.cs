@@ -69,32 +69,3 @@ public class CoroutineScript : MonoBehaviour
     }
 
 }
-
-/*
- [SerializeField]
-    public Image Scenefader;
-
-    [SerializeField]
-    public Material m_mTransitionIn;
-    [SerializeField]
-    public Material m_mTransitionOut;
-    [SerializeField]
-    public bool m_bFadeOut = true;
-    [SerializeField]
-    public bool m_bFadeEnd = false;
-    [SerializeField]
-    public static bool m_bFadeInEnd = false;
-    public static bool m_bMenu_InStage = false;
-    [SerializeField, Header("メニュースクリプト")]
-    MenuScript menuScript;
-    [SerializeField, Header("セレクトメニュー")]
-    public GameObject SelectMenu;
-    [SerializeField, Header("ステージメニュー")]
-    public GameObject StageMenu;
-    bool NowLoading = false;
-    
-    void Start()
-    {
-
-    }
-     */

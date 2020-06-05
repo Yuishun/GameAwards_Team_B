@@ -8,6 +8,9 @@ public class TitleInput : MonoBehaviour
     {
         if (Input.GetButtonDown("Button_START"))
             if (SceneManagerScript.m_bFadeInEnd)
+            {
+                transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
                 GameObject.FindWithTag("AllScene").GetComponent<SceneManagerScript>().Loadstagenum(0);
+            }
     }
 }
