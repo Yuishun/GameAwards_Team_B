@@ -36,14 +36,14 @@ public class BGScript : MonoBehaviour
 
         var island = transform.GetChild(0).transform;
         island.localPosition -= new Vector3(0, island.root.transform.localScale.y * 0.5f);
-        //island.localScale /= 1.15f;
         
+
         //海下端
+        SeaPlate.transform.localScale = new Vector3(transform.lossyScale.x, 2, transform.lossyScale.y) * 0.52f;
         var sea = SeaPlate.transform.position - SeaPlate.transform.forward * SeaPlate.transform.lossyScale.y * 5;
-        
         var disY = sea.y - ScreenUnderPos.y;
         SeaPlate.transform.position -= new Vector3(0, disY * 2);
-        SeaPlate.transform.localScale = new Vector3(transform.lossyScale.x, 2, transform.lossyScale.y) * 0.52f;
+        
     }
 }
 

@@ -20,25 +20,6 @@ public class ProphecyScript : MonoBehaviour
     TextScript textScript;
     [SerializeField]
     StageSelectScript stageSelectScript;
-    private Vector3 targetPos;
-    
-    
-    [SerializeField, Header("座標取得対象パーティクル")]
-    private ParticleSystem m_targetParticleSystem;
-    public ParticleSystem targetParticleSystem
-    {
-        get { return m_targetParticleSystem; }
-    }
-    [SerializeField]
-    GameObject RainObjEffect;
-    [SerializeField, Header("雨の表現。粒or流。✓=粒")]
-    bool WhichRainObjEffect;
-
-    [SerializeField, Header("雨。軽量版")]
-    ParticleSystem RainEffect;
-    [SerializeField, Header("雨粒。✓=軽量版")]
-    bool WhichRainBlot;
-
     [SerializeField, Header("本の表紙・中1・中2")]
     Texture booktex, booktex2, booktex3;
     RectTransform bookleft, bookright;
@@ -66,11 +47,6 @@ public class ProphecyScript : MonoBehaviour
         }
         else
             Itdestroy();
-        
-
-        if (WhichRainObjEffect)
-            transform.GetChild(1).transform.GetComponent<ParticleSystemRenderer>().enabled = false;
-
     }
 
     void Update()
@@ -93,31 +69,6 @@ public class ProphecyScript : MonoBehaviour
                         Itdestroy();
                     else
                         textScript.SkipText();
-                }
-            }
-            if (WhichRainObjEffect)
-            {
-                if (targetParticleSystem.particleCount > 0)
-                {
-                    var particleCount = targetParticleSystem.particleCount;
-                    ParticleSystem.Particle[] targetParticles = new ParticleSystem.Particle[particleCount];
-                    targetParticleSystem.GetParticles(targetParticles);
-                    foreach (var particle in targetParticles)
-                    {
-                        if (particle.remainingLifetime >= 1.9f)
-                        {
-                            targetPos = targetParticleSystem.transform.TransformPoint(particle.position);
-                            //Debug用
-                            //DropPaint(screenpos);
-                            if (WhichRainBlot)
-                            {
-                                RainEffect.transform.position = targetPos;
-                                RainEffect.Emit(1);
-                            }
-                            else
-                                Instantiate(RainObjEffect, targetPos, Quaternion.identity);
-                        }
-                    }
                 }
             }
         }

@@ -103,7 +103,7 @@ public class SceneManagerScript : MonoBehaviour
         {
             case 0://Titleからしか呼ばれない
                 ProphecyCheck = true;
-                transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
+                
                 StartCoroutine(SceneChange("StageSelect"));
                 break;
             case 1:
@@ -129,7 +129,7 @@ public class SceneManagerScript : MonoBehaviour
                 break;
             case 100:
                 if (singleton)
-                    singleton.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
+                    singleton.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
                 for (int i = 0; i < StageStatus.Length / 2; i++)
                     if (i < DebugStage)
                         StageStatus[i, 1] = 0;
@@ -140,7 +140,7 @@ public class SceneManagerScript : MonoBehaviour
                 break;
             case 1000:
                 if (singleton)
-                    singleton.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
+                    singleton.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
                 StartCoroutine(SceneChange("Start"));
                 break;
         }
@@ -152,7 +152,7 @@ public class SceneManagerScript : MonoBehaviour
     public static void SetButton_Active()
     {
         if (singleton) 
-            singleton.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
+            singleton.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
     }
 
     //=============================================================

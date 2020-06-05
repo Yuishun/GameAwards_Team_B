@@ -16,20 +16,23 @@ public class FreezeCarsorScript : MonoBehaviour
     private string Layer_Water = "PostProcessing";
     private float CasorRange;
 
+
     UIController sc_UIController;
 
     [SerializeField]
     Sprite Ice_flask, Unzip_flask;
+    Transform Camtra;
     void Start()
     {
         spr = transform.GetComponent<SpriteRenderer>();
         //spr.color = Meltcolor;
-        spr.sprite = Unzip_flask;
+        spr.sprite = Ice_flask;
 
         cam_root = Camera.main.transform.root;
         CasorRange = transform.localScale.x * 0.6f;
 
         sc_UIController = transform.root.GetChild(0).GetComponent<UIController>();
+        Camtra = Camera.main.transform.root;
     }
     public void ControllerColliderHit(int type)
     {
@@ -37,19 +40,26 @@ public class FreezeCarsorScript : MonoBehaviour
         {
             case 1:
                 transform.position -= cam_root.right * MoveSpeed;
+                sc_UIController.CarsorWay(1);
                 break;
             case 2:
                 transform.position += cam_root.right * MoveSpeed;
+                sc_UIController.CarsorWay(2);
                 break;
             case 3:
                 transform.position += cam_root.up * MoveSpeed;
+                sc_UIController.CarsorWay(3);
                 break;
             case 4:
                 transform.position -= cam_root.up * MoveSpeed;
+                sc_UIController.CarsorWay(4);
                 break;
         }
     }
-
+    void Update()
+    {
+        transform.localRotation = Camtra.localRotation;
+    }
     public void FreezeImage()
     {
         sc_UIController.IceIcon();
