@@ -47,7 +47,7 @@ public class FreezeCarsorScript : MonoBehaviour
             case 4:
                 transform.position -= cam_root.up * MoveSpeed;
                 break;
-        }
+        }        
     }
 
     public void FreezeImage()
@@ -67,5 +67,10 @@ public class FreezeCarsorScript : MonoBehaviour
         Collider2D target = Physics2D.OverlapCircle(transform.position, CasorRange, LayerMask.GetMask(Layer_Water));
         if (target)
             target.SendMessage("Melt");
+    }
+
+    public void SetRot()
+    {
+        transform.eulerAngles = cam_root.eulerAngles;
     }
 }
