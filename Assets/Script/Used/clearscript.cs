@@ -14,7 +14,7 @@ public class clearscript : MonoBehaviour
     void Start()
     {
         pos = panel.rectTransform.localPosition;
-        Invoke("Flagger",1);
+        Invoke("Flagger",0.1f);
         var manager = GameObject.FindWithTag("AllScene").gameObject;
         if (manager)
             all = manager.GetComponent<SceneManagerScript>();

@@ -30,6 +30,8 @@ public class MetaballParticleClass : MonoBehaviour {
 	public Rigidbody2D rb;
 	TrailRenderer tr;
     public SpriteRenderer spRend;
+    static int[] dir = new int[4];
+    static List<Vector2> normal = new List<Vector2>();
 
 	void Start () {
         //MObject = gameObject;
@@ -95,6 +97,9 @@ public class MetaballParticleClass : MonoBehaviour {
     // 水面の法線を返す
     public RaycastHit2D WaterNormalVec(RaycastHit2D ray)
     {
+        for (int i = 0; i < 4; i++)
+            dir[i] = 0;
+        normal.Clear();
         // 周囲に水の粒があるか
         Collider2D[] col = Physics2D.OverlapCircleAll(transform.position, 0.2f
             , LayerMask.GetMask("PostProcessing"));
@@ -104,6 +109,8 @@ public class MetaballParticleClass : MonoBehaviour {
             if (col[i].transform.position == transform.position)
                 continue;
 
+            //WaterDir((col[i].transform.position - transform.position).normalized);
+
             // rayの当たっている点から
             // 水面の線分への垂線が線分のどの部分に当たっているか
             Vector2 point = nearPoint(transform.position,
@@ -112,9 +119,11 @@ public class MetaballParticleClass : MonoBehaviour {
             if (point == Vector2.zero)
                 continue;
             // 線分からrayの当たっているところへのベクトルを法線とする
-            ray.normal = (ray.point - point).normalized;
+            //normal.Add((ray.point - point).normalized);
+            ray.normal= (ray.point - point).normalized;
 
         }
+        
         return ray;
     }
 
@@ -153,4 +162,42 @@ public class MetaballParticleClass : MonoBehaviour {
         }
 
     }
+
+    void WaterDir(Vector2 PVec)
+    {
+        byte answer;
+        float absX = Mathf.Abs(PVec.x);
+        float absY = Mathf.Abs(PVec.y);
+        if (absX > absY)
+        {
+            if (PVec.x < 0)
+                answer = 0; // 左
+            else
+                answer = 1; // 右
+        }
+        else if(absX < absY)
+        {
+            if (PVec.y < 0)
+                answer = 2; // 下
+            else
+                answer = 3; // 上
+        }
+        else
+        {
+            if (PVec.x < 0)
+                answer = 0; // 左
+            else
+                answer = 1; // 右
+
+            dir[answer]++;
+
+            if (PVec.y < 0)
+                answer = 2; // 下
+            else
+                answer = 3; // 上
+        }
+
+        dir[answer]++;
+    }
+
 }

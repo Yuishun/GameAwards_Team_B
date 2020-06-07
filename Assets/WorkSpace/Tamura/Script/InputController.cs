@@ -112,6 +112,8 @@ public class InputController : MonoBehaviour
                     FreezeCarsor.MeltIMage();
             }
 
+            FreezeCarsor.SetRot();
+
             //================================================
             // メニュー
             //================================================
