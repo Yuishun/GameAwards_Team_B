@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class UIController : MonoBehaviour
 {
-    [SerializeField,Range(15,20)]
+    [SerializeField, Range(15, 20)]
     float RotFrame_size = 20;
     RectTransform UI_NowRotframe, UI_MoveRotframe;
     Text UI_NowRotText, UI_MoveRotText;
@@ -47,7 +47,7 @@ public class UIController : MonoBehaviour
         //UI_MoveRotframe
         UI_MoveRotframe = transform.GetChild(1).GetComponent<RectTransform>();
         UI_MoveRotframe.sizeDelta = UI_NowRotframe.sizeDelta;
-        UI_MoveRotframe.localPosition = UI_NowRotframe.localPosition + new Vector3(-UI_NowRotframe.rect.width,0);//new Vector3(0, -UI_NowRotframe.rect.height * 0.5f) + new Vector3(0, -UI_MoveRotframe.rect.height * 0.5f);
+        UI_MoveRotframe.localPosition = UI_NowRotframe.localPosition + new Vector3(-UI_NowRotframe.rect.width, 0);//new Vector3(0, -UI_NowRotframe.rect.height * 0.5f) + new Vector3(0, -UI_MoveRotframe.rect.height * 0.5f);
         //UI_NowRotText
         UI_NowRotText = transform.GetChild(0).GetChild(0).GetComponent<Text>();
         UI_NowRotText.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(UI_NowRotframe.rect.width, UI_NowRotframe.rect.height);
@@ -58,11 +58,7 @@ public class UIController : MonoBehaviour
         //Ice/Unzipアイコン左下端
         Icon_Unzip.sizeDelta *= BidIconMagnification;
         Icon_Ice.transform.localPosition += new Vector3(Icon_Ice.rect.width * 0.5f, Icon_Ice.rect.height * 0.5f);
-        Icon_Unzip.transform.localPosition +=  new Vector3(Icon_Unzip.rect.width * 0.5f, Icon_Unzip.rect.height*1.5f);
-        //BigIconvec = Icon_Unzip.sizeDelta;
-        //BigIconpos = Icon_Unzip.localPosition;
-        //smallIconvec = Icon_Ice.sizeDelta;
-        //smallIconpos = Icon_Ice.localPosition;
+        Icon_Unzip.transform.localPosition += new Vector3(Icon_Unzip.rect.width * 0.5f, Icon_Unzip.rect.height * 1.5f);
 
         //RotIcon
         //LRボタン位置(RotIconに付随して動くため、RotIconを移動させること)
@@ -72,14 +68,14 @@ public class UIController : MonoBehaviour
         var roll3 = Icon_X.GetChild(0).GetComponent<RectTransform>();
         var roll4 = Icon_Y.GetChild(0).GetComponent<RectTransform>();
         var rotwidth = UI_NowRotframe.sizeDelta.x;
-        roll0.sizeDelta=
-        Icon_R.sizeDelta = Icon_L.sizeDelta = Icon_X.sizeDelta = Icon_Y.sizeDelta = 
-            roll1.sizeDelta = roll2.sizeDelta = roll3.sizeDelta = roll4.sizeDelta = 
+        roll0.sizeDelta =
+        Icon_R.sizeDelta = Icon_L.sizeDelta = Icon_X.sizeDelta = Icon_Y.sizeDelta =
+            roll1.sizeDelta = roll2.sizeDelta = roll3.sizeDelta = roll4.sizeDelta =
             Icon_Rot.sizeDelta = new Vector2(rotwidth, rotwidth) * 0.4f;
 
         Icon_Rot.transform.localPosition = Vector3.zero;
-        Icon_Rot.transform.localPosition += new Vector3(-rotwidth * 0.5f, rotwidth*0.5f);
-        
+        Icon_Rot.transform.localPosition += new Vector3(-rotwidth * 0.5f, rotwidth * 0.5f);
+
         Icon_R.transform.localPosition = Icon_Rot.transform.localPosition + new Vector3(rotwidth * 0.2f, rotwidth * 0.3f, 0);
         Icon_L.transform.localPosition = Icon_Rot.transform.localPosition + new Vector3(-rotwidth * 0.2f, rotwidth * 0.3f, 0);
         Icon_X.transform.localPosition = Icon_Rot.transform.localPosition + new Vector3(rotwidth * 0.2f, -rotwidth * 0.3f, 0);
@@ -102,9 +98,11 @@ public class UIController : MonoBehaviour
         Icon_Frask_Rendrer.sprite = Icon_Unzip_Frask;
         Icon_Frask.sizeDelta = Icon_Arrow.sizeDelta * 0.5f;
         Icon_Frask.transform.localPosition = Icon_Arrow.localPosition + new Vector3(-rotwidth, rotwidth) * 0.2f;
+        
         //Icon_Lst
         Icon_Lst.transform.localPosition = Icon_Arrow.localPosition;
         Icon_Lst.sizeDelta = Icon_Arrow.sizeDelta * 0.5f;
+        
     }
 
     // Update is called once per frame
@@ -166,83 +164,44 @@ public class UIController : MonoBehaviour
         else
             UI_NowRotText.text = angle.ToString("F0") + nowrot_afterwards;
     }
-    int oldval=0;
+    int oldval = 0;
     public void CarsorWay(int val)
     {
         if (val == 0)
             arrowimage.sprite = arrow;
         else
             arrowimage.sprite = arrowing;
-        if (oldval != val) 
-        switch (val)
-        {
-            case 0:
-                arrowimage.transform.rotation = Quaternion.Euler(0, 0, 0);
-                break;
-            case 1:
-                arrowimage.transform.rotation = Quaternion.Euler(0, 0, 90);
-                break;
-            case 2:
-                arrowimage.transform.rotation = Quaternion.Euler(0, 0,270);
-                break;
-            case 3:
-                arrowimage.transform.rotation = Quaternion.Euler(0, 0, 0);
-                break;
-            case 4:
-                arrowimage.transform.rotation = Quaternion.Euler(0, 0, 180);
-                break;
-        }
+        if (oldval != val)
+            switch (val)
+            {
+                case 0:
+                    arrowimage.transform.rotation = Quaternion.Euler(0, 0, 0);
+                    break;
+                case 1:
+                    arrowimage.transform.rotation = Quaternion.Euler(0, 0, 90);
+                    break;
+                case 2:
+                    arrowimage.transform.rotation = Quaternion.Euler(0, 0, 270);
+                    break;
+                case 3:
+                    arrowimage.transform.rotation = Quaternion.Euler(0, 0, 0);
+                    break;
+                case 4:
+                    arrowimage.transform.rotation = Quaternion.Euler(0, 0, 180);
+                    break;
+            }
         oldval = val;
     }
     public void IceIcon()
     {
         arrowimage.color = Color.cyan;
         Icon_Frask_Rendrer.sprite = Icon_Ice_Frask;
-        //StartCoroutine("IceTurn");
+
     }
     public void UnzipIcon()
     {
         arrowimage.color = Color.red;
         Icon_Frask_Rendrer.sprite = Icon_Unzip_Frask;
-        //StartCoroutine("UnzipTurn");
-    }
 
-    //**************************************************************************::
-    //アイコン動作用
-    //**************************************************************************::
-    IEnumerator IceTurn()
-    {
-        Icon_Ice.gameObject.transform.SetSiblingIndex(3);
-
-        yield return new WaitForEndOfFrame();
-        var timer = 0f;
-        while (timer < 1)
-        {
-            timer += Time.deltaTime * IconSlideSpeed;
-            Icon_Ice.localPosition = Vector3.Lerp(smallIconpos, BigIconpos, timer);
-            Icon_Unzip.localPosition = Vector3.Lerp(BigIconpos, smallIconpos, timer);
-            
-            Icon_Ice.sizeDelta = Vector3.Lerp(smallIconvec, BigIconvec, timer); 
-            Icon_Unzip.sizeDelta = Vector3.Lerp(BigIconvec, smallIconvec, timer);
-            yield return new WaitForEndOfFrame();
-        }
-    }
-    IEnumerator UnzipTurn()
-    {
-        Icon_Unzip.gameObject.transform.SetSiblingIndex(3);
-        
-        yield return new WaitForEndOfFrame();
-        var timer = 0f;
-        while (timer < 1)
-        {
-            timer += Time.deltaTime * IconSlideSpeed;
-            Icon_Ice.localPosition = Vector3.Lerp(BigIconpos, smallIconpos, timer);
-            Icon_Unzip.localPosition = Vector3.Lerp(smallIconpos, BigIconpos, timer);
-
-            Icon_Ice.sizeDelta = Vector3.Lerp(BigIconvec, smallIconvec, timer); 
-            Icon_Unzip.sizeDelta = Vector3.Lerp(smallIconvec, BigIconvec, timer);
-            yield return new WaitForEndOfFrame();
-        }        
     }
 }
-
