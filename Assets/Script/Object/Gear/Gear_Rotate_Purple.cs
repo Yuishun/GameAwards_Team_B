@@ -28,16 +28,22 @@ public class Gear_Rotate_Purple : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if(Physics2D.OverlapCircleNonAlloc(Rotate[0].position))
 
         if(PrevAngle - 2 > transform.localEulerAngles.z
             || PrevAngle + 2 < transform.localEulerAngles.z)
         {
+            if (Physics2D.OverlapCircleNonAlloc(Rotate[0].position, 1f, col,
+                LayerMask.GetMask("PostProcessing")) >= 1)
+            {
+                if (col[0].GetComponent<MeltingOrFreezingScript>().FreezingFlag)
+                    return;
+            }
+
             //float x1 = Circle.position.x, y1 = Circle.position.y;
             //float x2 = x1 * cos - y1 * sin;
             //float y2 = x1 * sin + y1 * cos;
             //Circle.MovePosition(new Vector2(x2, y2));
-            for(int i = 0; i < Rotate.Length; i++)
+            for (int i = 0; i < Rotate.Length; i++)
                 Rotate[i].RotateAround(Vector3.zero, Vector3.forward, RotSpeed[i]);
 
             PrevAngle = transform.localEulerAngles.z;
