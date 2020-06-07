@@ -3199,7 +3199,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 1024
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 1897261372}
+  m_TargetTexture: {fileID: 1858228166}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
@@ -3981,7 +3981,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1385324855}
   m_LocalRotation: {x: 0, y: 0, z: -0.9562537, w: 0.29253873}
-  m_LocalPosition: {x: 11.35, y: 9.34, z: 0}
+  m_LocalPosition: {x: 8, y: 7.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 677290447}
@@ -6113,7 +6113,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!84 &1897261372
+--- !u!84 &1858228166
 RenderTexture:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6125,8 +6125,8 @@ RenderTexture:
     Hash: 00000000000000000000000000000000
   m_ForcedFallbackFormat: 4
   m_DownscaleFallback: 0
-  m_Width: 458
-  m_Height: 498
+  m_Width: 522
+  m_Height: 294
   m_AntiAliasing: 1
   m_DepthFormat: 1
   m_ColorFormat: 7
