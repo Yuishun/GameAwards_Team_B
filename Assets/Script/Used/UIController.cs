@@ -47,7 +47,7 @@ public class UIController : MonoBehaviour
         //UI_MoveRotframe
         UI_MoveRotframe = transform.GetChild(1).GetComponent<RectTransform>();
         UI_MoveRotframe.sizeDelta = UI_NowRotframe.sizeDelta;
-        UI_MoveRotframe.localPosition = UI_NowRotframe.localPosition + new Vector3(0, -UI_NowRotframe.rect.height * 0.5f) + new Vector3(0, -UI_MoveRotframe.rect.height * 0.5f);
+        UI_MoveRotframe.localPosition = UI_NowRotframe.localPosition + new Vector3(-UI_NowRotframe.rect.width,0);//new Vector3(0, -UI_NowRotframe.rect.height * 0.5f) + new Vector3(0, -UI_MoveRotframe.rect.height * 0.5f);
         //UI_NowRotText
         UI_NowRotText = transform.GetChild(0).GetChild(0).GetComponent<Text>();
         UI_NowRotText.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(UI_NowRotframe.rect.width, UI_NowRotframe.rect.height);
