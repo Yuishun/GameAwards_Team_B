@@ -6802,6 +6802,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2515bc80c8924104ebaf1cbeb6c733e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  WRotateFlag: 1
   WaterDropsObjects:
   - {fileID: 1549246604}
   - {fileID: 0}
