@@ -8,6 +8,7 @@ public class Gear_Rotate_Purple : MonoBehaviour
     Transform[] Rotate;
     [SerializeField]
     float[] RotSpeed;
+    Collider2D[] col = new Collider2D[1];
     //Vector2 Angle = Vector2.right;
     //float a = 0.01f;
     //
@@ -27,6 +28,7 @@ public class Gear_Rotate_Purple : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //if(Physics2D.OverlapCircleNonAlloc(Rotate[0].position))
 
         if(PrevAngle - 2 > transform.localEulerAngles.z
             || PrevAngle + 2 < transform.localEulerAngles.z)
