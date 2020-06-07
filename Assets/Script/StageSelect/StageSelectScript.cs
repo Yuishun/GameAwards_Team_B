@@ -86,7 +86,8 @@ public class StageSelectScript : MonoBehaviour
             if (num < ClearStageNum.Length / 2)
                 islandstage[num].color = StageIconColor;
         }
-        nowStageColor = colors[clearNum];
+        if (clearNum < 7)
+            nowStageColor = colors[clearNum];
         if (clearNum <= 7)
             ButtonFlag = false;
     }
