@@ -11,6 +11,7 @@
     {
 
         public static Water2DSpawner2 instance;
+        public bool WRotateFlag;
 
         void Awake()
         {
@@ -135,6 +136,8 @@
             //Application.targetFrameRate = 60;
 
             _parent = new GameObject("_metaBalls2");
+            if(WRotateFlag)
+                _parent.transform.SetParent(GameObject.Find("WorldRotate").transform);
             //_parent.hideFlags = HideFlags.HideInHierarchy;
             WaterDropsObjects[0].transform.SetParent(_parent.transform);
             WaterDropsObjects[0].transform.localScale = new Vector3(size, size, 1f);
