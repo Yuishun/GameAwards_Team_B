@@ -140,9 +140,9 @@ public class LightMove : MonoBehaviour
                         // Debug.Log("Exit" + ray2.point);
                         //Debug.Log("ExitN" + ray.normal);
                         m_pos = ray.point + m_dirVec * 0.001f; // 位置調整
-                        if (ray)
-                            ray = ray.transform.GetComponent<MetaballParticleClass>().WaterNormalVec(ray);
-                        //var watersurface = surface.ReInVector2(m_pos, ray, -m_dirVec);
+                        //if (ray)
+                        //    ray = ray.transform.GetComponent<MetaballParticleClass>().WaterNormalVec(ray);
+                        var watersurface = surface.ReInVector2(m_pos, ray, -m_dirVec);
                         m_dirVec = Refractioning(GetRefractiveIndex(RefractiveIndex.Water),
                                 GetRefractiveIndex(RefractiveIndex.Air),
                                 m_dirVec, -ray.normal);
