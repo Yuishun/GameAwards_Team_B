@@ -28,8 +28,8 @@ public class GravityControllerScript : MonoBehaviour
     public bool LeftRoll = false;
     void Start()
     {
-        Physics2D.gravity = Physics2D.gravity * cam_root.up;
         cam_root = Camera.main.transform.root;
+        Physics2D.gravity = Physics2D.gravity * cam_root.up;
         localGravity = Physics2D.gravity;
     }
 
