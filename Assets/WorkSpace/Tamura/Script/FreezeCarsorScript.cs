@@ -26,7 +26,7 @@ public class FreezeCarsorScript : MonoBehaviour
     {
         spr = transform.GetComponent<SpriteRenderer>();
         //spr.color = Meltcolor;
-        spr.sprite = Ice_flask;
+        spr.sprite = Unzip_flask;
 
         cam_root = Camera.main.transform.root;
         CasorRange = transform.localScale.x * 0.6f;
