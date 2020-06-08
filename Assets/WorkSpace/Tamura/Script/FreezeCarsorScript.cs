@@ -8,31 +8,29 @@ public class FreezeCarsorScript : MonoBehaviour
     float MoveSpeed = 0.1f;
     Transform cam_root;
     SpriteRenderer spr;
-    [SerializeField]
-    private Color Freezecolor = new Color(0.0f, 1.0f, 1.0f, 1.0f);
-    [SerializeField]
-    private Color Meltcolor = new Color(1.0f, 0.4f, 0.0f, 1.0f);
 
     private string Layer_Water = "PostProcessing";
     private float CasorRange;
-
-
+    
     UIController sc_UIController;
 
     [SerializeField]
     Sprite Ice_flask, Unzip_flask;
-    Transform Camtra;
+    Vector3 Pos;
+    float timer = 0;
+    bool ResetPosflag = false;
+    
+    float distance;
     void Start()
     {
         spr = transform.GetComponent<SpriteRenderer>();
-        //spr.color = Meltcolor;
         spr.sprite = Unzip_flask;
 
         cam_root = Camera.main.transform.root;
         CasorRange = transform.localScale.x * 0.6f;
 
         sc_UIController = transform.root.GetChild(0).GetComponent<UIController>();
-        Camtra = Camera.main.transform.root;
+        distance = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0)).x;
     }
     public void ControllerColliderHit(int type)
     {
@@ -58,12 +56,27 @@ public class FreezeCarsorScript : MonoBehaviour
     }
     void Update()
     {
-        transform.localRotation = Camtra.localRotation;
+        transform.localRotation = cam_root.localRotation;
+        if (!ResetPosflag)
+        {
+            Pos = transform.localPosition;
+            if(distance < Mathf.Abs(Vector3.Distance(Pos,Vector3.zero)))
+                ResetPosflag = true;
+        }
+        else
+        {
+            timer += Time.deltaTime;
+            transform.localPosition = Vector3.Lerp(Pos, Vector3.zero, timer);
+            if (timer >= 1)
+            {
+                timer = 0;
+                ResetPosflag = false;
+            }
+        }
     }
     public void FreezeImage()
     {
         sc_UIController.IceIcon();
-        //spr.color = Freezecolor;
         spr.sprite = Ice_flask;
         Collider2D target = Physics2D.OverlapCircle(transform.position, CasorRange, LayerMask.GetMask(Layer_Water));
         if (target)
@@ -72,7 +85,6 @@ public class FreezeCarsorScript : MonoBehaviour
     public void MeltIMage()
     {
         sc_UIController.UnzipIcon();
-        //spr.color = Meltcolor;
         spr.sprite = Unzip_flask;
         Collider2D target = Physics2D.OverlapCircle(transform.position, CasorRange, LayerMask.GetMask(Layer_Water));
         if (target)

@@ -2290,6 +2290,7 @@ MonoBehaviour:
   menuScript: {fileID: 854677074}
   SelectMenu: {fileID: 1592120076}
   StageMenu: {fileID: 2006242029}
+  hideUItime: 5
 --- !u!4 &854677076
 Transform:
   m_ObjectHideFlags: 0
