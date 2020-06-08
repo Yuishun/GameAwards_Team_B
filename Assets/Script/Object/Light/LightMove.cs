@@ -110,8 +110,11 @@ public class LightMove : MonoBehaviour
                 m_dirVec = Refractioning(GetRefractiveIndex(RefractiveIndex.Air),
                     GetRefractiveIndex(RefractiveIndex.Water),
                     m_dirVec, ray.normal);
-                
+
                 m_pos = ray.point;
+                //m_pos = MetaballParticleClass.nearPoint(ray.point, ray.point + ray.normal,
+                //    (Vector2)ray.transform.position + ray.normal * 0.126f, false);
+                //Debug.DrawRay(m_pos, m_dirVec, Color.blue);
 
                 AddLineRenderer();
                 m_color = ray.transform.GetComponent<MetaballParticleClass>().
@@ -136,11 +139,9 @@ public class LightMove : MonoBehaviour
                     {
                         ray = Physics2D.Raycast(m_pos, -m_dirVec, 5,
                             WaterLayer, 0, 2);
-                       // m_color = ray.transform.GetComponent<MetaballParticleClass>().
-                       //     spRend.color;
                         // Debug.Log("Exit" + ray2.point);
                         //Debug.Log("ExitN" + ray.normal);
-                        m_pos = ray.point + m_dirVec * 0.001f; // 位置調整
+                        //m_pos = ray.point + m_dirVec * 0.001f; // 位置調整
                         //if (ray)
                             ray = ray.transform.GetComponent<MetaballParticleClass>().WaterNormalVec(ray);
                         //ray.normal = MetaballParticleClass.WaterDir(ray.normal);
@@ -148,6 +149,10 @@ public class LightMove : MonoBehaviour
                         m_dirVec = Refractioning(GetRefractiveIndex(RefractiveIndex.Water),
                                 GetRefractiveIndex(RefractiveIndex.Air),
                                 m_dirVec, -ray.normal);
+
+                        m_pos = MetaballParticleClass.nearPoint(ray.point, ray.point + ray.normal,
+                            (Vector2)ray.transform.position + ray.normal * 0.126f, false);
+                        Debug.DrawRay(m_pos, m_dirVec, Color.blue);
 
                         AddLineRenderer();
 
