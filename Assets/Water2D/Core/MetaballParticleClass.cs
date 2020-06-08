@@ -29,7 +29,7 @@ public class MetaballParticleClass : MonoBehaviour {
 	float delta;
 	public Rigidbody2D rb;
 	TrailRenderer tr;
-    public SpriteRenderer spRend;
+    public SpriteRenderer spRend;    
 
 	void Start () {
         //MObject = gameObject;
@@ -95,9 +95,6 @@ public class MetaballParticleClass : MonoBehaviour {
     // 水面の法線を返す
     public RaycastHit2D WaterNormalVec(RaycastHit2D ray)
     {
-        for (int i = 0; i < 4; i++)
-            dir[i] = 0;
-        normal.Clear();
         // 周囲に水の粒があるか
         Collider2D[] col = Physics2D.OverlapCircleAll(transform.position, 0.2f
             , LayerMask.GetMask("PostProcessing"));
@@ -121,7 +118,7 @@ public class MetaballParticleClass : MonoBehaviour {
             ray.normal= (ray.point - point).normalized;
 
         }
-        
+        ray.normal = WaterDir(ray.normal);
         return ray;
     }
 
@@ -161,41 +158,47 @@ public class MetaballParticleClass : MonoBehaviour {
 
     }
 
-    void WaterDir(Vector2 PVec)
+    static Vector2 WaterDir(Vector2 PVec)
     {
-        byte answer;
-        float absX = Mathf.Abs(PVec.x);
-        float absY = Mathf.Abs(PVec.y);
-        if (absX > absY)
+        Vector2 vec = Vector2.zero;
+        for(int i = 0; i < 8; i++)
         {
-            if (PVec.x < 0)
-                answer = 0; // 左
-            else
-                answer = 1; // 右
-        }
-        else if(absX < absY)
-        {
-            if (PVec.y < 0)
-                answer = 2; // 下
-            else
-                answer = 3; // 上
-        }
-        else
-        {
-            if (PVec.x < 0)
-                answer = 0; // 左
-            else
-                answer = 1; // 右
 
-            dir[answer]++;
-
-            if (PVec.y < 0)
-                answer = 2; // 下
-            else
-                answer = 3; // 上
         }
 
-        dir[answer]++;
+        return vec;
     }
 
+    static Vector2 normalVec(int i)
+    {
+        Vector2 vec = Vector2.zero;
+        switch (i)
+        {
+            case 0:
+                vec = Vector2.up;
+                break;
+            case 1:
+                vec = new Vector2(1, 1).normalized;
+                break;
+            case 2:
+                vec = Vector2.right;
+                break;
+            case 3:
+                vec = new Vector2(1, -1).normalized;
+                break;
+            case 4:
+                vec = Vector2.down;
+                break;
+            case 5:
+                vec = new Vector2(-1, -1).normalized;
+                break;
+            case 6:
+                vec = Vector2.left;
+                break;
+            case 7:
+                vec = new Vector2(-1, 1).normalized;
+                break;
+        }
+        return vec;
+    }
 }
