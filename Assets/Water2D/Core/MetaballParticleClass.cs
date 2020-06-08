@@ -158,15 +158,23 @@ public class MetaballParticleClass : MonoBehaviour {
 
     }
 
-    static Vector2 WaterDir(Vector2 PVec)
+    public static Vector2 WaterDir(Vector2 PVec)
     {
-        Vector2 vec = Vector2.zero;
-        for(int i = 0; i < 8; i++)
+        float answer = -2;
+        int index = -1;
+        for(int i = 0; i < 16; i++)
         {
-
+            Vector2 vec2 = normalVec(i);
+            float a = (PVec.x * vec2.x + PVec.y * vec2.y)
+                / (PVec.magnitude * vec2.magnitude);
+            if (a > answer)
+            {
+                answer = a;
+                index = i;
+            }
         }
 
-        return vec;
+        return normalVec(index);
     }
 
     static Vector2 normalVec(int i)
@@ -197,6 +205,31 @@ public class MetaballParticleClass : MonoBehaviour {
                 break;
             case 7:
                 vec = new Vector2(-1, 1).normalized;
+                break;
+
+            case 8:
+                vec = Vector2.Lerp(Vector2.up, new Vector2(1, 1),0.5f).normalized;
+                break;
+            case 9:
+                vec= Vector2.Lerp(Vector2.right, new Vector2(1, 1), 0.5f).normalized;
+                break;
+            case 10:
+                vec= Vector2.Lerp(Vector2.right, new Vector2(1, -1), 0.5f).normalized;
+                break;
+            case 11:
+                vec= Vector2.Lerp(Vector2.down, new Vector2(1, -1), 0.5f).normalized;
+                break;
+            case 12:
+                vec= Vector2.Lerp(Vector2.down, new Vector2(-1, -1), 0.5f).normalized;
+                break;
+            case 13:
+                vec= Vector2.Lerp(Vector2.left, new Vector2(-1, -1), 0.5f).normalized;
+                break;
+            case 14:
+                vec= Vector2.Lerp(Vector2.left, new Vector2(-1, 1), 0.5f).normalized;
+                break;
+            case 15:
+                vec = Vector2.Lerp(Vector2.up, new Vector2(-1, 1), 0.5f).normalized;
                 break;
         }
         return vec;
