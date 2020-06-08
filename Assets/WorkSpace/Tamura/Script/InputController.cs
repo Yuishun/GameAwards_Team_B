@@ -9,6 +9,8 @@ public class InputController : MonoBehaviour
     SceneManagerScript sceneManagerScript;
     UIController uIController;
     bool m_bControll_ok = true;
+    float NotOperation_Time = 0;
+    float SetHidetime = 1;
     void Start()
     {
         gameObject.tag = "GameController";
@@ -16,12 +18,18 @@ public class InputController : MonoBehaviour
         FreezeCarsor = transform.GetChild(2).transform.GetComponent<FreezeCarsorScript>();
         uIController = FreezeCarsor.transform.root.GetChild(0).GetComponent<UIController>();
         if (GameObject.FindWithTag("AllScene"))
+        {
             sceneManagerScript = GameObject.FindWithTag("AllScene").GetComponent<SceneManagerScript>();
+            SetHidetime = sceneManagerScript.GethideUItime();
+        }
     }
     void Update()
     {
         if (m_bControll_ok)
         {
+            //コントロールしていない時間を計測
+            if (!MenuScript.m_bMenuOpen)
+                NotOperation_Time += Time.deltaTime;
             //===============================================
             //ステージ回転(押下のみ判定)
             //===============================================
@@ -32,25 +40,37 @@ public class InputController : MonoBehaviour
                 Input.GetButtonDown("Button_L"))//回転
             {
                 if (!MenuScript.m_bMenuOpen)
+                {
+                    NotOperation_Time = 0;
                     GravityController.LeftRoll = true;
+                }
             }
             else if (RstickH > 0 || Trigger > 0 ||
                 Input.GetButtonDown("Button_R"))//回転
             {
                 if (!MenuScript.m_bMenuOpen)
+                {
+                    NotOperation_Time = 0;
                     GravityController.RightRoll = true;
+                }
             }
             else if (Input.GetButtonDown("Button_Y"))
             //回転角度変更
             {
                 if (!MenuScript.m_bMenuOpen)
+                {
+                    NotOperation_Time = 0;
                     GravityController.RollAngleChange(true);
+                }
             }
             else if (Input.GetButtonDown("Button_X"))
             //回転角度変更
             {
                 if (!MenuScript.m_bMenuOpen)
+                {
+                    NotOperation_Time = 0;
                     GravityController.RollAngleChange(false);
+                }
             }
 
 
@@ -65,6 +85,7 @@ public class InputController : MonoBehaviour
             {
                 if (!MenuScript.m_bMenuOpen)
                 {
+                    NotOperation_Time = 0;
                     FreezeCarsor.ControllerColliderHit(1);
                     uIController.CarsorWay(1);
                 }
@@ -73,6 +94,7 @@ public class InputController : MonoBehaviour
             {
                 if (!MenuScript.m_bMenuOpen)
                 {
+                    NotOperation_Time = 0;
                     FreezeCarsor.ControllerColliderHit(2);
                     uIController.CarsorWay(2);
                 }
@@ -81,6 +103,7 @@ public class InputController : MonoBehaviour
             {
                 if (!MenuScript.m_bMenuOpen)
                 {
+                    NotOperation_Time = 0;
                     FreezeCarsor.ControllerColliderHit(3);
                     uIController.CarsorWay(3);
                 }
@@ -89,6 +112,7 @@ public class InputController : MonoBehaviour
             {
                 if (!MenuScript.m_bMenuOpen)
                 {
+                    NotOperation_Time = 0;
                     FreezeCarsor.ControllerColliderHit(4);
                     uIController.CarsorWay(4);
                 }
@@ -104,12 +128,18 @@ public class InputController : MonoBehaviour
             if (Input.GetButtonDown("Button_A"))//凍結
             {
                 if (!MenuScript.m_bMenuOpen)
+                {
+                    NotOperation_Time = 0;
                     FreezeCarsor.FreezeImage();
+                }
             }
             if (Input.GetButtonDown("Button_B"))//溶解
             {
                 if (!MenuScript.m_bMenuOpen)
+                {
+                    NotOperation_Time = 0;
                     FreezeCarsor.MeltIMage();
+                }
             }
 
             FreezeCarsor.SetRot();
@@ -120,7 +150,18 @@ public class InputController : MonoBehaviour
             if (Input.GetButtonDown("Button_START"))
             {
                 if (!MenuScript.m_bMenuOpen)
+                {
+                    NotOperation_Time = 0;
                     sceneManagerScript.Menu();
+                }
+            }
+            if (NotOperation_Time > SetHidetime)
+            {
+                uIController.HideUI();
+            }
+            if (NotOperation_Time == 0)
+            {
+                uIController.ShowUI();
             }
         }
     }
@@ -138,5 +179,6 @@ public class InputController : MonoBehaviour
     public void NoControll()
     {
         m_bControll_ok = false;
+        uIController.HideUI();
     }
 }
