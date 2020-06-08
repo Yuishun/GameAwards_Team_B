@@ -52,7 +52,8 @@ public class SceneManagerScript : MonoBehaviour
     bool NowLoading = false;
     static float audioBGMVolume = 0;
     static float audioSEVolume = 0;
-
+    [SerializeField,Header("ステージUI隠すまでの時間"),Range(1,10)]
+    float hideUItime = 5f;
     void Awake()
     {
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Debug用
@@ -343,5 +344,9 @@ public class SceneManagerScript : MonoBehaviour
     {
         audioSEVolume = val;
         PlayerPrefs.SetFloat("SE", audioSEVolume);
+    }
+    public float GethideUItime()
+    {
+        return hideUItime;
     }
 }

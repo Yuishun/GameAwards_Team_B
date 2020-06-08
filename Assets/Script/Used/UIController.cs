@@ -36,6 +36,11 @@ public class UIController : MonoBehaviour
     [SerializeField]
     Sprite arrow, arrowing;
     Image arrowimage;
+    RectTransform[] hideUIgroup;
+    Vector2[] showUIpos, hideUIpos;
+    bool UIhideFlag = false, UIFlag = false;
+    float UItimer = 0;
+
     void Start()
     {
         float worldScreenHeight = Camera.main.orthographicSize * 2f;
@@ -102,13 +107,33 @@ public class UIController : MonoBehaviour
         //Icon_Lst
         Icon_Lst.transform.localPosition = Icon_Arrow.localPosition;
         Icon_Lst.sizeDelta = Icon_Arrow.sizeDelta * 0.5f;
-        
+        //hideUIpos
+        showUIpos = new Vector2[] { UI_NowRotframe.transform.localPosition, UI_MoveRotframe.localPosition ,
+            Icon_Ice.localPosition,Icon_Unzip.localPosition,
+            Icon_Rot.parent.localPosition,Icon_Arrow.parent.localPosition
+        };
+        hideUIpos = new Vector2[] {
+            UI_NowRotframe.transform.localPosition + new Vector3(0,UI_NowRotframe.rect.height),
+            UI_MoveRotframe.localPosition+ new Vector3(UI_MoveRotframe.rect.width,0),
+            Icon_Ice.localPosition+ new Vector3(-Icon_Ice.rect.width -Icon_A.rect.width*0.5f,0),
+            Icon_Unzip.localPosition+ new Vector3(-Icon_Unzip.rect.width-Icon_B.rect.width*0.5f,0),
+            Icon_Rot.parent.localPosition+ new Vector3(rotwidth,0),
+            Icon_Arrow.parent.localPosition+ new Vector3(-Icon_Arrow.rect.width,0)
+        };
+        hideUIgroup = new RectTransform[]
+        {
+            UI_NowRotframe,
+            UI_MoveRotframe,
+            Icon_Ice,
+            Icon_Unzip,
+            Icon_Rot.parent.GetComponent<RectTransform>(),
+            Icon_Arrow.parent.GetComponent<RectTransform>()
+        };
     }
 
     // Update is called once per frame
     void Update()
     {
-
         var way = gravityController.BackRollWay();
         switch (way)
         {
@@ -163,6 +188,27 @@ public class UIController : MonoBehaviour
             UI_NowRotText.text = (360 - angle).ToString("F0") + nowrot_afterwards;
         else
             UI_NowRotText.text = angle.ToString("F0") + nowrot_afterwards;
+
+        if (UIFlag)
+        {
+            UItimer += Time.deltaTime;
+            if (UIhideFlag)
+            {
+                for (int i = 0; i < showUIpos.Length; i++)
+                    hideUIgroup[i].localPosition = Vector2.Lerp(showUIpos[i], hideUIpos[i], UItimer);
+            }
+            else
+            {
+                UItimer += Time.deltaTime;
+                for (int i = 0; i < showUIpos.Length; i++)
+                    hideUIgroup[i].localPosition = Vector2.Lerp(hideUIpos[i], showUIpos[i], UItimer);
+            }
+            if (1 <= UItimer)
+            {
+                UIFlag = false;
+                UItimer = 0;
+            }
+        }
     }
     int oldval = 0;
     public void CarsorWay(int val)
@@ -202,6 +248,21 @@ public class UIController : MonoBehaviour
     {
         arrowimage.color = Color.red;
         Icon_Frask_Rendrer.sprite = Icon_Unzip_Frask;
-
+    }
+    public void HideUI()
+    {
+        if (!UIhideFlag)
+        {
+            UIhideFlag = true;
+            UIFlag = true;
+        }
+    }
+    public void ShowUI()
+    {
+        if (UIhideFlag)
+        {
+            UIhideFlag = false;
+            UIFlag = true;
+        }
     }
 }

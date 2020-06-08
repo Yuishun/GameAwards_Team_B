@@ -36,7 +36,6 @@ public class FlowerScript : MonoBehaviour
     ParticleSystem.MinMaxGradient[] color;
     void Start()
     {
-        Debug.Log(StageSelectScript.nowStageColor);
         SpriteRender = transform.GetComponent<SpriteRenderer>();
         SpriteRender.material = material;
         material.color = new Color(1, 1, 1, 1);
