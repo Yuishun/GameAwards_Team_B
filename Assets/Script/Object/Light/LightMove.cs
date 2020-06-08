@@ -102,8 +102,9 @@ public class LightMove : MonoBehaviour
                     m_pos = ray.point + m_dirVec * Vector2.Distance(ray.point, ray.transform.position) * 2;
                     continue;
                 }
-                //ray.transform.GetComponent<>().
-                //ray = ray.transform.GetComponent<MetaballParticleClass>().WaterNormalVec(ray);
+
+                ray = ray.transform.GetComponent<MetaballParticleClass>().WaterNormalVec(ray);
+                //ray.normal = MetaballParticleClass.WaterDir(ray.normal);
                 //var watersurface = surface.ReInVector2(m_pos, ray, m_dirVec);
                 // 空気から水への屈折したベクトルを取得
                 m_dirVec = Refractioning(GetRefractiveIndex(RefractiveIndex.Air),
@@ -141,7 +142,8 @@ public class LightMove : MonoBehaviour
                         //Debug.Log("ExitN" + ray.normal);
                         m_pos = ray.point + m_dirVec * 0.001f; // 位置調整
                         //if (ray)
-                        //    ray = ray.transform.GetComponent<MetaballParticleClass>().WaterNormalVec(ray);
+                            ray = ray.transform.GetComponent<MetaballParticleClass>().WaterNormalVec(ray);
+                        //ray.normal = MetaballParticleClass.WaterDir(ray.normal);
                         //var watersurface = surface.ReInVector2(m_pos, ray, -m_dirVec);
                         m_dirVec = Refractioning(GetRefractiveIndex(RefractiveIndex.Water),
                                 GetRefractiveIndex(RefractiveIndex.Air),
