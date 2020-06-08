@@ -30,8 +30,6 @@ public class MetaballParticleClass : MonoBehaviour {
 	public Rigidbody2D rb;
 	TrailRenderer tr;
     public SpriteRenderer spRend;
-    static int[] dir = new int[4];
-    static List<Vector2> normal = new List<Vector2>();
 
 	void Start () {
         //MObject = gameObject;

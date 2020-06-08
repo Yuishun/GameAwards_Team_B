@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: e391f00234292cc4f935308c11cf0e54, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: d4454f71d85928744be7771e2143dab7, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -901,11 +901,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 486282, guid: 1f9a47a695f72184f96ddc8d0b602c32, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 486282, guid: 1f9a47a695f72184f96ddc8d0b602c32, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.32
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 486282, guid: 1f9a47a695f72184f96ddc8d0b602c32, type: 3}
       propertyPath: m_LocalPosition.z
@@ -951,7 +951,7 @@ PrefabInstance:
     - target: {fileID: 4064339307071467320, guid: 1f9a47a695f72184f96ddc8d0b602c32,
         type: 3}
       propertyPath: WaterDropsObjects.Array.size
-      value: 150
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 4064339307071467320, guid: 1f9a47a695f72184f96ddc8d0b602c32,
         type: 3}
@@ -967,6 +967,16 @@ PrefabInstance:
         type: 3}
       propertyPath: DelayBetweenParticles
       value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 4064339307071467320, guid: 1f9a47a695f72184f96ddc8d0b602c32,
+        type: 3}
+      propertyPath: size
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4064339307071467320, guid: 1f9a47a695f72184f96ddc8d0b602c32,
+        type: 3}
+      propertyPath: initSpeed.x
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f9a47a695f72184f96ddc8d0b602c32, type: 3}
@@ -1295,7 +1305,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 8, y: 1.96}
+  m_Offset: {x: 7, y: 3}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -1306,7 +1316,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 5}
+  m_Size: {x: 1, y: 7}
   m_EdgeRadius: 0
 --- !u!61 &474005137
 BoxCollider2D:
@@ -1321,7 +1331,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -8, y: 1.96}
+  m_Offset: {x: -7, y: 3}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -1332,7 +1342,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 5}
+  m_Size: {x: 1, y: 7}
   m_EdgeRadius: 0
 --- !u!61 &474005138
 BoxCollider2D:
@@ -1358,7 +1368,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 15, y: 1}
+  m_Size: {x: 13, y: 1}
   m_EdgeRadius: 0
 --- !u!4 &474005139
 Transform:
@@ -1368,7 +1378,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 474005135}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.20411214, y: 2.04, z: 0}
+  m_LocalPosition: {x: 0, y: -0.85, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1423,7 +1433,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 1040
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 1314542775}
+  m_TargetTexture: {fileID: 1020611847}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
@@ -2838,6 +2848,38 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!84 &1020611847
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_Width: 522
+  m_Height: 294
+  m_AntiAliasing: 1
+  m_DepthFormat: 1
+  m_ColorFormat: 7
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
 --- !u!1001 &1087704569
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3509,38 +3551,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1277241609}
   m_CullTransparentMesh: 0
---- !u!84 &1314542775
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_Width: 522
-  m_Height: 294
-  m_AntiAliasing: 1
-  m_DepthFormat: 1
-  m_ColorFormat: 7
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 0
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
 --- !u!1 &1323352800
 GameObject:
   m_ObjectHideFlags: 0
@@ -9277,12 +9287,12 @@ ParticleSystem:
         key6: {r: 0.78186166, g: 0.46306515, b: 0.8113208, a: 0}
         key7: {r: 0, g: 0, b: 0, a: 0}
         ctime0: 0
-        ctime1: 9306
-        ctime2: 18350
-        ctime3: 27525
-        ctime4: 36700
-        ctime5: 45875
-        ctime6: 55049
+        ctime1: 11141
+        ctime2: 22282
+        ctime3: 32768
+        ctime4: 43908
+        ctime5: 55049
+        ctime6: 65535
         ctime7: 65535
         atime0: 0
         atime1: 65535
@@ -9297,22 +9307,22 @@ ParticleSystem:
         m_NumAlphaKeys: 2
       minGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 1, b: 1, a: 1}
-        key1: {r: 1, g: 1, b: 1, a: 1}
-        key2: {r: 0, g: 0, b: 0, a: 0}
-        key3: {r: 0, g: 0, b: 0, a: 0}
-        key4: {r: 0, g: 0, b: 0, a: 0}
-        key5: {r: 0, g: 0, b: 0, a: 0}
-        key6: {r: 0, g: 0, b: 0, a: 0}
-        key7: {r: 0, g: 0, b: 0, a: 0}
+        key0: {r: 0.78186166, g: 0.46306515, b: 0.8113208, a: 1}
+        key1: {r: 0, g: 0, b: 1, a: 1}
+        key2: {r: 0.2240566, g: 0.8962264, b: 0.83475024, a: 0}
+        key3: {r: 0.035398245, g: 1, b: 0, a: 0}
+        key4: {r: 0.9622642, g: 0.95581806, b: 0.20425421, a: 0}
+        key5: {r: 1, g: 0.6, b: 0, a: 0}
+        key6: {r: 1, g: 0, b: 0, a: 0}
+        key7: {r: 1, g: 0, b: 0, a: 0}
         ctime0: 0
-        ctime1: 65535
-        ctime2: 0
-        ctime3: 0
-        ctime4: 0
-        ctime5: 0
-        ctime6: 0
-        ctime7: 0
+        ctime1: 11141
+        ctime2: 22282
+        ctime3: 32768
+        ctime4: 43908
+        ctime5: 55049
+        ctime6: 65535
+        ctime7: 65535
         atime0: 0
         atime1: 65535
         atime2: 0
@@ -9322,7 +9332,7 @@ ParticleSystem:
         atime6: 0
         atime7: 0
         m_Mode: 0
-        m_NumColorKeys: 2
+        m_NumColorKeys: 7
         m_NumAlphaKeys: 2
     widthOverTrail:
       serializedVersion: 2
@@ -9384,21 +9394,21 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 0, b: 0, a: 1}
-        key1: {r: 1, g: 0.6, b: 0, a: 1}
-        key2: {r: 0.9622642, g: 0.95581806, b: 0.20425421, a: 0}
+        key0: {r: 0.78186166, g: 0.46306515, b: 0.8113208, a: 1}
+        key1: {r: 0, g: 0, b: 1, a: 1}
+        key2: {r: 0.2240566, g: 0.8962264, b: 0.83475024, a: 0}
         key3: {r: 0.035398245, g: 1, b: 0, a: 0}
-        key4: {r: 0.2240566, g: 0.8962264, b: 0.83475024, a: 0}
-        key5: {r: 0, g: 0, b: 1, a: 0}
-        key6: {r: 0.78186166, g: 0.46306515, b: 0.8113208, a: 0}
-        key7: {r: 0, g: 0, b: 0, a: 0}
+        key4: {r: 0.9622642, g: 0.95581806, b: 0.20425421, a: 0}
+        key5: {r: 1, g: 0.6, b: 0, a: 0}
+        key6: {r: 1, g: 0, b: 0, a: 0}
+        key7: {r: 1, g: 0, b: 0, a: 0}
         ctime0: 0
-        ctime1: 9306
-        ctime2: 18350
-        ctime3: 27525
-        ctime4: 36700
-        ctime5: 45875
-        ctime6: 55049
+        ctime1: 11141
+        ctime2: 22282
+        ctime3: 32768
+        ctime4: 43908
+        ctime5: 55049
+        ctime6: 65535
         ctime7: 65535
         atime0: 0
         atime1: 65535
@@ -10390,7 +10400,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2051966775}
   - component: {fileID: 2051966774}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: IrisNoah2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
