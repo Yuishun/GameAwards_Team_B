@@ -124,17 +124,8 @@ SubShader {
 			texcol = tex2D(_GrabTexture, i.uv) ;
 			
 		}
-					
-		
-		
 	 	return texcol;
-	 	
-	   
 	}
-
-
-
-
 	ENDCG
 
     }
