@@ -58,10 +58,10 @@ public class RainSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (WaterDropsObjects[WaterDropsObjects.Length - 1].GetComponent<MetaballParticleClass>().
-            Active == true)
-            Debug.Log("LengthMax");
-        int rand = Random.Range(0, 5);
+        //if (WaterDropsObjects[WaterDropsObjects.Length - 1].GetComponent<MetaballParticleClass>().
+        //    Active == true)
+        //    Debug.Log("LengthMax");
+        int rand = Random.Range(0, 8);
         if (rand == 0)
         {
             rand = Random.Range(1, 10);
