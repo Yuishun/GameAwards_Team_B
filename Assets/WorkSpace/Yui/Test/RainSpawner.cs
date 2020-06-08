@@ -93,7 +93,7 @@ public class RainSpawner : MonoBehaviour
             if (MetaBall.Active == true)
             {
                 Vector3 scale = WaterDropsObjects[i].transform.localScale;
-                scale = new Vector3(scale.x - 0.01f, scale.y - 0.01f, 1);
+                scale = new Vector3(scale.x * 0.99f, scale.y * 0.99f, 1);
                 if (scale.x <= 0.1f)
                     MetaBall.Active = false;
                 else
