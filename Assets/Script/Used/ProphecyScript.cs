@@ -26,7 +26,7 @@ public class ProphecyScript : MonoBehaviour
     RawImage bookl_maintex, bookr_maintex;
     [SerializeField]
     Color color1, color2;
-
+    AudioSource audioSE;
     void Awake()
     {   
         //1度だけのチェック
@@ -43,7 +43,7 @@ public class ProphecyScript : MonoBehaviour
             bookright = transform.GetChild(0).GetChild(1).GetComponent<RectTransform>();
             bookl_maintex = bookleft.GetComponent<RawImage>();
             bookr_maintex = bookright.GetComponent<RawImage>();
-
+            audioSE = GetComponent<AudioSource>();
             StartCoroutine("BookOpen");
         }
         else
@@ -97,6 +97,8 @@ public class ProphecyScript : MonoBehaviour
 
     IEnumerator BookOpen()
     {
+        
+        
         bookleft.gameObject.transform.SetSiblingIndex(4);
         bookleft.localPosition = new Vector3(bookleft.rect.width, 0, 0);
         var timer = 0f;
