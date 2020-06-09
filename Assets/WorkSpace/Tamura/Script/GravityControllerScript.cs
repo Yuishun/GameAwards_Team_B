@@ -26,6 +26,7 @@ public class GravityControllerScript : MonoBehaviour
     float timer = 0;
     public bool RightRoll = false;
     public bool LeftRoll = false;
+    
     void Start()
     {
         cam_root = Camera.main.transform.root;
@@ -55,16 +56,15 @@ public class GravityControllerScript : MonoBehaviour
     }
     void Roll()
     {
-        timer += Time.deltaTime* RotateSpeed;
-        if (timer <= 1)
-        {
-            if (rollWay == RollWay.right)
-                cam_root.transform.Rotate(new Vector3(0, 0, (int)rollAngle) * Time.deltaTime * RotateSpeed);
-            if (rollWay == RollWay.left)
-                cam_root.transform.Rotate(new Vector3(0, 0, -(int)rollAngle) * Time.deltaTime * RotateSpeed);
-            Physics2D.gravity = localGravity.y * cam_root.up;
-
-        }
+        var rottime = 0.02f * RotateSpeed;
+        timer += rottime;
+        
+        if (rollWay == RollWay.right)
+            cam_root.transform.Rotate(new Vector3(0, 0, (int)rollAngle) * rottime);
+        if (rollWay == RollWay.left)
+            cam_root.transform.Rotate(new Vector3(0, 0, -(int)rollAngle) * rottime);
+        Physics2D.gravity = localGravity.y * cam_root.up;
+        
         if (timer >= 1)
         {
             timer = 0;
@@ -72,12 +72,6 @@ public class GravityControllerScript : MonoBehaviour
             RightRoll = false;
             LeftRoll = false;
             rollWay = RollWay.normal;
-            //var axis = Vector3.Cross(-Vector3.up, (Vector3)localGravity);
-            //            var axis = Vector3.Cross(-Vector3.up, (Vector3)Physics2D.gravity);
-            //            if (-0.05f < axis.z || axis.z < 0.05f)
-            //            {
-            //                Physics2D.gravity = localGravity;
-            //            }
         }
     }
 

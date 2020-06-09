@@ -29,9 +29,7 @@ public class MetaballParticleClass : MonoBehaviour {
 	float delta;
 	public Rigidbody2D rb;
 	TrailRenderer tr;
-    public SpriteRenderer spRend;
-    static int[] dir = new int[4];
-    static List<Vector2> normal = new List<Vector2>();
+    public SpriteRenderer spRend;    
 
 	void Start () {
         //MObject = gameObject;
@@ -97,9 +95,6 @@ public class MetaballParticleClass : MonoBehaviour {
     // 水面の法線を返す
     public RaycastHit2D WaterNormalVec(RaycastHit2D ray)
     {
-        for (int i = 0; i < 4; i++)
-            dir[i] = 0;
-        normal.Clear();
         // 周囲に水の粒があるか
         Collider2D[] col = Physics2D.OverlapCircleAll(transform.position, 0.2f
             , LayerMask.GetMask("PostProcessing"));
@@ -123,12 +118,13 @@ public class MetaballParticleClass : MonoBehaviour {
             ray.normal= (ray.point - point).normalized;
 
         }
-        
+        ray.normal = WaterDir(ray.normal);
+        Debug.DrawRay(ray.point, ray.normal, Color.green);
         return ray;
     }
 
     // 線分と点から線分への垂線がどこで交わっているか
-    Vector2 nearPoint(Vector2 A,Vector2 B, Vector2 P)
+    public static Vector2 nearPoint(Vector2 A,Vector2 B, Vector2 P,bool mode = true)
     {
         Vector2 a, b;
         float r;
@@ -141,63 +137,120 @@ public class MetaballParticleClass : MonoBehaviour {
         // 内積 ÷ |a|^2
         r = (a.x * b.x + a.y * b.y) / (a.x * a.x + a.y * a.y);
 
-        if (r == 0)
-        {
-            return A;
-        }
-        else if (r == 1)
-        {
-            return B;
-        }
-        else if(r < 0 || r > 1)
-        {
-            return Vector2.zero;
-        }
-        else
-        {
-            Vector2 result;
-            result.x = A.x + r * a.x;
-            result.y = A.y + r * a.y;
-            return result;
-        }
-
+        if(mode)
+            if (r == 0)
+            {
+                return A;
+            }
+            else if (r == 1)
+            {
+                return B;
+            }
+            else if(r < 0 || r > 1)
+            {
+                return Vector2.zero;
+            }
+            else
+            {
+                Vector2 result;
+                result.x = A.x + r * a.x;
+                result.y = A.y + r * a.y;
+                return result;
+            }
+        else        
+            if (r <= 0)
+            {
+                return A;
+            }
+            else if (r >= 1)
+            {
+                return B;
+            }
+            else
+            {
+                Vector2 result;
+                result.x = A.x + r * a.x;
+                result.y = A.y + r * a.y;
+                return result;
+            }
+        
     }
 
-    void WaterDir(Vector2 PVec)
+    public static Vector2 WaterDir(Vector2 PVec)
     {
-        byte answer;
-        float absX = Mathf.Abs(PVec.x);
-        float absY = Mathf.Abs(PVec.y);
-        if (absX > absY)
+        float answer = -2;
+        int index = -1;
+        for(int i = 0; i < 16; i++)
         {
-            if (PVec.x < 0)
-                answer = 0; // 左
-            else
-                answer = 1; // 右
-        }
-        else if(absX < absY)
-        {
-            if (PVec.y < 0)
-                answer = 2; // 下
-            else
-                answer = 3; // 上
-        }
-        else
-        {
-            if (PVec.x < 0)
-                answer = 0; // 左
-            else
-                answer = 1; // 右
-
-            dir[answer]++;
-
-            if (PVec.y < 0)
-                answer = 2; // 下
-            else
-                answer = 3; // 上
+            Vector2 vec2 = normalVec(i);
+            float a = (PVec.x * vec2.x + PVec.y * vec2.y)
+                / (PVec.magnitude * vec2.magnitude);
+            if (a > answer)
+            {
+                answer = a;
+                index = i;
+            }
         }
 
-        dir[answer]++;
+        return normalVec(index);
     }
 
+    static Vector2 normalVec(int i)
+    {
+        Vector2 vec = Vector2.zero;
+        switch (i)
+        {
+            case 0:
+                vec = Vector2.up;
+                break;
+            case 1:
+                vec = new Vector2(1, 1).normalized;
+                break;
+            case 2:
+                vec = Vector2.right;
+                break;
+            case 3:
+                vec = new Vector2(1, -1).normalized;
+                break;
+            case 4:
+                vec = Vector2.down;
+                break;
+            case 5:
+                vec = new Vector2(-1, -1).normalized;
+                break;
+            case 6:
+                vec = Vector2.left;
+                break;
+            case 7:
+                vec = new Vector2(-1, 1).normalized;
+                break;
+
+         /*   case 8:
+                vec = Vector2.Lerp(Vector2.up, new Vector2(1, 1),0.5f).normalized;
+                break;
+            case 9:
+                vec= Vector2.Lerp(Vector2.right, new Vector2(1, 1), 0.5f).normalized;
+                break;
+            case 10:
+                vec= Vector2.Lerp(Vector2.right, new Vector2(1, -1), 0.5f).normalized;
+                break;
+            case 11:
+                vec= Vector2.Lerp(Vector2.down, new Vector2(1, -1), 0.5f).normalized;
+                break;
+            case 12:
+                vec= Vector2.Lerp(Vector2.down, new Vector2(-1, -1), 0.5f).normalized;
+                break;
+            case 13:
+                vec= Vector2.Lerp(Vector2.left, new Vector2(-1, -1), 0.5f).normalized;
+                break;
+            case 14:
+                vec= Vector2.Lerp(Vector2.left, new Vector2(-1, 1), 0.5f).normalized;
+                break;
+            case 15:
+                vec = Vector2.Lerp(Vector2.up, new Vector2(-1, 1), 0.5f).normalized;
+                break;
+         */
+        }
+        return vec;
+    }
 }

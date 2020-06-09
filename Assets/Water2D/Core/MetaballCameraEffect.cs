@@ -81,6 +81,11 @@ namespace UnityStandardAssets.ImageEffects
                 return;
             }
 
+            if (Screen.width>1000)
+                iterations = 4;
+            else
+                iterations = 2;
+
         }
 
         // Performs one blur iteration.

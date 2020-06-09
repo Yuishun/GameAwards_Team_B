@@ -112,7 +112,7 @@ SubShader {
 			// ビューポート座標系に変換
 			i.uv = (samplingScreenPos.xy / samplingScreenPos.w) * 0.5 + 0.5;			
 #if UNITY_UV_STARTS_AT_TOP
-			//i.uv.y = 1.0 - i.uv.y;			
+			i.uv.y = 1.0 - i.uv.y;			
 #endif			
 			i.uv.x = 1.0 - i.uv.x;
 			texcol = tex2D(_GrabTexture, i.uv);// *0.5 + half4(color, 1) * _ColorIndex;
