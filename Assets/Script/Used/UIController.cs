@@ -242,7 +242,6 @@ public class UIController : MonoBehaviour
     {
         arrowimage.color = Color.cyan;
         Icon_Frask_Rendrer.sprite = Icon_Ice_Frask;
-
     }
     public void UnzipIcon()
     {
