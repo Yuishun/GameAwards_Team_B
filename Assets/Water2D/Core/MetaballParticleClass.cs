@@ -119,11 +119,12 @@ public class MetaballParticleClass : MonoBehaviour {
 
         }
         ray.normal = WaterDir(ray.normal);
+        Debug.DrawRay(ray.point, ray.normal, Color.green);
         return ray;
     }
 
     // 線分と点から線分への垂線がどこで交わっているか
-    Vector2 nearPoint(Vector2 A,Vector2 B, Vector2 P)
+    public static Vector2 nearPoint(Vector2 A,Vector2 B, Vector2 P,bool mode = true)
     {
         Vector2 a, b;
         float r;
@@ -136,26 +137,43 @@ public class MetaballParticleClass : MonoBehaviour {
         // 内積 ÷ |a|^2
         r = (a.x * b.x + a.y * b.y) / (a.x * a.x + a.y * a.y);
 
-        if (r == 0)
-        {
-            return A;
-        }
-        else if (r == 1)
-        {
-            return B;
-        }
-        else if(r < 0 || r > 1)
-        {
-            return Vector2.zero;
-        }
-        else
-        {
-            Vector2 result;
-            result.x = A.x + r * a.x;
-            result.y = A.y + r * a.y;
-            return result;
-        }
-
+        if(mode)
+            if (r == 0)
+            {
+                return A;
+            }
+            else if (r == 1)
+            {
+                return B;
+            }
+            else if(r < 0 || r > 1)
+            {
+                return Vector2.zero;
+            }
+            else
+            {
+                Vector2 result;
+                result.x = A.x + r * a.x;
+                result.y = A.y + r * a.y;
+                return result;
+            }
+        else        
+            if (r <= 0)
+            {
+                return A;
+            }
+            else if (r >= 1)
+            {
+                return B;
+            }
+            else
+            {
+                Vector2 result;
+                result.x = A.x + r * a.x;
+                result.y = A.y + r * a.y;
+                return result;
+            }
+        
     }
 
     public static Vector2 WaterDir(Vector2 PVec)
@@ -207,7 +225,7 @@ public class MetaballParticleClass : MonoBehaviour {
                 vec = new Vector2(-1, 1).normalized;
                 break;
 
-            case 8:
+         /*   case 8:
                 vec = Vector2.Lerp(Vector2.up, new Vector2(1, 1),0.5f).normalized;
                 break;
             case 9:
@@ -231,6 +249,7 @@ public class MetaballParticleClass : MonoBehaviour {
             case 15:
                 vec = Vector2.Lerp(Vector2.up, new Vector2(-1, 1), 0.5f).normalized;
                 break;
+         */
         }
         return vec;
     }
