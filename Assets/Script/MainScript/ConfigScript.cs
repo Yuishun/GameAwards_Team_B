@@ -21,6 +21,13 @@ public class ConfigScript : MonoBehaviour
     float timer = 0;
     [SerializeField,Range(0.15f,0.3f)]
     float interval_time;
+    Text text;
+    [SerializeField]
+    Image img;
+    [SerializeField]
+    Sprite spriteA,spriteB;
+    string Atex = "決定",Btex = "戻る";
+    GameObject mute1, mute2;
     enum SelectState
     {
         BGMSlide,
@@ -49,10 +56,26 @@ public class ConfigScript : MonoBehaviour
             numtext.text = count + "/7";
             BGMValue.value = managerScript.GetBGMVolume();
             SEValue.value = managerScript.GetSEVolume();
-            audio.volume = BGMValue.value;
+            audio = manage.GetComponent<AudioSource>();
+        }
+        else
+        {
+            BGMValue.value = PlayerPrefs.GetFloat("BGM");
+            SEValue.value = PlayerPrefs.GetFloat("SE");
         }
         IconDistance = new Vector3(0, 100);
-        BGMValue.value = audio.volume;
+        text = img.transform.GetChild(0).GetComponent<Text>();
+        img.sprite = spriteA;
+        mute1 = transform.GetChild(2).GetChild(5).gameObject;
+        mute2 = transform.GetChild(3).GetChild(5).gameObject;
+        if (BGMValue.value == 0)
+            mute1.SetActive(true);
+        else
+            mute1.SetActive(false);
+        if (SEValue.value == 0)
+            mute2.SetActive(true);
+        else
+            mute2.SetActive(false);
     }
 
     void Update()
@@ -128,6 +151,10 @@ public class ConfigScript : MonoBehaviour
                                 Config_State = SelectState.SESlide;
                                 arrow.transform.localPosition -= IconDistance;
                             }
+                            if (BGMValue.value == 0)
+                                mute1.SetActive(true);
+                            else
+                                mute1.SetActive(false);
                         }
                         break;
                     case SelectState.SESlide:
@@ -151,6 +178,10 @@ public class ConfigScript : MonoBehaviour
                                 Config_State = SelectState.Release;
                                 arrow.transform.localPosition -= IconDistance;
                             }
+                            if (SEValue.value == 0)
+                                mute2.SetActive(true);
+                            else
+                                mute2.SetActive(false);
                         }
                         break;
                     case SelectState.Release:
@@ -190,6 +221,16 @@ public class ConfigScript : MonoBehaviour
                         }
                         break;
                 }
+                if (!ButtonFlag)
+                {
+                    img.sprite = spriteA;
+                    text.text = Atex;
+                }
+                else
+                {
+                    img.sprite = spriteB;
+                    text.text = Btex;
+                }
             }
             else
             {
@@ -228,7 +269,8 @@ public class ConfigScript : MonoBehaviour
             else
                 BGMValue.value += val;
         }
-        audio.volume = BGMValue.value;
+        if (managerScript)
+            audio.volume = BGMValue.value;
     }
     public void SEChange(float val)
     {
@@ -249,7 +291,7 @@ public class ConfigScript : MonoBehaviour
             else
                 SEValue.value += val;
         }
-        
+
     }
     public void StageCountClear()
     {

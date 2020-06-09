@@ -7,13 +7,13 @@ public class BGMAudioscript : MonoBehaviour
     [SerializeField]
     AudioClip[] BGMgroup;
     AudioSource aud;
-    void Awake()
-    {
-        aud = GetComponent<AudioSource>();
-        aud.loop = true;
-        aud.playOnAwake = false;
-        aud.volume = PlayerPrefs.GetFloat("BGM");
-    }
+    //void Awake()
+    //{
+    //    aud = GetComponent<AudioSource>();
+    //    aud.loop = true;
+    //    aud.playOnAwake = false;
+    //    aud.volume = PlayerPrefs.GetFloat("BGM");
+    //}
     
     public void SetBGM(SceneManagerScript maf,string name)
     {
@@ -46,5 +46,13 @@ public class BGMAudioscript : MonoBehaviour
                 break;
         }
         aud.Play();
+    }
+    public void SetVolume(float val)
+    {
+        aud = GetComponent<AudioSource>();
+        aud.loop = true;
+        aud.playOnAwake = false;
+        aud.volume = val;
+        
     }
 }

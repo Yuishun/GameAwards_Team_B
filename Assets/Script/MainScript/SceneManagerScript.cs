@@ -61,11 +61,13 @@ public class SceneManagerScript : MonoBehaviour
         {
             DontDestroyOnLoad(gameObject);
             singleton = this;
+            audioBGMVolume = PlayerPrefs.GetFloat("BGM");
+            audioSEVolume = PlayerPrefs.GetFloat("SE");
+            audioScript.SetVolume(audioBGMVolume);
         }
         else
             Destroy(gameObject);
-        audioBGMVolume = PlayerPrefs.GetFloat("BGM");
-        audioSEVolume = PlayerPrefs.GetFloat("SE");
+
     }
     //=============================================================
     // シーン遷移後処理
