@@ -35,6 +35,8 @@ public class FlowerScript : MonoBehaviour
     GameObject ef_flower;
     ParticleSystem.MinMaxGradient[] color;
     AudioSource audioSource;
+
+    ParticleSystem sield;
     void Start()
     {
         SpriteRender = transform.GetComponent<SpriteRenderer>();
@@ -46,6 +48,7 @@ public class FlowerScript : MonoBehaviour
         audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.volume = PlayerPrefs.GetFloat("SE");
         audioSource.clip = Resources.Load<AudioClip>("Sound\\SE\\ClearFloweerSE");
+        sield = transform.GetChild(2).GetComponent<ParticleSystem>();
     }
 
     void GoalFlower()
@@ -53,6 +56,7 @@ public class FlowerScript : MonoBehaviour
         GameObject.FindGameObjectWithTag("GameController").GetComponent<InputController>().NoControll();
         StopCoroutine("Swing");
         StartCoroutine("Blooming");
+        transform.GetChild(1).GetComponent<ParticleSystem>().Stop();
     }
 
     public void SkipFlower()
@@ -165,7 +169,9 @@ public class FlowerScript : MonoBehaviour
         if (!m_bGoal)
         {
             col[0] = null;
-            Physics2D.OverlapCircleNonAlloc(transform.position, 0.7f,
+            Physics2D.OverlapCircleNonAlloc(transform.position 
+                +new Vector3(-0.3f*transform.localScale.x,-0.5f*transform.localScale.y,0),
+            0.7f,
             col, LayerMask.GetMask("Light"));
             if (col[0])
             {
@@ -173,7 +179,9 @@ public class FlowerScript : MonoBehaviour
                     != ClearColor)
                     return;
 
-                m_iCollisionTimer++;
+                
+                if (m_iCollisionTimer++ % 60 == 0)
+                    sield.Play();
                 if (m_iCollisionTimer > m_iLimitCollisionTime)
                 {
                     m_bGoal = !m_bGoal;
