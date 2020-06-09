@@ -56,7 +56,6 @@ public class SceneManagerScript : MonoBehaviour
     float hideUItime = 5f;
     [SerializeField]
     AudioScript audioScript;
-    
     void Awake()
     {
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Debug用
