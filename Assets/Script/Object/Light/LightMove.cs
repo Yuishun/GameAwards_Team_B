@@ -56,7 +56,7 @@ public class LightMove : MonoBehaviour
         m_color = m_lightpoint.vertColor;
         bool  EnterWater = false;   // 水に当たっているか
         int i = 0;
-        while (i++ > 200)
+        while (i++ < 200)
         {
 
             // 水か光を通さないものに当たっているか
@@ -115,7 +115,7 @@ public class LightMove : MonoBehaviour
 
                         m_pos = MetaballParticleClass.nearPoint(ray.point, ray.point + ray.normal,
                             (Vector2)ray.transform.position + ray.normal * 0.126f, false);
-                        //Debug.DrawRay(m_pos, m_dirVec, Color.blue);
+                        //Debug.DrawRay(m_pos, m_dirVec, Color.blue); // 0.126f 0.085f
 
                         AddLineRenderer();
 
