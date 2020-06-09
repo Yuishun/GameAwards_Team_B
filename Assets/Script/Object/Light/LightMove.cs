@@ -78,7 +78,7 @@ public class LightMove : MonoBehaviour
             i++;    // 無限ループ阻止
             if (i > 100)
             {
-                Debug.Log("無限ループ脱出");
+             //   Debug.Log("無限ループ脱出");
                 break;
             }
 

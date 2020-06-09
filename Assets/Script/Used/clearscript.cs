@@ -43,8 +43,6 @@ public class clearscript : MonoBehaviour
         {
             if (Input.GetButtonDown("Button_A"))
             {
-                Debug.Log("A");
-                Debug.Log(all);
                 if (all)
                     all.Loadstagenum(1000);
             }
