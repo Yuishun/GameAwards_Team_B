@@ -61,13 +61,13 @@ public class SceneManagerScript : MonoBehaviour
         {
             DontDestroyOnLoad(gameObject);
             singleton = this;
-            audioBGMVolume = PlayerPrefs.GetFloat("BGM");
-            audioSEVolume = PlayerPrefs.GetFloat("SE");
+
+            audioBGMVolume = PlayerPrefs.GetFloat("BGM", 1f);
+            audioSEVolume = PlayerPrefs.GetFloat("SE", 1f);
             audioScript.SetVolume(audioBGMVolume);
         }
         else
             Destroy(gameObject);
-
     }
     //=============================================================
     // シーン遷移後処理
@@ -88,8 +88,7 @@ public class SceneManagerScript : MonoBehaviour
         else
             SceneManagerScript.m_bMenu_InStage = false;
         MenuEnd();
-        audioScript.SetBGM(singleton
-            ,nextScene.name);
+        audioScript.SetBGM(singleton, nextScene.name);
     }
     //===================================================
     // 読み込みシーン選択＆フェード
