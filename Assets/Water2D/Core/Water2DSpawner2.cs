@@ -17,7 +17,9 @@
         {
             if (instance == null)
                 instance = this;
-
+            var aud = GetComponent<AudioSource>();
+            if (aud)
+                aud.volume = PlayerPrefs.GetFloat("SE");
         }
 
         [Title("Water 2D", 20f, 20)]
