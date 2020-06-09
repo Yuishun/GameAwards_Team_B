@@ -56,7 +56,7 @@ public class LightMove : MonoBehaviour
         m_color = m_lightpoint.vertColor;
         bool  EnterWater = false;   // 水に当たっているか
         int i = 0;
-        while (i++ > 200)
+        while (i++ < 200)
         {
 
             // 水か光を通さないものに当たっているか
