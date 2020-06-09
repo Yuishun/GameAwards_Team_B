@@ -55,7 +55,7 @@ public class SceneManagerScript : MonoBehaviour
     [SerializeField,Header("ステージUI隠すまでの時間"),Range(1,10)]
     float hideUItime = 5f;
     [SerializeField]
-    AudioScript audioScript;
+    BGMAudioscript audioScript;
     void Awake()
     {
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Debug用
@@ -96,7 +96,7 @@ public class SceneManagerScript : MonoBehaviour
         else
             SceneManagerScript.m_bMenu_InStage = false;
         MenuEnd();
-        audioScript.SetBGM(nextScene.name);
+        audioScript.SetBGM(singleton,nextScene.name);
     }
     //===================================================
     // 読み込みシーン選択＆フェード

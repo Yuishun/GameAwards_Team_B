@@ -30,7 +30,8 @@ public class GravityControllerScript : MonoBehaviour
     void Start()
     {
         cam_root = Camera.main.transform.root;
-        Physics2D.gravity = Physics2D.gravity * cam_root.up;
+        Physics2D.gravity = new Vector2(0, -9.81f);
+        //Physics2D.gravity * cam_root.up;
         localGravity = Physics2D.gravity;
     }
 
