@@ -148,8 +148,6 @@ public class LightMove : MonoBehaviour
     void AddLineRenderer()
     {
         m_lightpoint.AddLineRenderer(m_pos, m_dirVec,m_color);
-        //Debug.Log("Pos "+m_pos+"Vec "+ m_dirVec+"Color "+m_color);
-        //Debug.Log("Normal" + ray.normal);
     }
 
 
@@ -227,7 +225,6 @@ public class LightMove : MonoBehaviour
                 }
                 break;
         }
-        //Debug.Log("FramereturnError");
         return true;
     }
 }
