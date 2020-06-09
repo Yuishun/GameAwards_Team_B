@@ -79,6 +79,9 @@ public class SceneManagerScript : MonoBehaviour
         singleton.m_bFadeOut = false;
         //Debug.Log(prevSceneName + "->" + nextScene.name);
 
+        for (int i = 0; i < StageClearLoad(); i++)
+            StageStatus[i, 1] = 1;
+
         if (gamedata1 == 100)
             ClearSceneFadeOut();
         StartCoroutine(BeginTransition());
@@ -103,7 +106,6 @@ public class SceneManagerScript : MonoBehaviour
         {
             case 0://Titleからしか呼ばれない
                 ProphecyCheck = true;
-                
                 StartCoroutine(SceneChange("StageSelect"));
                 break;
             case 1:
@@ -164,7 +166,6 @@ public class SceneManagerScript : MonoBehaviour
     //=============================================================
     IEnumerator SceneChange(string scene)
     {
-
         var async = SceneManager.LoadSceneAsync(scene);
         async.allowSceneActivation = false;
         while (!singleton.m_bFadeEnd || async.progress < 0.9f)
@@ -247,11 +248,16 @@ public class SceneManagerScript : MonoBehaviour
     //=============================================================
     public void OneStageClear(int val)
     {
+        int count = 0;
         for (int i = 0; i < StageStatus.Length / 2; i++)
         {
             if (i + 1 == val)
+            {
+                count++;
                 StageStatus[i, 1] = 1;
+            }
         }
+        StageClearSave(count);
         Loadstagenum(500);
     }
     //=============================================================
@@ -261,6 +267,7 @@ public class SceneManagerScript : MonoBehaviour
     {
         for (int i = 0; i < StageStatus.Length / 2; i++)
             StageStatus[i, 1] = 0;
+        StageClearSave(0);
     }
     //=============================================================
     // Menu
@@ -321,6 +328,9 @@ public class SceneManagerScript : MonoBehaviour
         m_bClearFade = false;
     }
 
+    //===========================
+    // 音量 BGM・SE
+    //===========================
     public float GetBGMVolume()
     {        
         return audioBGMVolume;
@@ -339,8 +349,24 @@ public class SceneManagerScript : MonoBehaviour
         audioSEVolume = val;
         PlayerPrefs.SetFloat("SE", audioSEVolume);
     }
+    //===========================
+    // UI隠し時間返し
+    //===========================
     public float GethideUItime()
     {
         return hideUItime;
+    }
+    //===========================
+    //クリア状態 セーブ・ロード
+    //===========================
+    void StageClearSave(int num)
+    {
+        PlayerPrefs.SetInt("ClearNum",num);
+    }
+    int StageClearLoad()
+    {
+        var add = PlayerPrefs.GetInt("ClearNum", 0);
+        if (add > 7) add = 7;
+        return add;
     }
 }
