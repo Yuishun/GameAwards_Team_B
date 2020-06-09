@@ -23,7 +23,7 @@ public class BGScript : MonoBehaviour
         //比率をスプライトのローカル座標に反映
         transform.localScale = new Vector3(worldScreenWidth / width, worldScreenHeight / height);
         //transform.localScale *= 1.15f;
-        
+
 
         Vector3 campos = Camera.main.transform.position;
         campos.z = 0;
@@ -35,8 +35,16 @@ public class BGScript : MonoBehaviour
         transform.GetChild(1).position = transform.position + new Vector3(0, transform.lossyScale.y * 3);
 
         var island = transform.GetChild(0).transform;
-        island.localPosition -= new Vector3(0, island.root.transform.localScale.y * 0.5f);
-        
+        island.localPosition -= new Vector3(0, island.root.transform.localScale.y * 0.4f);
+        var Isprite = island.GetComponent<SpriteRenderer>().sprite.bounds;
+        float wide = Isprite.size.x;
+        float high = Isprite.size.y;
+        island.localScale = new Vector3(
+            (1/(worldScreenWidth / width))*(worldScreenWidth/wide)
+            ,
+            (1/(worldScreenHeight / height))*(worldScreenHeight/high)
+            );
+
 
         //海下端
         SeaPlate.transform.localScale = new Vector3(transform.lossyScale.x, 2, transform.lossyScale.y) * 0.52f;

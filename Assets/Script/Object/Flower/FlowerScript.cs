@@ -34,15 +34,18 @@ public class FlowerScript : MonoBehaviour
     bool m_bGoal = false;
     GameObject ef_flower;
     ParticleSystem.MinMaxGradient[] color;
+    AudioSource audioSource;
     void Start()
     {
-        Debug.Log(StageSelectScript.nowStageColor);
         SpriteRender = transform.GetComponent<SpriteRenderer>();
         SpriteRender.material = material;
         material.color = new Color(1, 1, 1, 1);
         SpriteRender.sprite = seed;
         StartCoroutine("Swing");
         ef_flower = Resources.Load<GameObject>("FlowerEffect");
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.volume = PlayerPrefs.GetFloat("SE");
+        audioSource.clip = Resources.Load<AudioClip>("Sound\\SE\\ClearFloweerSE");
     }
 
     void GoalFlower()
@@ -65,6 +68,7 @@ public class FlowerScript : MonoBehaviour
 
     IEnumerator Blooming()
     {
+        audioSource.Play();
         var rot = Quaternion.Euler(-90, 0, 0);
         
         transform.rotation = Quaternion.Euler(0, 0, 0);
