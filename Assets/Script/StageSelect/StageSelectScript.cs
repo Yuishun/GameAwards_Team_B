@@ -124,32 +124,6 @@ public class StageSelectScript : MonoBehaviour
         }
         if (!prophecy.activeSelf)
             ButtonFlag = true;
-        //==*************************************************************
-        // Debug用ステージセレクト
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-            StageSelect(1);
-        else
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-            StageSelect(2);
-        else
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-            StageSelect(3);
-        else
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-            StageSelect(4);
-        else
-        if (Input.GetKeyDown(KeyCode.Alpha5))
-            StageSelect(5);
-        else
-        if (Input.GetKeyDown(KeyCode.Alpha6))
-            StageSelect(6);
-        else
-        if (Input.GetKeyDown(KeyCode.Alpha7))
-            StageSelect(7);
-        
-        if (Input.GetKeyDown(KeyCode.Alpha7))
-            StageSelect(8);
-        //==*************************************************************
     }
     public void SelectButtonActivateion()
     {
