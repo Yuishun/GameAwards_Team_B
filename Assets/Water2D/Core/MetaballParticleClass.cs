@@ -32,7 +32,6 @@ public class MetaballParticleClass : MonoBehaviour {
     public SpriteRenderer spRend;    
 
 	void Start () {
-        //MObject = gameObject;
         Init();
 	}
 
@@ -50,16 +49,7 @@ public class MetaballParticleClass : MonoBehaviour {
 
 			VelocityLimiter ();
 
-			//if (LifeTime < 0)
 				return;
-            /*
-			if (delta > LifeTime) {
-				delta *= 0;
-				Active = false;
-			} else {
-				delta += Time.deltaTime;
-			}
-            */
 
 		}
 
@@ -104,7 +94,6 @@ public class MetaballParticleClass : MonoBehaviour {
             if (col[i].transform.position == transform.position)
                 continue;
 
-            //WaterDir((col[i].transform.position - transform.position).normalized);
 
             // rayの当たっている点から
             // 水面の線分への垂線が線分のどの部分に当たっているか
@@ -114,8 +103,8 @@ public class MetaballParticleClass : MonoBehaviour {
             if (point == Vector2.zero)
                 continue;
             // 線分からrayの当たっているところへのベクトルを法線とする
-            //normal.Add((ray.point - point).normalized);
             ray.normal= (ray.point - point).normalized;
+            break;
 
         }
         ray.normal = WaterDir(ray.normal);
