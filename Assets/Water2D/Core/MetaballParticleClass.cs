@@ -180,7 +180,7 @@ public class MetaballParticleClass : MonoBehaviour {
     {
         float answer = -2;
         int index = -1;
-        for(int i = 0; i < 16; i++)
+        for(int i = 0; i < 8; i++)
         {
             Vector2 vec2 = normalVec(i);
             float a = (PVec.x * vec2.x + PVec.y * vec2.y)
