@@ -144,16 +144,7 @@ public class MenuScript : MonoBehaviour
                 {
                     case MenuState.Controll:
                         ControllerCanvas.gameObject.SetActive(true);
-                        if (!InStage)
-                        {
-                            ControllerCanvas.GetChild(1).gameObject.SetActive(true);
-                            ControllerCanvas.GetChild(2).gameObject.SetActive(false);
-                        }
-                        else
-                        {
-                            ControllerCanvas.GetChild(1).gameObject.SetActive(false);
-                            ControllerCanvas.GetChild(2).gameObject.SetActive(true);
-                        }
+                        ControllerCanvas.GetChild(2).gameObject.SetActive(true);
                         if (!ControllerMenuFlag) ControllerMenuFlag = true;
                         break;
                     case MenuState.Config:
@@ -180,7 +171,6 @@ public class MenuScript : MonoBehaviour
         {
             if (Input.GetButtonDown("Button_A"))
             {
-                ControllerCanvas.GetChild(1).gameObject.SetActive(false);
                 ControllerCanvas.GetChild(2).gameObject.SetActive(false);
                 ControllerCanvas.gameObject.SetActive(false);
                 if (ControllerMenuFlag) ControllerMenuFlag = false;

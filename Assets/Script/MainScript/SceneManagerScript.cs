@@ -84,19 +84,19 @@ public class SceneManagerScript : MonoBehaviour
         SceneManagerScript.m_bFadeInEnd = false;
         NowLoading = false;
         singleton.m_bFadeOut = false;
-        Debug.Log(prevSceneName + "->" + nextScene.name);
+        //Debug.Log(prevSceneName + "->" + nextScene.name);
 
         if (gamedata1 == 100)
             ClearSceneFadeOut();
         StartCoroutine(BeginTransition());
         prevSceneName = nextScene.name;
-
         if (1 <= gamedata1 && gamedata1 <= 7)
             SceneManagerScript.m_bMenu_InStage = true;
         else
             SceneManagerScript.m_bMenu_InStage = false;
         MenuEnd();
-        audioScript.SetBGM(singleton,nextScene.name);
+        audioScript.SetBGM(singleton
+            ,nextScene.name);
     }
     //===================================================
     // 読み込みシーン選択＆フェード

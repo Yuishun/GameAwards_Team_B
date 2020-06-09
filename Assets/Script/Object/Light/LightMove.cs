@@ -26,7 +26,7 @@ public class LightMove : MonoBehaviour
     }
 
     [SerializeField] LayerMask FrameLayer, WaterLayer;
-    [SerializeField] Surface surface;
+    
     public Color m_color;
 
     RaycastHit2D ray;
