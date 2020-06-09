@@ -39,7 +39,6 @@ public class LightStartPoint : MonoBehaviour
         if (i == points.Count - 1)
         {
             verticesVec = vectors[i];
-            //verticesVec.y = Mathf.Abs(verticesVec.y);
         }
         else
         {
@@ -79,8 +78,6 @@ public class LightStartPoint : MonoBehaviour
             this.vertices.Add(rightpoint);
         }        
 
-        //Debug.Log("vec" + transform.InverseTransformVector(vectors[i - 1])
-        //    + "vert" + (vertices[offset + 2] - vertices[offset]).normalized);
 
         // UVを追加
         this.uvs.Add(new Vector2(xoffset, 0));
@@ -168,9 +165,7 @@ public class LightStartPoint : MonoBehaviour
     Vector2 p2,
     Vector2 p3,
     Vector3 p4)
-    //out Vector2 intersection)
     {
-       // intersection = Vector2.zero;
 
         var d = (p2.x - p1.x) * (p4.y - p3.y) - (p2.y - p1.y) * (p4.x - p3.x);
 
@@ -187,8 +182,6 @@ public class LightStartPoint : MonoBehaviour
             return false;
         }
 
-        //intersection.x = p1.x + u * (p2.x - p1.x);
-        //intersection.y = p1.y + u * (p2.y - p1.y);
 
         return true;
     }

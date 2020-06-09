@@ -17,7 +17,6 @@ public class LightMove : MonoBehaviour
     {
         set { m_dirVec = value; }
     }
-    //Rigidbody2D m_rb2d;
 
     LightStartPoint m_lightpoint;
     public LightStartPoint lightpoint
@@ -36,19 +35,11 @@ public class LightMove : MonoBehaviour
     {
         m_pos = transform.position;
         //Debug.Log(0 + " " + m_dirVec);
-        //m_rb2d = GetComponent<Rigidbody2D>();
-
-        //InvokeRepeating("Refravtion", 0, 2);
         
     }
 
     void FixedUpdate()
     {
-        /*if (Input.GetKeyDown(KeyCode.L))
-        {
-            //StartCoroutine(Refraction());
-            Refraction();
-        }*/
         StartCoroutine("Refraction");
     }
 
@@ -60,27 +51,13 @@ public class LightMove : MonoBehaviour
 
         m_lightpoint.LineReset();
         // 変数宣言
-        //RaycastHit2D ray;
         m_dirVec = m_lightpoint.transform.right;    // 初期方向
         m_pos = m_lightpoint.transform.position;    // 初期位置
         m_color = m_lightpoint.vertColor;
-        int i = 0;
-
         bool  EnterWater = false;   // 水に当たっているか
-        while (true)
+        int i = 0;
+        while (i++ > 200)
         {
-            // エラー時の処理
-            if(m_dirVec==new Vector2(0, 0))
-            {
-                Debug.Log("Vector Error");
-                break;
-            }
-            i++;    // 無限ループ阻止
-            if (i > 100)
-            {
-                Debug.Log("無限ループ脱出");
-                break;
-            }
 
             // 水か光を通さないものに当たっているか
             ray = Physics2D.Raycast(m_pos, m_dirVec, 50,
@@ -104,17 +81,12 @@ public class LightMove : MonoBehaviour
                 }
 
                 ray = ray.transform.GetComponent<MetaballParticleClass>().WaterNormalVec(ray);
-                //ray.normal = MetaballParticleClass.WaterDir(ray.normal);
-                //var watersurface = surface.ReInVector2(m_pos, ray, m_dirVec);
                 // 空気から水への屈折したベクトルを取得
                 m_dirVec = Refractioning(GetRefractiveIndex(RefractiveIndex.Air),
                     GetRefractiveIndex(RefractiveIndex.Water),
                     m_dirVec, ray.normal);
 
                 m_pos = ray.point;
-                //m_pos = MetaballParticleClass.nearPoint(ray.point, ray.point + ray.normal,
-                //    (Vector2)ray.transform.position + ray.normal * 0.126f, false);
-                //Debug.DrawRay(m_pos, m_dirVec, Color.blue);
 
                 AddLineRenderer();
                 m_color = ray.transform.GetComponent<MetaballParticleClass>().
@@ -127,11 +99,8 @@ public class LightMove : MonoBehaviour
             {
                 Collider2D[] collider2D = new Collider2D[1];
                 Vector2 raypos = m_pos;
-                int k = 0;
                 while (EnterWater)
                 {
-                    if (++k > 100)
-                        break;
                     // まだ水の中にいるか
                     int hitnum = Physics2D.OverlapCircleNonAlloc(m_pos, 0.2f, 
                         collider2D,WaterLayer);
@@ -139,20 +108,14 @@ public class LightMove : MonoBehaviour
                     {
                         ray = Physics2D.Raycast(m_pos, -m_dirVec, 5,
                             WaterLayer, 0, 2);
-                        // Debug.Log("Exit" + ray2.point);
-                        //Debug.Log("ExitN" + ray.normal);
-                        //m_pos = ray.point + m_dirVec * 0.001f; // 位置調整
-                        //if (ray)
-                            ray = ray.transform.GetComponent<MetaballParticleClass>().WaterNormalVec(ray);
-                        //ray.normal = MetaballParticleClass.WaterDir(ray.normal);
-                        //var watersurface = surface.ReInVector2(m_pos, ray, -m_dirVec);
+                        ray = ray.transform.GetComponent<MetaballParticleClass>().WaterNormalVec(ray);
                         m_dirVec = Refractioning(GetRefractiveIndex(RefractiveIndex.Water),
                                 GetRefractiveIndex(RefractiveIndex.Air),
                                 m_dirVec, -ray.normal);
 
                         m_pos = MetaballParticleClass.nearPoint(ray.point, ray.point + ray.normal,
                             (Vector2)ray.transform.position + ray.normal * 0.126f, false);
-                        Debug.DrawRay(m_pos, m_dirVec, Color.blue);
+                        //Debug.DrawRay(m_pos, m_dirVec, Color.blue);
 
                         AddLineRenderer();
 
@@ -163,7 +126,6 @@ public class LightMove : MonoBehaviour
                         m_dirVec, 0.3f, FrameLayer, 0, 2))
                     {                        
                         
-                        //if(ray.collider)
                         EnterWater =
                             FrameLayerProcessing(ray.transform.tag, EnterWater);
                         if(!EnterWater)
@@ -215,21 +177,12 @@ public class LightMove : MonoBehaviour
             return new Vector2(0, 0);
         }
 
-          float nr = n2 / n1;
-        
-       /*   float cos1 = Vector2.Dot(v, n);
-          float cos2 = n1 / n2 * Mathf.Sqrt(nr * nr - (1 - cos1 * cos1));
-          float omega = nr * cos2 - cos1;
-
-          Vector2 f = n1 / n2 * (v - omega * n);
-          return f.normalized;*/
-          
+          float nr = n2 / n1;                  
 
         float C = -Vector2.Dot(v, n);
         float g = Mathf.Sqrt(nr * nr + C * C - 1);
         if (float.IsNaN(g))
         {
-            //return (v + 2 * C * n).normalized;
             nr = n1 / n2;
             C = -Vector2.Dot(v, n);
             g = Mathf.Sqrt(nr * nr + C * C - 1);
@@ -274,7 +227,7 @@ public class LightMove : MonoBehaviour
                 }
                 break;
         }
-        Debug.Log("FramereturnError");
+        //Debug.Log("FramereturnError");
         return true;
     }
 }

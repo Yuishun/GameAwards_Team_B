@@ -224,32 +224,6 @@ public class MetaballParticleClass : MonoBehaviour {
             case 7:
                 vec = new Vector2(-1, 1).normalized;
                 break;
-
-         /*   case 8:
-                vec = Vector2.Lerp(Vector2.up, new Vector2(1, 1),0.5f).normalized;
-                break;
-            case 9:
-                vec= Vector2.Lerp(Vector2.right, new Vector2(1, 1), 0.5f).normalized;
-                break;
-            case 10:
-                vec= Vector2.Lerp(Vector2.right, new Vector2(1, -1), 0.5f).normalized;
-                break;
-            case 11:
-                vec= Vector2.Lerp(Vector2.down, new Vector2(1, -1), 0.5f).normalized;
-                break;
-            case 12:
-                vec= Vector2.Lerp(Vector2.down, new Vector2(-1, -1), 0.5f).normalized;
-                break;
-            case 13:
-                vec= Vector2.Lerp(Vector2.left, new Vector2(-1, -1), 0.5f).normalized;
-                break;
-            case 14:
-                vec= Vector2.Lerp(Vector2.left, new Vector2(-1, 1), 0.5f).normalized;
-                break;
-            case 15:
-                vec = Vector2.Lerp(Vector2.up, new Vector2(-1, 1), 0.5f).normalized;
-                break;
-         */
         }
         return vec;
     }
