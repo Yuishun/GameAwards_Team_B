@@ -21,8 +21,17 @@ public class FreezeCarsorScript : MonoBehaviour
     bool ResetPosflag = false;
     
     float distance;
+    AudioSource audioSource;
+    AudioClip melt_sound, ice_sound;
     void Start()
     {
+        ice_sound = Resources.Load<AudioClip>("Sound\\SE\\glass1(cut)");
+        melt_sound = Resources.Load<AudioClip>("Sound\\SE\\water-foll(cut)");
+        
+        audioSource = transform.gameObject.AddComponent<AudioSource>();
+        audioSource.volume = PlayerPrefs.GetFloat("SE");
+        audioSource.playOnAwake = false;
+
         spr = transform.GetComponent<SpriteRenderer>();
         spr.sprite = Unzip_flask;
 
@@ -80,7 +89,11 @@ public class FreezeCarsorScript : MonoBehaviour
         spr.sprite = Ice_flask;
         Collider2D target = Physics2D.OverlapCircle(transform.position, CasorRange, LayerMask.GetMask(Layer_Water));
         if (target)
+        {
+            audioSource.clip = ice_sound;
             target.SendMessage("Freeze");
+            audioSource.Play();
+        }
     }
     public void MeltIMage()
     {
@@ -88,7 +101,11 @@ public class FreezeCarsorScript : MonoBehaviour
         spr.sprite = Unzip_flask;
         Collider2D target = Physics2D.OverlapCircle(transform.position, CasorRange, LayerMask.GetMask(Layer_Water));
         if (target)
+        {
+            audioSource.clip = melt_sound;
             target.SendMessage("Melt");
+            audioSource.Play();
+        }
     }
 
     public void SetRot()

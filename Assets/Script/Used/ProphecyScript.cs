@@ -26,12 +26,15 @@ public class ProphecyScript : MonoBehaviour
     RawImage bookl_maintex, bookr_maintex;
     [SerializeField]
     Color color1, color2;
+    [SerializeField]
     AudioSource audioSE;
     void Awake()
-    {   
+    {
+        audioSE.volume = PlayerPrefs.GetFloat("SE");
         //1度だけのチェック
         if (SceneManagerScript.ProphecyCheck)
         {
+            audioSE.Stop();
             gameObject.SetActive(true);
             SceneManagerScript.ProphecyCheck = false;
             transform.GetChild(0).gameObject.SetActive(true);
@@ -43,7 +46,6 @@ public class ProphecyScript : MonoBehaviour
             bookright = transform.GetChild(0).GetChild(1).GetComponent<RectTransform>();
             bookl_maintex = bookleft.GetComponent<RawImage>();
             bookr_maintex = bookright.GetComponent<RawImage>();
-            audioSE = GetComponent<AudioSource>();
             StartCoroutine("BookOpen");
         }
         else
@@ -67,7 +69,10 @@ public class ProphecyScript : MonoBehaviour
                 if (Input.GetButtonDown("Button_A"))
                 {
                     if (onceflag)
+                    {
+                        audioSE.Play();
                         Itdestroy();
+                    }
                     else
                         textScript.SkipText();
                 }
@@ -97,8 +102,6 @@ public class ProphecyScript : MonoBehaviour
 
     IEnumerator BookOpen()
     {
-        
-        
         bookleft.gameObject.transform.SetSiblingIndex(4);
         bookleft.localPosition = new Vector3(bookleft.rect.width, 0, 0);
         var timer = 0f;
