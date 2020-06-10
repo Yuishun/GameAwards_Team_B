@@ -86,12 +86,15 @@ public class MetaballParticleClass : MonoBehaviour {
     public RaycastHit2D WaterNormalVec(RaycastHit2D ray)
     {
         // 周囲に水の粒があるか
-        Collider2D[] col = Physics2D.OverlapCircleAll(transform.position, 0.2f
+        Collider2D[] col = new Collider2D[4];
+        Physics2D.OverlapCircleNonAlloc(transform.position, 0.2f,col
             , LayerMask.GetMask("PostProcessing"));
+        
         for(int i = 0; i < col.Length; i++)
         {
             // 自分自身なら処理を飛ばす
-            if (col[i].transform.position == transform.position)
+            if (col[i] == null
+                || col[i].transform.position == transform.position)
                 continue;
 
 
