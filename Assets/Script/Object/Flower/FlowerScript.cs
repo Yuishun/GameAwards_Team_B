@@ -176,6 +176,7 @@ public class FlowerScript : MonoBehaviour
                 +new Vector3(-0.3f*transform.localScale.x,-0.5f*transform.localScale.y,0),
             0.7f,
             col, LayerMask.GetMask("Light"));
+            Debug.Log(col[0]);
             if (col[0])
             {
                 if (col[0].GetComponent<LightMove>().m_color
