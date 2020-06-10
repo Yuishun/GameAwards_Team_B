@@ -967,7 +967,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 1024
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 826527562}
+  m_TargetTexture: {fileID: 829751104}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
@@ -1990,7 +1990,7 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 790282289}
   m_PrefabAsset: {fileID: 0}
---- !u!84 &826527562
+--- !u!84 &829751104
 RenderTexture:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2002,8 +2002,8 @@ RenderTexture:
     Hash: 00000000000000000000000000000000
   m_ForcedFallbackFormat: 4
   m_DownscaleFallback: 0
-  m_Width: 321
-  m_Height: 464
+  m_Width: 1920
+  m_Height: 1080
   m_AntiAliasing: 1
   m_DepthFormat: 1
   m_ColorFormat: 7
@@ -2423,7 +2423,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 3087aaffb024dbc449449e02dc14d8d0, type: 3}
-  m_Color: {r: 1, g: 0.4, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
