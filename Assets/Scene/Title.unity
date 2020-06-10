@@ -1040,7 +1040,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 1040
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 1743311259}
+  m_TargetTexture: {fileID: 665375252}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
@@ -1210,6 +1210,38 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 568030147}
   m_CullTransparentMesh: 0
+--- !u!84 &665375252
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_Width: 1920
+  m_Height: 1080
+  m_AntiAliasing: 1
+  m_DepthFormat: 1
+  m_ColorFormat: 7
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
 --- !u!1 &691620651
 GameObject:
   m_ObjectHideFlags: 0
@@ -1327,7 +1359,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34382083ad114a07d000fbfb8d76c639, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iterations: 2
+  iterations: 4
   blurSpread: 0.6
   blurShader: {fileID: 4800000, guid: 57e6deea7c2924e22a5138e2b70bb4dc, type: 3}
   cutOutMaterial: {fileID: 2100000, guid: fc3845f2d2d7d9c4e90bc3c69a810432, type: 2}
@@ -2024,9 +2056,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BGMgroup:
-  - {fileID: 8300000, guid: c554349bfd104a6499e6e3117fa52c0d, type: 3}
+  - {fileID: 8300000, guid: 39025576183a62f4fb8f75d76cbfc95c, type: 3}
   - {fileID: 8300000, guid: 05b01f7d9800f59458c76cc476e3f5cd, type: 3}
-  - {fileID: 8300000, guid: c554349bfd104a6499e6e3117fa52c0d, type: 3}
+  - {fileID: 8300000, guid: aa1ab21910cffbc42abee58174de8420, type: 3}
   - {fileID: 8300000, guid: a24d790cce3fa0545aee770c84cbad06, type: 3}
   - {fileID: 8300000, guid: 6d4bb6925af9f1548a4862867f854133, type: 3}
   - {fileID: 8300000, guid: 6549e10db729b4c4db37d97cd63288ca, type: 3}
@@ -3075,6 +3107,7 @@ GameObject:
   - component: {fileID: 1327872921}
   - component: {fileID: 1327872920}
   - component: {fileID: 1327872916}
+  - component: {fileID: 1327872917}
   m_Layer: 0
   m_Name: Sphere (1)
   m_TagString: Untagged
@@ -3103,7 +3136,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1327872914}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ab070cb635ce24f268300eb3342ab80f, type: 3}
   m_Name: 
@@ -3114,6 +3147,27 @@ MonoBehaviour:
   witinTarget: 0
   rb: {fileID: 0}
   spRend: {fileID: 0}
+--- !u!50 &1327872917
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1327872914}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!23 &1327872920
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4296,38 +4350,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -50, y: -50}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!84 &1743311259
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_Width: 522
-  m_Height: 294
-  m_AntiAliasing: 1
-  m_DepthFormat: 1
-  m_ColorFormat: 7
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 0
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
 --- !u!1 &1773814359
 GameObject:
   m_ObjectHideFlags: 0
