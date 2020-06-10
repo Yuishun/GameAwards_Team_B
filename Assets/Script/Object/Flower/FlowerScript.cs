@@ -173,8 +173,8 @@ public class FlowerScript : MonoBehaviour
         {
             col[0] = null;
             Physics2D.OverlapCircleNonAlloc(transform.position 
-                +new Vector3(-0.3f*transform.localScale.x,-0.5f*transform.localScale.y,0),
-            0.7f,
+                +new Vector3(-0.3f*transform.localScale.x,-0.7f*transform.localScale.y,0),
+            0.82f,
             col, LayerMask.GetMask("Light"));
             Debug.Log(col[0]);
             if (col[0])
@@ -184,7 +184,7 @@ public class FlowerScript : MonoBehaviour
                     return;
 
 
-                if (m_iCollisionTimer++ % 60 == 0)
+                if (m_iCollisionTimer++ % 60 == 2)
                 {
                     sield.Play();
                     audioSource.Play();

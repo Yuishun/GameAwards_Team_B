@@ -26,17 +26,16 @@ public class RainSpawner : MonoBehaviour
         //_parent.hideFlags = HideFlags.HideInHierarchy;
         WaterDropsObjects[0].transform.SetParent(_parent.transform);
         //WaterDropsObjects[0].transform.localScale = new Vector3(size, size, 1f);
-        WaterDropsObjects[0].GetComponent<MetaballParticleClass>().Active = false;
+        WaterDropsObjects[0].SetActive(false);
 
         for (int i = 1; i < WaterDropsObjects.Length; i++)
         {
             WaterDropsObjects[i] = Instantiate(WaterDropsObjects[0], gameObject.transform.position, new Quaternion(0, 0, 0, 0)) as GameObject;
             WaterDropsObjects[i].name = "WaterDrops" + i;
-            WaterDropsObjects[i].GetComponent<MetaballParticleClass>().Active = false;
+            WaterDropsObjects[i].SetActive(false);
             WaterDropsObjects[i].transform.SetParent(_parent.transform);
            // WaterDropsObjects[i].transform.localScale = new Vector3(size, size, 1f);
             WaterDropsObjects[i].layer = WaterDropsObjects[0].layer;
-            //WaterDropsObjects[i].SetActive(false);
         }
 
         WaterDropsObjects[0].SetActive(false);
@@ -68,9 +67,9 @@ public class RainSpawner : MonoBehaviour
 
             for (int i = 0; i < WaterDropsObjects.Length; i++)
             {
-                MetaballParticleClass MetaBall = WaterDropsObjects[i].GetComponent<MetaballParticleClass>();
+                
 
-                if (MetaBall.Active == true)
+                if (WaterDropsObjects[i].activeSelf == true)
                     continue;
                 
 
@@ -79,7 +78,7 @@ public class RainSpawner : MonoBehaviour
                 WaterDropsObjects[i].transform.position = new Vector3(x, y, 0);
                 float size_ = Random.Range(0.8f, 1.2f);
                 WaterDropsObjects[i].transform.localScale = new Vector3(size_, size_, 1f);
-                MetaBall.Active = true;
+                WaterDropsObjects[i].SetActive(true);
                 if (--rand < 1)
                     break;
             }
@@ -88,14 +87,13 @@ public class RainSpawner : MonoBehaviour
 
         for (int i = 0; i < WaterDropsObjects.Length; i++)
         {
-            MetaballParticleClass MetaBall = WaterDropsObjects[i].GetComponent<MetaballParticleClass>();
 
-            if (MetaBall.Active == true)
+            if (WaterDropsObjects[i].activeSelf == true)
             {
                 Vector3 scale = WaterDropsObjects[i].transform.localScale;
                 scale = new Vector3(scale.x * 0.99f, scale.y * 0.99f, 1);
                 if (scale.x <= 0.1f)
-                    MetaBall.Active = false;
+                    WaterDropsObjects[i].SetActive(false);
                 else
                     WaterDropsObjects[i].transform.localScale = scale;
             }
