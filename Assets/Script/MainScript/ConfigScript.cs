@@ -36,6 +36,10 @@ public class ConfigScript : MonoBehaviour
         Return
     }
     SelectState Config_State = SelectState.BGMSlide;
+    
+    AudioClip buttonA, buttonB,warning;
+    AudioSource audioButton;
+    bool onebutton = false;
     void Start()
     {
         Config_State = SelectState.BGMSlide;
@@ -59,15 +63,15 @@ public class ConfigScript : MonoBehaviour
             SEValue.value = managerScript.GetSEVolume();
             var val = PlayerPrefs.GetFloat("BGM");
             if (BGMValue.value != val) {
-                BGMValue.value = PlayerPrefs.GetFloat("BGM");
-                SEValue.value = PlayerPrefs.GetFloat("SE");
+                BGMValue.value = PlayerPrefs.GetFloat("BGM",1);
+                SEValue.value = PlayerPrefs.GetFloat("SE", 1);
             }
             audio = manage.GetComponent<AudioSource>();
         }
         else
         {
-            BGMValue.value = PlayerPrefs.GetFloat("BGM");
-            SEValue.value = PlayerPrefs.GetFloat("SE");
+            BGMValue.value = PlayerPrefs.GetFloat("BGM", 1);
+            SEValue.value = PlayerPrefs.GetFloat("SE", 1);
         }
         IconDistance = new Vector3(0, 100);
         text = img.transform.GetChild(0).GetComponent<Text>();
@@ -82,6 +86,10 @@ public class ConfigScript : MonoBehaviour
             mute2.SetActive(true);
         else
             mute2.SetActive(false);
+        buttonA = Resources.Load<AudioClip>("Sound\\SE\\decision29");
+        buttonB = Resources.Load<AudioClip>("Sound\\SE\\cancel2");
+        warning = Resources.Load<AudioClip>("Sound\\SE\\warning2");
+        audioButton = gameObject.AddComponent<AudioSource>();
     }
 
     void Update()
@@ -93,6 +101,11 @@ public class ConfigScript : MonoBehaviour
         }
         if (Input.GetButtonDown("Button_B"))
         {
+            if (onebutton)
+            {
+                onebutton = false;
+                audioButton.PlayOneShot(buttonB);
+            }
             ArrowFlag = false;
             ButtonFlag = false;
         }
@@ -146,6 +159,11 @@ public class ConfigScript : MonoBehaviour
                         {
                             if (ButtonFlag)
                             {
+                                if (!onebutton)
+                                {
+                                    onebutton = true;
+                                    audioButton.PlayOneShot(buttonA);
+                                }
                                 if (ButtonState[0] == 1)
                                     BGMChange(-0.1f);
                                 if (ButtonState[1] == 1)
@@ -167,6 +185,11 @@ public class ConfigScript : MonoBehaviour
                         {
                             if (ButtonFlag)
                             {
+                                if (!onebutton)
+                                {
+                                    onebutton = true;
+                                    audioButton.PlayOneShot(buttonA);
+                                }
                                 if (ButtonState[0] == 1)
                                     SEChange(-0.1f);
                                 if (ButtonState[1] == 1)
@@ -194,6 +217,7 @@ public class ConfigScript : MonoBehaviour
                         {
                             if (ButtonFlag)
                             {
+                                audioButton.PlayOneShot(warning);
                                 StageCountClear();
                                 ButtonFlag = false;
                             }
@@ -215,6 +239,7 @@ public class ConfigScript : MonoBehaviour
                         {
                             if (ButtonFlag)
                             {
+                                audioButton.PlayOneShot(buttonA);
                                 ReturnSelect();
                                 ButtonFlag = false;
                             }
@@ -276,8 +301,10 @@ public class ConfigScript : MonoBehaviour
                 BGMValue.value += val;
         }
         if (managerScript)
+        {
             audio.volume = BGMValue.value;
-        managerScript.SetSEVolume(BGMValue.value);
+            managerScript.SetSEVolume(BGMValue.value);
+        }
     }
     public void SEChange(float val)
     {
@@ -298,7 +325,8 @@ public class ConfigScript : MonoBehaviour
             else
                 SEValue.value += val;
         }
-        managerScript.SetBGMVolume(SEValue.value);
+        if (managerScript)
+            managerScript.SetBGMVolume(SEValue.value);
     }
     public void StageCountClear()
     {

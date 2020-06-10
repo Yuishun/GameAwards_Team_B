@@ -159,9 +159,9 @@ public class FlowerScript : MonoBehaviour
                 transform.up = transform.root.up;
             }
             if (swingway)
-                angle = Mathf.LerpAngle(-10, 10, swingtime);
+                angle = Mathf.LerpAngle(-5, 5, swingtime);
             else
-                angle = Mathf.LerpAngle(10, -10, swingtime);
+                angle = Mathf.LerpAngle(5, -5, swingtime);
             transform.localEulerAngles = new Vector3(0, 0, angle);
             yield return null;
         }

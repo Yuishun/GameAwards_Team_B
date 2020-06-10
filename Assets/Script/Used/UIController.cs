@@ -40,7 +40,7 @@ public class UIController : MonoBehaviour
     Vector2[] showUIpos, hideUIpos;
     bool UIhideFlag = false, UIFlag = false;
     float UItimer = 0;
-
+    AudioSource aud;
     void Start()
     {
         float worldScreenHeight = Camera.main.orthographicSize * 2f;
@@ -129,6 +129,10 @@ public class UIController : MonoBehaviour
             Icon_Rot.parent.GetComponent<RectTransform>(),
             Icon_Arrow.parent.GetComponent<RectTransform>()
         };
+        aud = gameObject.AddComponent<AudioSource>();
+        aud.volume = PlayerPrefs.GetFloat("BGM");
+        aud.loop = false;
+        aud.playOnAwake = false;
     }
 
     // Update is called once per frame

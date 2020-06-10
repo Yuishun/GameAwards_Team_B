@@ -31,9 +31,17 @@ public class MenuScript : MonoBehaviour
     float beforeAxis = 0;
     InputController inputter;
     bool ControllerMenuFlag = false;
-    void Start()
+    AudioSource audio;
+    AudioClip SoundBA, SoundBB;
+    void Awake()
     {
         sceneManagerScript = transform.GetComponent<SceneManagerScript>();
+        audio = transform.GetChild(0).gameObject.AddComponent<AudioSource>();
+        audio.loop = false;
+        audio.playOnAwake = false;
+        audio.volume = sceneManagerScript.GetSEVolume();
+        SoundBA = Resources.Load<AudioClip>("Sound\\SE\\decision29");
+        SoundBB = Resources.Load<AudioClip>("Sound\\SE\\cancel2");
     }
     void OnEnable()
     {
@@ -68,6 +76,7 @@ public class MenuScript : MonoBehaviour
         color4b = image4.color - new Color32(70, 70, 70, 0);
 
         value = 0;
+        audio.PlayOneShot(SoundBA);
     }
     void OnDisable()
     {
@@ -78,7 +87,6 @@ public class MenuScript : MonoBehaviour
         image2.color = color2;
         image3.color = color3;
         image4.color = color4;
-
     }
     void Update()
     {
@@ -143,23 +151,29 @@ public class MenuScript : MonoBehaviour
                 switch (State)
                 {
                     case MenuState.Controll:
+                        audio.PlayOneShot(SoundBA);
                         ControllerCanvas.gameObject.SetActive(true);
                         ControllerCanvas.GetChild(2).gameObject.SetActive(true);
                         if (!ControllerMenuFlag) ControllerMenuFlag = true;
                         break;
                     case MenuState.Config:
+                        audio.PlayOneShot(SoundBA);
                         sceneManagerScript.Loadstagenum(600);
                         break;
                     case MenuState.Title:
+                        audio.PlayOneShot(SoundBA);
                         sceneManagerScript.Loadstagenum(1000);
                         break;
                     case MenuState.Close:
+                        audio.PlayOneShot(SoundBB);
                         sceneManagerScript.MenuEnd();
                         break;
                     case MenuState.Reset:
+                        audio.PlayOneShot(SoundBA);
                         sceneManagerScript.ReStage();
                         break;
                     case MenuState.ReSelect:
+                        audio.PlayOneShot(SoundBA);
                         sceneManagerScript.Loadstagenum(500);
                         break;
                 }
@@ -171,6 +185,7 @@ public class MenuScript : MonoBehaviour
         {
             if (Input.GetButtonDown("Button_A"))
             {
+                audio.PlayOneShot(SoundBB);
                 ControllerCanvas.GetChild(2).gameObject.SetActive(false);
                 ControllerCanvas.gameObject.SetActive(false);
                 if (ControllerMenuFlag) ControllerMenuFlag = false;
