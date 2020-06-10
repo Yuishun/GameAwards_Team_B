@@ -45,14 +45,17 @@ public class FlowerScript : MonoBehaviour
         SpriteRender.sprite = seed;
         StartCoroutine("Swing");
         ef_flower = Resources.Load<GameObject>("FlowerEffect");
+
         audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.loop = false;
         audioSource.volume = PlayerPrefs.GetFloat("SE");
-        audioSource.clip = Resources.Load<AudioClip>("Sound\\SE\\ClearFloweerSE");
+        audioSource.clip = Resources.Load<AudioClip>("Sound\\SE\\swords04");
         sield = transform.GetChild(2).GetComponent<ParticleSystem>();
     }
 
     void GoalFlower()
     {
+        audioSource.clip = Resources.Load<AudioClip>("Sound\\SE\\ClearFloweerSE");
         GameObject.FindGameObjectWithTag("GameController").GetComponent<InputController>().NoControll();
         StopCoroutine("Swing");
         StartCoroutine("Blooming");
@@ -179,9 +182,12 @@ public class FlowerScript : MonoBehaviour
                     != ClearColor)
                     return;
 
-                
+
                 if (m_iCollisionTimer++ % 60 == 0)
+                {
                     sield.Play();
+                    audioSource.Play();
+                }
                 if (m_iCollisionTimer > m_iLimitCollisionTime)
                 {
                     m_bGoal = !m_bGoal;
