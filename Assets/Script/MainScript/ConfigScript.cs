@@ -54,8 +54,14 @@ public class ConfigScript : MonoBehaviour
                     count++;
             }
             numtext.text = count + "/7";
+            
             BGMValue.value = managerScript.GetBGMVolume();
             SEValue.value = managerScript.GetSEVolume();
+            var val = PlayerPrefs.GetFloat("BGM");
+            if (BGMValue.value != val) {
+                BGMValue.value = PlayerPrefs.GetFloat("BGM");
+                SEValue.value = PlayerPrefs.GetFloat("SE");
+            }
             audio = manage.GetComponent<AudioSource>();
         }
         else
@@ -271,6 +277,7 @@ public class ConfigScript : MonoBehaviour
         }
         if (managerScript)
             audio.volume = BGMValue.value;
+        managerScript.SetSEVolume(BGMValue.value);
     }
     public void SEChange(float val)
     {
@@ -291,7 +298,7 @@ public class ConfigScript : MonoBehaviour
             else
                 SEValue.value += val;
         }
-
+        managerScript.SetBGMVolume(SEValue.value);
     }
     public void StageCountClear()
     {
@@ -302,13 +309,17 @@ public class ConfigScript : MonoBehaviour
 
     public void ReturnSelect()
     {
-        PlayerPrefs.SetFloat("BGM", BGMValue.value);
-        PlayerPrefs.SetFloat("SE", SEValue.value);
         if (managerScript)
         {
             managerScript.SetSEVolume(BGMValue.value);
             managerScript.SetBGMVolume(SEValue.value);
+            PlayerPrefs.Save();
             managerScript.Loadstagenum(500);
+        }
+        else
+        {
+            PlayerPrefs.SetFloat("BGM", BGMValue.value);
+            PlayerPrefs.SetFloat("SE", SEValue.value);
         }
     }
 }
