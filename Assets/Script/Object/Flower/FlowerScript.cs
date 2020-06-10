@@ -172,10 +172,13 @@ public class FlowerScript : MonoBehaviour
         if (!m_bGoal)
         {
             col[0] = null;
+            var pos = new Vector2(-0.3f * transform.localScale.x, -0.7f * transform.localScale.y) * transform.up;
             Physics2D.OverlapCircleNonAlloc(transform.position 
-                +new Vector3(-0.3f*transform.localScale.x,-0.7f*transform.localScale.y,0),
+                + (Vector3)pos,
             0.82f,
             col, LayerMask.GetMask("Light"));
+            
+            
             if (col[0])
             {
                 if (col[0].GetComponent<LightMove>().m_color
@@ -206,5 +209,7 @@ public class FlowerScript : MonoBehaviour
                 SkipFlower();
             }
         }
-    }
+    }    
 }
+
+
