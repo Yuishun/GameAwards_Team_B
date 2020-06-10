@@ -26,13 +26,28 @@ public class GravityControllerScript : MonoBehaviour
     float timer = 0;
     public bool RightRoll = false;
     public bool LeftRoll = false;
-    
+
+
+    AudioClip aclip_rot;
+    AudioClip aclip_end;
+    AudioClip aclip_rotchange;
+    AudioClip aclip_rotchange2;
+    AudioSource audio;
+    bool audioFlag = true;
     void Start()
     {
         cam_root = Camera.main.transform.root;
         Physics2D.gravity = new Vector2(0, -9.81f);
         //Physics2D.gravity * cam_root.up;
         localGravity = Physics2D.gravity;
+        audio = gameObject.AddComponent<AudioSource>();
+        audio.loop = false;
+        audio.playOnAwake = false;
+        audio.volume = PlayerPrefs.GetFloat("SE",1);
+        aclip_rot = Resources.Load<AudioClip>("Sound\\SE\\Gear_Rot");
+        aclip_end = Resources.Load<AudioClip>("Sound\\SE\\Gear_Rot_End");
+        aclip_rotchange= Resources.Load<AudioClip>("Sound\\SE\\レバー倒す06");
+        aclip_rotchange2= Resources.Load<AudioClip>("Sound\\SE\\レバー倒す03");
     }
 
     void Update()
@@ -57,6 +72,13 @@ public class GravityControllerScript : MonoBehaviour
     }
     void Roll()
     {
+        if (audioFlag)
+        {
+            audioFlag = false;
+            audio.loop = true;
+            audio.clip = aclip_rot;
+            audio.Play();
+        }
         var rottime = 0.02f * RotateSpeed;
         timer += rottime;
         
@@ -73,6 +95,14 @@ public class GravityControllerScript : MonoBehaviour
             RightRoll = false;
             LeftRoll = false;
             rollWay = RollWay.normal;
+            if (!audioFlag)
+            {
+                audio.Stop();
+                audioFlag = true;
+                audio.loop = false;
+                audio.clip = aclip_end;
+                audio.Play();
+            }
         }
     }
 
@@ -93,6 +123,7 @@ public class GravityControllerScript : MonoBehaviour
                         rollAngle = RollAngle.Ten;
                         break;
                 }
+                audio.PlayOneShot(aclip_rotchange);
             }
             else
             {
@@ -108,6 +139,7 @@ public class GravityControllerScript : MonoBehaviour
                         rollAngle = RollAngle.Fifteen;
                         break;
                 }
+                audio.PlayOneShot(aclip_rotchange2);
             }
     }
     
