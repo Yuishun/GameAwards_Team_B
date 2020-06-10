@@ -339,8 +339,8 @@ public class ConfigScript : MonoBehaviour
     {
         if (managerScript)
         {
-            managerScript.SetSEVolume(BGMValue.value);
-            managerScript.SetBGMVolume(SEValue.value);
+            managerScript.SetBGMVolume(BGMValue.value);
+            managerScript.SetSEVolume(SEValue.value);
             PlayerPrefs.Save();
             managerScript.Loadstagenum(500);
         }
