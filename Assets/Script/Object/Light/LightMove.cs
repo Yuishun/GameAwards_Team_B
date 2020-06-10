@@ -114,8 +114,8 @@ public class LightMove : MonoBehaviour
                                 m_dirVec, -ray.normal);
 
                         m_pos = MetaballParticleClass.nearPoint(ray.point, ray.point + ray.normal,
-                            (Vector2)ray.transform.position + ray.normal * 0.126f, false);
-                        //Debug.DrawRay(m_pos, m_dirVec, Color.blue); // 0.126f 0.085f
+                            (Vector2)ray.transform.position + ray.normal * 0.112f, false);
+                        //Debug.DrawRay(m_pos, m_dirVec, Color.blue); // 0.126f 0.085f 0.112f
 
                         AddLineRenderer();
 
