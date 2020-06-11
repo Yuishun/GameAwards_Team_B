@@ -99,7 +99,8 @@ public class LightMove : MonoBehaviour
             {
                 Collider2D[] collider2D = new Collider2D[1];
                 Vector2 raypos = m_pos;
-                while (EnterWater)
+                int k = 0;
+                while (EnterWater && k++ < 200)
                 {
                     // まだ水の中にいるか
                     int hitnum = Physics2D.OverlapCircleNonAlloc(m_pos, 0.2f, 
@@ -114,7 +115,7 @@ public class LightMove : MonoBehaviour
                                 m_dirVec, -ray.normal);
 
                         m_pos = MetaballParticleClass.nearPoint(ray.point, ray.point + ray.normal,
-                            (Vector2)ray.transform.position + ray.normal * 0.112f, false);
+                            (Vector2)ray.transform.position + ray.normal * 0.114f, false);
                         //Debug.DrawRay(m_pos, m_dirVec, Color.blue); // 0.126f 0.085f 0.112f
 
                         AddLineRenderer();

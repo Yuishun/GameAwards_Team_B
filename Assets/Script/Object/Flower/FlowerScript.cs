@@ -209,6 +209,13 @@ public class FlowerScript : MonoBehaviour
                 SkipFlower();
             }
         }
+
+        //if (Input.GetKeyDown(KeyCode.L))
+        //{
+        //    m_bGoal = !m_bGoal;
+        //    GoalFlower();
+        //}
+
     }    
 }
 
