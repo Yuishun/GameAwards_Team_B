@@ -153,15 +153,6 @@ public class SceneManagerScript : MonoBehaviour
     }
 
     //=============================================================
-    // メニューボタン用(ステージセレクト画面用)
-    //=============================================================
-    public static void SetButton_Active()
-    {
-        if (singleton) 
-            singleton.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
-    }
-
-    //=============================================================
     // 非同期読み込み(フェード終了かつ読み込み後に遷移)
     //=============================================================
     IEnumerator SceneChange(string scene)

@@ -96,7 +96,6 @@ public class ProphecyScript : MonoBehaviour
     {
         stageSelectScript.SelectButtonActivateion();
         IconFlag = false;
-        SceneManagerScript.SetButton_Active();
         gameObject.SetActive(false);
     }
 
