@@ -249,4 +249,8 @@ public class StageSelectScript : MonoBehaviour
     {
         return colors;
     }
+    public void MenuClose_ButtonControllOK()
+    {
+        m_bMenuOpen = false;
+    }
 }
