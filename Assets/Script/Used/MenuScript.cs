@@ -33,6 +33,7 @@ public class MenuScript : MonoBehaviour
     bool ControllerMenuFlag = false;
     AudioSource audio;
     AudioClip SoundBA, SoundBB;
+    StageSelectScript stageselect;
     void Awake()
     {
         sceneManagerScript = transform.GetComponent<SceneManagerScript>();
@@ -55,6 +56,7 @@ public class MenuScript : MonoBehaviour
         }
         else
         {
+            stageselect = GameObject.Find("StageSlect").GetComponent<StageSelectScript>();
             InStage = false;
             State = MenuState.Controll;
             TargetMenu = sceneManagerScript.SelectMenu.transform;
@@ -165,6 +167,8 @@ public class MenuScript : MonoBehaviour
                         sceneManagerScript.Loadstagenum(1000);
                         break;
                     case MenuState.Close:
+                        if (!InStage)
+                            stageselect.MenuClose_ButtonControllOK();
                         audio.PlayOneShot(SoundBB);
                         sceneManagerScript.MenuEnd();
                         break;
