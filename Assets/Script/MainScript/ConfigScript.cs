@@ -73,7 +73,7 @@ public class ConfigScript : MonoBehaviour
             BGMValue.value = PlayerPrefs.GetFloat("BGM", 1);
             SEValue.value = PlayerPrefs.GetFloat("SE", 1);
         }
-        IconDistance = new Vector3(0, 100);
+        IconDistance = BGMValue.transform.localPosition-SEValue.transform.localPosition;
         text = img.transform.GetChild(0).GetComponent<Text>();
         img.sprite = spriteA;
         mute1 = transform.GetChild(2).GetChild(5).gameObject;

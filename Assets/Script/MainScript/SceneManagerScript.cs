@@ -130,13 +130,9 @@ public class SceneManagerScript : MonoBehaviour
                 StartCoroutine(SceneChange("Stage7_Purple"));
                 break;
             case 600:
-                if (singleton)
-                    singleton.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
                 StartCoroutine(SceneChange("Config"));
                 break;
             case 100:
-                if (singleton)
-                    singleton.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
                 for (int i = 0; i < StageStatus.Length / 2; i++)
                         StageStatus[i, 1] = 0;
                 StartCoroutine(SceneChange("GameClear"));
@@ -145,8 +141,6 @@ public class SceneManagerScript : MonoBehaviour
                 StartCoroutine(SceneChange("StageSelect"));
                 break;
             case 1000:
-                if (singleton)
-                    singleton.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
                 StartCoroutine(SceneChange("Start"));
                 break;
         }
