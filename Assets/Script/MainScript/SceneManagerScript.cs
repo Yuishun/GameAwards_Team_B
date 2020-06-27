@@ -81,9 +81,7 @@ public class SceneManagerScript : MonoBehaviour
 
         for (int i = 0; i < StageClearLoad(); i++)
             StageStatus[i, 1] = 1;
-        for (int i = 0; i < 7; i++)
-            StageStatus[i, 1] = 1;
-        
+
         if (gamedata1 == 100)
             ClearSceneFadeOut();
         StartCoroutine(BeginTransition());
