@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Video;
 public class MenuScript : MonoBehaviour
 {
     [SerializeField]
@@ -30,10 +31,11 @@ public class MenuScript : MonoBehaviour
     Color color1b, color2b, color3b, color4b;
     float beforeAxis = 0;
     InputController inputter;
-    bool ControllerMenuFlag = false;
+    bool ControllerMenuFlag = false, MovieFlag = false;
     AudioSource audio;
     AudioClip SoundBA, SoundBB;
     StageSelectScript stageselect;
+    VideoPlayer PVplayer;
     void Awake()
     {
         sceneManagerScript = transform.GetComponent<SceneManagerScript>();
@@ -43,6 +45,7 @@ public class MenuScript : MonoBehaviour
         audio.volume = sceneManagerScript.GetSEVolume();
         SoundBA = Resources.Load<AudioClip>("Sound\\SE\\decision29");
         SoundBB = Resources.Load<AudioClip>("Sound\\SE\\cancel2");
+        PVplayer = ControllerCanvas.GetChild(3).GetComponent<VideoPlayer>();
     }
     void OnEnable()
     {
@@ -185,6 +188,18 @@ public class MenuScript : MonoBehaviour
                     sceneManagerScript.MenuEnd();
             }
         }
+        else if (MovieFlag)
+        {
+            if (Input.GetButtonDown("Button_A") || Input.GetButtonDown("Button_B")
+                || Input.GetButtonDown("Button_X") || Input.GetButtonDown("Button_Y"))
+            {
+                audio.PlayOneShot(SoundBB);
+                PVplayer.Stop();
+                PVplayer.gameObject.SetActive(false);
+                GetComponent<AudioSource>().Play();
+                MovieFlag = false;
+            }
+        }
         else
         {
             if (Input.GetButtonDown("Button_A"))
@@ -193,6 +208,14 @@ public class MenuScript : MonoBehaviour
                 ControllerCanvas.GetChild(2).gameObject.SetActive(false);
                 ControllerCanvas.gameObject.SetActive(false);
                 if (ControllerMenuFlag) ControllerMenuFlag = false;
+            }
+            else if (Input.GetButtonDown("Button_X"))
+            {
+                audio.PlayOneShot(SoundBA);
+                PVplayer.gameObject.SetActive(true);
+                GetComponent<AudioSource>().Pause();
+                if (!MovieFlag)
+                    MovieFlag = true;
             }
         }
     }
